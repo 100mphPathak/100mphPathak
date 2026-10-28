@@ -1,0 +1,213 @@
+/* Current reference homepage layouts and actions. */
+/* Version 15: three equal products and supplied APX artwork. */
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .equal-paths.three-paths {
+  grid-template-columns: repeat(3,minmax(0,1fr))
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partner-art img.apx-logo,:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partner-card img.apx-logo {
+  width: 160px;
+  height: auto;
+  max-height: 100px;
+  object-fit: contain;
+  filter: none;
+  mix-blend-mode: multiply
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .closing-brand-logos img.apx-logo {
+  width: 145px;
+  height: auto;
+  max-height: 82px;
+  object-fit: contain;
+  filter: none
+}
+@media(max-width:760px){
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .equal-paths.three-paths {
+  grid-template-columns: 1fr
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partner-art img.apx-logo {
+  width: 140px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .closing-brand-logos img.apx-logo {
+  width: 100%;
+  height: auto;
+  max-height: 60px
+}}
+
+/* Version 16: exact brand casing and three active partners. */
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .brand-name {
+  text-transform: none!important
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 20px;
+  overflow: visible;
+  padding-bottom: 0
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-card {
+  min-width: 0;
+  width: auto;
+  min-height: 245px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-art {
+  min-height: 90px;
+  display: flex;
+  align-items: center
+}
+@media(max-width:760px){
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-grid {
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+  overflow: visible
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-card {
+  padding: 18px 12px;
+  min-height: 240px;
+  border-radius: 20px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-art {
+  min-height: 80px;
+  height: 80px;
+  width: 100%
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-art img {
+  width: 100%;
+  max-width: 135px;
+  max-height: 65px;
+  object-fit: contain;
+  margin: 0
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-role {
+  font-size: 9px;
+  line-height: 1.5
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-card h3 {
+  font-size: 18px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-code {
+  width: 100%;
+  padding: 10px;
+  gap: 6px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-code strong {
+  font-size: 12px
+}}
+@media(max-width:350px){
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-grid {
+  grid-template-columns: 1fr
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners .partner-card {
+  min-height: 220px
+}}
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) :is(button,.button,.home-capsule,.glass-link,.text-link,.nav-enquire,.partner-code,.partner-visit,.reset-checklist,.menu-contact a,.whatsapp-float),body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) :is(button,.button,.home-capsule,.glass-link,.text-link,.nav-enquire,.partner-code,.partner-visit,.reset-checklist,.menu-contact a,.whatsapp-float):is(:hover,:focus,:active) {
+  box-shadow: none!important;
+  filter: none;
+  animation: lehar-gradient 6s ease-in-out infinite;
+  background-size: 320% 180%;
+  background-image: linear-gradient(115deg,#15263e 0%,#334d6c 23%,#6489a0 37%,#314b70 49%,#172c47 65%,#507786 82%,#20334e 100%)
+}
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .partners :is(.partner-code,.partner-visit),body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .menu-button,body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) button[data-photo] {
+  background-image: linear-gradient(115deg,#edf2f8,#fff,#dce8f1,#f5f8fb)
+}
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) :is(button,.button,.home-capsule,.glass-link,.text-link,.nav-enquire,.partner-code,.partner-visit,.whatsapp-float):focus-visible {
+  outline: 2px solid #3578ba;
+  outline-offset: 4px
+}
+@media(max-width:760px){
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 12px;
+  align-items: stretch
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event {
+  width: 100%;
+  min-width: 0;
+  height: 240px;
+  min-height: 240px;
+  padding: 15px 10px;
+  border-radius: 20px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event h3 {
+  font-size: 15px;
+  line-height: 1.3
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event .pill {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  padding: 6px 2px;
+  font-size: 8px;
+  white-space: nowrap
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event-number {
+  font-size: 8px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .speed-graphic {
+  font-size: 48px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event-orbit {
+  width: 60px;
+  height: 60px
+}}
+@media(max-width:360px){
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event h3 {
+  font-size: 13px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event {
+  padding: 12px 7px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event .pill {
+  font-size: 7px
+}}
+@media(prefers-reduced-motion:reduce){
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) :is(button,.button,.home-capsule,.glass-link,.text-link,.nav-enquire,.partner-code,.partner-visit,.reset-checklist,.menu-contact a,.whatsapp-float) {
+  animation: none!important
+}}
+
+@media(max-width:760px){
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid {
+  grid-template-columns: repeat(3,minmax(0,82%));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event {
+  height: 275px;
+  min-height: 275px;
+  padding: 22px;
+  scroll-snap-align: start
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event h3 {
+  font-size: 23px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event .pill {
+  width: 116px;
+  font-size: 9px;
+  padding: 7px 10px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event-number {
+  font-size: 10px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .speed-graphic {
+  font-size: 70px
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event-orbit {
+  width: 85px;
+  height: 85px
+}}
+@media(max-width:760px){
+body :is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto
+}
+:is(.home-page, .events-page, .coach-page, .assessment-page, .training-page, .scholarship-page) .events-grid .event {
+  flex: 0 0 82%;
+  width: 82%;
+  height: 275px
+}}
+
+
+/* Assessment player experience videos. */
+:is(.assessment-page, .training-page) .video-story{min-width:0;overflow:hidden;background:#f6f8fb;border:1px solid #dce3ed;border-radius:20px}
+:is(.assessment-page, .training-page) .video-story iframe{display:block;width:100%;height:auto;aspect-ratio:9/16;border:0;background:#f2f5f9}
+:is(.assessment-page, .training-page) .video-story .video-fallback{display:block;text-align:center;padding:12px}
