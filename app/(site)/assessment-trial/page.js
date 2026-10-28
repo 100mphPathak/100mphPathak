@@ -1,9 +1,9 @@
 import Image from "next/image";
-import PageHero from "../page-hero";
-import Partners from "../partners";
+import PageHero from "../../page-hero";
+import Partners from "../../partners";
 import AssessmentBooking from "./assessment-booking";
-import "../home.css";
-import { seo } from "../seo";
+import "../../home.css";
+import { seo } from "../../seo";
 
 export const metadata = seo("/assessment-trial/", "Cricket Academy Admission assessment & Online Assessment | Pathak100MPH", "Book your ₹1,199 personal online assessment with Ankit Pathak. Share your bowling videos, meet on Google Meet and discuss your development or academy admission.");
 

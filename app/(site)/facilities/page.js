@@ -1,7 +1,7 @@
-import PageHero from "../page-hero";
+import PageHero from "../../page-hero";
 import Image from "next/image";
 import Link from "next/link";
-import { seo } from "../seo";
+import { seo } from "../../seo";
 export const metadata = seo("/facilities/", "Cricket Academy with Hostel in Delhi NCR | Pathak100MPH", "Explore Pathak100MPH’s 5-acre cricket training environment, gym, facilities and residential support in Delhi NCR.");
 export default function Facilities() {
   return (

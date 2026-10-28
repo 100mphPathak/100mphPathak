@@ -1,9 +1,9 @@
-import PageHero from "../page-hero";
+import PageHero from "../../page-hero";
 import Image from "next/image";
 import Link from "next/link";
-import Partners from "../partners";
-import "../home.css";
-import { seo } from "../seo";
+import Partners from "../../partners";
+import "../../home.css";
+import { seo } from "../../seo";
 export const metadata = seo("/online-training/", "Online Fast Bowling Training | Pathak100MPH", "Personalised online fast bowling training with Coach Ankit Pathak’s team. Regular drills, video analysis and monthly live guidance through your private WhatsApp group.");
 export default function OnlineTraining() {
   return (

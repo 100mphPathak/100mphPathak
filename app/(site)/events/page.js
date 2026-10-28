@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import Partners from "../partners";
-import "../home.css";
-import { seo } from "../seo";
+import Partners from "../../partners";
+import "../../home.css";
+import { seo } from "../../seo";
 
 export const metadata = seo("/events/", "Pathak100MPH Events | Speed Contest & Upcoming Events", "Follow upcoming Pathak100MPH events, including the Speed Contest. Dates, participation criteria and registration details will be announced once confirmed.");
 

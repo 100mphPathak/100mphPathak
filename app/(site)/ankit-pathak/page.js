@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import PageHero from "../page-hero";
-import Partners from "../partners";
-import PlayerResults from "../player-results";
-import "../home.css";
-import { seo } from "../seo";
+import PageHero from "../../page-hero";
+import Partners from "../../partners";
+import PlayerResults from "../../player-results";
+import "../../home.css";
+import { seo } from "../../seo";
 
 export const metadata = seo("/ankit-pathak/", "Ankit Pathak | Best Fast Bowling Coach for Your Game", "Looking for the best fast bowling coach for your game? Meet Ankit Pathak: 13+ years of experience and an approach built around technique, preparation and mindset.");
 

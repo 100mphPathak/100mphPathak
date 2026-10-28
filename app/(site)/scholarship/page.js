@@ -1,8 +1,8 @@
 import Image from "next/image";
-import PageHero from "../page-hero";
-import Partners from "../partners";
-import "../home.css";
-import { seo } from "../seo";
+import PageHero from "../../page-hero";
+import Partners from "../../partners";
+import "../../home.css";
+import { seo } from "../../seo";
 
 export const metadata = seo("/scholarship/", "Fast Bowling Scholarship in India | Pathak100MPH", "A performance-based fast bowling scholarship for players aged 11 to 23. Explore the assessment criteria, waiting list, academy sponsorship and ₹5,000 registration.");
 

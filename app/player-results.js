@@ -1,76 +1,30 @@
-import Image from "next/image";
+import { getContent } from "./lib/content";
+import { Img } from "./content/text";
 
-export default function PlayerResults() {
+export default async function PlayerResults() {
+  const { playerResults: r } = await getContent("global");
   return (
     <section className="wrap results">
       <div className="section-head reveal">
         <div>
-          <p className="eyebrow">{"THE WORK SHOWS"}</p>
-          <h2>{"Potential. Meet proof."}</h2>
+          <p className="eyebrow">{r.eyebrow}</p>
+          <h2>{r.heading}</h2>
         </div>
         <p>
-          {
-            "65+ selections across district, state, national and franchise cricket in just 5 years."
-          }
+          {r.text}
         </p>
       </div>
       <div className="player-rail">
-        <article className="player reveal">
-          <div className="player-image">
-            <Image
-              alt="Swayam Srivastav"
-              height="500"
-              loading="lazy"
-              src="/assets/player0.webp"
-              width="500"
-            />
-          </div>
-          <span className="tiny">{"PATHAK100MPH PLAYER"}</span>
-          <h3>{"Swayam Srivastav"}</h3>
-          <p>{"Odisha Pro T20 League"}</p>
-        </article>
-        <article className="player reveal">
-          <div className="player-image">
-            <Image
-              alt="Vishal Thakur"
-              height="500"
-              loading="lazy"
-              src="/assets/player1.webp"
-              width="500"
-            />
-          </div>
-          <span className="tiny">{"PATHAK100MPH PLAYER"}</span>
-          <h3>{"Vishal Thakur"}</h3>
-          <p>{"Ranji Trophy · Services"}</p>
-        </article>
-        <article className="player reveal">
-          <div className="player-image">
-            <Image
-              alt="Hemant Dhami"
-              height="500"
-              loading="lazy"
-              src="/assets/player2.webp"
-              width="500"
-            />
-          </div>
-          <span className="tiny">{"PATHAK100MPH PLAYER"}</span>
-          <h3>{"Hemant Dhami"}</h3>
-          <p>{"Nepal National Team"}</p>
-        </article>
-        <article className="player reveal">
-          <div className="player-image">
-            <Image
-              alt="Akash Gautam"
-              height="500"
-              loading="lazy"
-              src="/assets/player3.webp"
-              width="500"
-            />
-          </div>
-          <span className="tiny">{"PATHAK100MPH PLAYER"}</span>
-          <h3>{"Akash Gautam"}</h3>
-          <p>{"Indian Street Premier League"}</p>
-        </article>
+        {r.players.map((player, i) => (
+          <article className="player reveal" key={i}>
+            <div className="player-image">
+              <Img v={player.photo} loading="lazy" />
+            </div>
+            <span className="tiny">{player.tag}</span>
+            <h3>{player.name}</h3>
+            <p>{player.team}</p>
+          </article>
+        ))}
       </div>
     </section>
   );

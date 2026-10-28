@@ -1,0 +1,138 @@
+const logo = { src: "/assets/logo.webp", alt: "Pathak100MPH", width: 367, height: 170 };
+const link = (label, href) => ({ label, href });
+
+export default {
+  seo: {
+    title: "Pathak100MPH | High-Performance Cricket Academy",
+    description:
+      "High-performance bowling and batting coaching. Explore trials, online bowling training and personal action analysis with Ankit Pathak.",
+    ogImage: { src: "/assets/team.webp", alt: "Ankit Pathak with Pathak100MPH players", width: 825, height: 1024 },
+  },
+  announcement: {
+    lead: "Your next step starts here.",
+    link: link("Explore academy assessment", "/assessment-trial/"),
+  },
+  header: {
+    logo,
+    callbackButton: "Request a call back",
+    nav: [
+      link("Ankit Pathak", "/ankit-pathak/"),
+      link("Admission", "/assessment-trial/"),
+      link("Online Training", "/online-training/"),
+      link("Scholarship", "/scholarship/"),
+      link("Facilities", "/facilities/"),
+      link("Events", "/events/"),
+      link("Insights", "/blogs/"),
+    ],
+  },
+  mobileMenu: {
+    links: [
+      link("Ankit Pathak", "/ankit-pathak/"),
+      link("Admission", "/assessment-trial/"),
+      link("Online Training", "/online-training/"),
+      link("Scholarship", "/scholarship/"),
+      link("Facilities", "/facilities/"),
+      link("Upcoming Events", "/events/"),
+      link("Insights", "/blogs/"),
+    ],
+    eyebrow: "LET’S FIND YOUR NEXT STEP",
+    heading: "Not sure where to start?",
+    text: "Talk to our team about the right training option for you.",
+    whatsapp: link("WhatsApp us", "https://wa.me/918882390596"),
+    call: link("Call the team", "tel:+918882390596"),
+    signature: "Pathak100MPH · EST. 2021",
+  },
+  callbackForm: {
+    eyebrow: "LET’S FIND YOUR NEXT STEP",
+    heading: "Let’s talk about\nyour next step.",
+    text: "Request a call back from our admissions team.",
+    nameLabel: "Player’s name",
+    namePlaceholder: "Full name",
+    ageLabel: "Age",
+    agePlaceholder: "Age",
+    countryLabel: "Country / region",
+    phoneLabel: "Phone / WhatsApp",
+    phonePlaceholder: "Your phone number",
+    phoneHelp: "Choose your country, then enter your phone or WhatsApp number.",
+    programLabel: "Interested in",
+    programPlaceholder: "Choose a program",
+    programs: [
+      "Offline Bowling Training",
+      "Offline Batting Training",
+      "Online Bowling Training",
+      "Action Analysis",
+      "Scholarship",
+    ],
+    notice: "Design preview: this form demonstrates the enquiry experience. Details are not sent or stored.",
+    submit: "Request a call back",
+  },
+  whatsappButton: {
+    href: "https://wa.me/918882390596",
+    kicker: "Let’s talk",
+    label: "WhatsApp us",
+  },
+  callbackPrompt: {
+    eyebrow: "A QUESTION ABOUT TRAINING?",
+    heading: "Let’s find your next step.",
+    button: "Request a call back",
+  },
+  footer: {
+    logo,
+    kicker: "DELHI NCR · EST. 2021",
+    tagline: "Built for the",
+    taglineBold: "serious cricketer.",
+    phoneLead: "Let’s talk cricket",
+    phone: link("+91 88823 90596", "tel:+918882390596"),
+    academyHeading: "THE ACADEMY",
+    academyLinks: [
+      link("Ankit Pathak", "/ankit-pathak/"),
+      link("Facilities & hostel", "/facilities/"),
+      link("Upcoming events", "/events/"),
+      link("Coaching insights", "/blogs/"),
+    ],
+    trainingHeading: "YOUR GAME. YOUR WAY.",
+    trainingLinks: [
+      link("Admission", "/assessment-trial/"),
+      link("Online training", "/online-training/"),
+      link("Scholarship", "/scholarship/"),
+    ],
+    locationHeading: "COME FIND YOUR PACE",
+    address: "Near Chhapraula Police Chowki,\nKRBL Rice Mill, Bisnauli,\nUttar Pradesh 203207",
+    whatsapp: link("Connect on WhatsApp", "https://wa.me/918882390596"),
+    copyright: "© 2026 Ankit Pathak and Sons",
+    legalLinks: [
+      link("Terms & Conditions", "https://sam.harsh-4844.chatgpt.site/terms/"),
+      link("Return Policy", "https://sam.harsh-4844.chatgpt.site/return-policy/"),
+      link("Privacy Policy", "https://sam.harsh-4844.chatgpt.site/privacy/"),
+    ],
+    motto: "PACE. PURPOSE. PATHAK.",
+  },
+  playerResults: {
+    eyebrow: "THE WORK SHOWS",
+    heading: "Potential. Meet proof.",
+    text: "65+ selections across district, state, national and franchise cricket in just 5 years.",
+    players: [
+      { photo: { src: "/assets/player0.webp", alt: "Swayam Srivastav", width: 500, height: 500 }, tag: "PATHAK100MPH PLAYER", name: "Swayam Srivastav", team: "Odisha Pro T20 League" },
+      { photo: { src: "/assets/player1.webp", alt: "Vishal Thakur", width: 500, height: 500 }, tag: "PATHAK100MPH PLAYER", name: "Vishal Thakur", team: "Ranji Trophy · Services" },
+      { photo: { src: "/assets/player2.webp", alt: "Hemant Dhami", width: 500, height: 500 }, tag: "PATHAK100MPH PLAYER", name: "Hemant Dhami", team: "Nepal National Team" },
+      { photo: { src: "/assets/player3.webp", alt: "Akash Gautam", width: 500, height: 500 }, tag: "PATHAK100MPH PLAYER", name: "Akash Gautam", team: "Indian Street Premier League" },
+    ],
+  },
+  // Partners section shown on most pages (Action Analysis has its own copy).
+  partners: {
+    eyebrow: "OUR PARTNERS",
+    heading: "Stronger, together.",
+    text: "The brands supporting our players and academy.",
+    sponsor: {
+      eyebrow: "OUR ACADEMY SPONSOR",
+      heading: "Powered by STAG Global.",
+      text: "STAG Global supports our academy with cricket gear and merchandise for training and match days.",
+      link: link("Explore STAG Global", "https://stag.global/"),
+      logo: { src: "/assets/stag-global.png", alt: "STAG Global", width: 500, height: 500 },
+    },
+    cards: [
+      { logo: { src: "/assets/naturaltein.svg", alt: "Naturaltein", width: 500, height: 500 }, wideLogo: false, role: "Pathak100MPH NUTRITION PARTNER", name: "Naturaltein", codeLabel: "USE CODE", code: "100MPH", href: "https://naturaltein.in/", linkDescription: "Code 100MPH. Visit Naturaltein" },
+      { logo: { src: "/assets/apx-official.png", alt: "APX Collection", width: 720, height: 406 }, wideLogo: true, role: "Pathak100MPH CRICKET GEAR PARTNER", name: "APX Collection", codeLabel: "USE CODE", code: "100MPH", href: "https://stag.global/collections/cricket", linkDescription: "Code 100MPH. Visit cricket collection" },
+    ],
+  },
+};

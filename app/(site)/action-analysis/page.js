@@ -1,8 +1,8 @@
-import PageHero from "../page-hero";
+import PageHero from "../../page-hero";
 import Link from "next/link";
-import Partners from "../partners";
-import CommunityReels from "../community-reels";
-import { seo } from "../seo";
+import Partners from "../../partners";
+import CommunityReels from "../../community-reels";
+import { seo } from "../../seo";
 
 export const metadata = seo("/action-analysis/", "Bowling Action Analysis with Ankit Pathak | ₹499", "Personal fast bowling action analysis with Ankit Pathak on Google Meet for ₹499. Share your videos and get guidance on your next steps.");
 

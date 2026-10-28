@@ -1,8 +1,4 @@
-import Script from "next/script";
 import { DM_Sans, Manrope } from "next/font/google";
-import "./globals.css";
-import SiteShell from "./site-shell";
-import SiteInteractions from "./site-interactions";
 import { SITE_URL } from "./seo";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
@@ -15,15 +11,11 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
 };
 
+// Public pages get the site header/footer from app/(site)/layout.js; /admin has its own.
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${manrope.variable}`}>
-      <body>
-        <SiteShell>{children}</SiteShell>
-        {/* Only the callback form uses this; site-interactions reads it via window.libphonenumber?. */}
-        <Script src="/assets/libphonenumber-max.js" strategy="lazyOnload" />
-        <SiteInteractions />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
