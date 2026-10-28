@@ -174,7 +174,7 @@ export default function CountryOptions() {
                 data-country-name="Cayman Islands"
                 data-dial="+1"
                 value="KY"
-              >
+              > 
                 {"Cayman Islands (+1)"}
               </option>
               <option

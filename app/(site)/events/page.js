@@ -1,66 +1,53 @@
-import Image from "next/image";
 import Link from "next/link";
 import Partners from "../../partners";
 import "../../home.css";
-import { seo } from "../../seo";
+import { getContent, pageMetadata } from "../../lib/content";
+import { Faq } from "../../content/sections";
+import { Img, T } from "../../content/text";
 
-export const metadata = seo("/events/", "Pathak100MPH Events | Speed Contest & Upcoming Events", "Follow upcoming Pathak100MPH events, including the Speed Contest. Dates, participation criteria and registration details will be announced once confirmed.");
+export const generateMetadata = () => pageMetadata("events");
 
-export default function Events() {
+export default async function Events() {
+  const [c, { header }] = await Promise.all([getContent("events"), getContent("global")]);
   return (
     <main id="main" className="events-page">
       <section className="wrap page-hero">
-        <p className="eyebrow reveal"><span className="brand-name">Pathak100MPH</span> EVENTS</p>
-        <h1 className="reveal">New challenges.<br /><span>More to chase.</span></h1>
+        <p className="eyebrow reveal"><T v={c.hero.eyebrow} brand /></p>
+        <h1 className="reveal">{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></h1>
         <p className="lede reveal">
-          Follow upcoming <span className="brand-name">Pathak100MPH</span> events, starting with our Speed Contest. Dates, participation criteria and registration details will be announced here once confirmed.
+          <T v={c.hero.text} brand />
         </p>
         <div className="events-grid">
           <article className="event speed">
-            <span className="event-number">01 / UPCOMING</span>
+            <span className="event-number">{c.featured.number}</span>
             <div aria-hidden="true" className="speed-graphic">100<span>MPH</span></div>
             <div>
-              <span className="pill">COMING SOON</span>
-              <h3><span className="brand-name">Pathak100MPH</span><br />Speed Contest</h3>
+              <span className="pill">{c.featured.badge}</span>
+              <h3><T v={c.featured.heading} brand /></h3>
             </div>
           </article>
-          {["02", "03"].map(number => (
-            <article className="event pending" key={number}>
-              <span className="event-number">{number} / UPCOMING</span>
+          {c.upcoming.map((event, i) => (
+            <article className="event pending" key={i}>
+              <span className="event-number">{event.number}</span>
               <div aria-hidden="true" className="event-orbit" />
               <div>
-                <span className="pill">COMING SOON</span>
-                <h3>Next event<br /><span>To be announced</span></h3>
+                <span className="pill">{event.badge}</span>
+                <h3>{event.heading}<br /><span>{event.headingAccent}</span></h3>
               </div>
             </article>
           ))}
         </div>
       </section>
-      <section className="wrap seo-faq">
-        <div>
-          <p className="eyebrow">BEFORE YOUR NEXT STEP</p>
-          <h2>Clear answers.<br />Confident decisions.</h2>
-        </div>
-        <div>
-          <details>
-            <summary>Is the Pathak100MPH Speed Contest open for registration?</summary>
-            <p>The Speed Contest is coming soon. A confirmed date, entry criteria and registration details have not yet been announced.</p>
-          </details>
-          <details>
-            <summary>Are the other upcoming events confirmed?</summary>
-            <p>Two more events are being planned. We will share their names and details once confirmed.</p>
-          </details>
-        </div>
-      </section>
+      <Faq v={c.faq} />
       <Partners current />
       <section className="closing wrap reveal">
         <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
-          <Image alt="Pathak100MPH" height="170" src="/assets/logo.webp" width="367" />
+          <Img v={header.logo} />
         </Link>
-        <h2>Keep building.<br />Your moment will come.</h2>
-        <p>Explore how you can train with <span className="brand-name">Pathak100MPH</span> today.</p>
+        <h2><T v={c.closing.heading} /></h2>
+        <p><T v={c.closing.text} brand /></p>
         <div className="actions">
-          <Link className="button" href="/assessment-trial/">Explore training<span aria-hidden="true">↗</span></Link>
+          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗</span></Link>
         </div>
       </section>
     </main>

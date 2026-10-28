@@ -1,26 +1,24 @@
 import Link from "next/link";
+import { T } from "./content/text";
 
-const reels = ["DbPxoFiyA-5", "Da0KkjAy0Rh", "Da2wvF5ye3p"];
-
-export default function CommunityReels({ eyebrow, title, subtitle }) {
+// Instagram reels rail: { eyebrow, heading, hint, items: [{ reelId }] }.
+export default function CommunityReels({ v }) {
   return (
     <section className="wrap reel-section">
       <div className="section-head">
         <div>
-          <p className="eyebrow">{eyebrow}</p>
+          <p className="eyebrow">{v.eyebrow}</p>
           <h2>
-            {title}
-            <br />
-            {subtitle}
+            <T v={v.heading} />
           </h2>
         </div>
-        <span className="swipe-hint">From the Pathak100MPH community</span>
+        <span className="swipe-hint">{v.hint}</span>
       </div>
-      <div aria-label={eyebrow} className="reel-rail" tabIndex={0}>
-        {reels.map((id) => {
-          const url = `https://www.instagram.com/reel/${id}/`;
+      <div aria-label={v.eyebrow} className="reel-rail" tabIndex={0}>
+        {v.items.map(({ reelId }, i) => {
+          const url = `https://www.instagram.com/reel/${reelId}/`;
           return (
-            <article className="native-reel" key={id}>
+            <article className="native-reel" key={i}>
               <blockquote
                 className="instagram-media"
                 data-instgrm-permalink={url}

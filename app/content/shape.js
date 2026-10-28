@@ -3,8 +3,10 @@
 
 const MAX_TEXT = 5000;
 const MAX_ITEMS = 50;
-const SAFE_HREF = /^(\/(?!\/)|#[\w-]*$|https?:\/\/[^\s"'<>]+$|tel:\+?[\d\s-]+$|mailto:[^\s"'<>]+$)/;
+export const SAFE_HREF = /^(\/(?!\/)|#[\w-]*$|https?:\/\/[^\s"'<>]+$|tel:\+?[\d\s-]+$|mailto:[^\s"'<>]+$)/;
 const LOCAL_IMAGE = /^\/assets\/[\w.-]+$/;
+// Inline links inside text: [label](/path)
+export const INLINE_LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g;
 const EMBED_ID = /^[\w-]{5,40}$/;
 
 // Card colours map to the existing .art-N classes.
@@ -26,7 +28,11 @@ function checkString(key, value, template) {
     const prefix = mediaPrefix();
     if (!LOCAL_IMAGE.test(value) && !(prefix && value.startsWith(prefix) && !value.includes(".."))) return "must be an image from the media library";
   }
+  for (const [, , target] of value.matchAll(INLINE_LINK)) {
+    if (!SAFE_HREF.test(target)) return `has an unsafe link target "${target}"`;
+  }
   if (key === "color" && !Object.hasOwn(COLORS, value)) return `must be one of: ${Object.keys(COLORS).join(", ")}`;
+  if (key === "platform" && !["youtube", "instagram"].includes(value)) return "must be youtube or instagram";
   if (key === "canonical" && value && !/^\/[\w\-/]*$/.test(value)) return "must be a path on this site, like /blogs/";
   if (/(^|[a-z])(videoId|reelId)$/i.test(key) || key === "id") {
     if (!EMBED_ID.test(value)) return "must be a YouTube or Instagram id like -iHp0AR06XE";
