@@ -1,9 +1,26 @@
-import { ROUTES, SITE_URL } from "./seo";
+import { PAGES } from "./content/defaults";
+import { sql } from "./lib/db";
+import { SITE_URL } from "./seo";
 
-export default function sitemap() {
-  return ROUTES.map((path) => ({
-    url: SITE_URL + path,
-    changeFrequency: path === "/blogs/" ? "weekly" : "monthly",
-    priority: path === "/" ? 1 : 0.8,
-  }));
+// Published, indexable pages only. Rebuilt whenever a page is published or taken offline.
+export default async function sitemap() {
+  let pages;
+  try {
+    pages = await sql`
+      select p.slug, p.route, p.published_at, r.seo from pages p
+      join revisions r on r.id = p.published_revision_id
+      where p.status = 'published' and p.route like '/%'`;
+    pages = pages.filter((p) => !p.seo?.noindex);
+  } catch (error) {
+    console.error("[cms] sitemap falling back to built-in pages:", error.message);
+    pages = Object.values(PAGES).filter((p) => p.route);
+  }
+  return pages
+    .sort((a, b) => a.route.localeCompare(b.route))
+    .map((page) => ({
+      url: SITE_URL + page.route,
+      ...(page.published_at && { lastModified: page.published_at }),
+      changeFrequency: page.route === "/blogs/" ? "weekly" : "monthly",
+      priority: page.route === "/" ? 1 : 0.8,
+    }));
 }

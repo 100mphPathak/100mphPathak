@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test",
+    "migrate": "node --env-file=.env.local scripts/migrate.mjs",
+    "seed": "node --env-file=.env.local scripts/seed.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1158.0",

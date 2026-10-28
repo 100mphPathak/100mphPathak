@@ -62,7 +62,7 @@ export async function pageMetadata(slug) {
   const metadata = seo(s.canonical || page.route, s.title || g.title, s.description || g.description, {
     ogTitle: s.ogTitle,
     ogDescription: s.ogDescription,
-    ogImage: s.ogImage || g.ogImage,
+    ogImage: s.ogImage?.src ? s.ogImage : g.ogImage,
   });
   if (s.noindex || page.preview) metadata.robots = { index: false, follow: !page.preview };
   return metadata;
