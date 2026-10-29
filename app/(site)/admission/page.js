@@ -22,7 +22,6 @@ export default async function AssessmentTrial() {
         description={<Text v={c.hero.text} brand />}
         videoTitle={c.hero.videoTitle}
         videoId={c.hero.videoId}
-        showYoutubeLink={false}
         actions={<a className="button" href={c.hero.button.href} rel="noopener" target="_blank">{c.hero.button.label}{" ↗"}</a>}
         trust={c.hero.trustLine}
       />

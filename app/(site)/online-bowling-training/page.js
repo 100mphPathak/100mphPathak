@@ -21,7 +21,6 @@ export default async function OnlineTraining() {
         title={<>{" "}{c.hero.heading}<br /><span>{c.hero.headingAccent}</span>{" "}</>}
         videoTitle={c.hero.videoTitle}
         videoId={c.hero.videoId}
-        showYoutubeLink={false}
         description={<>{" "}{c.hero.text}{" "}</>}
         actions={
           <a className="button" href={c.hero.button.href}>

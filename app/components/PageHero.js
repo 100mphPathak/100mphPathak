@@ -1,4 +1,3 @@
-import Link from "next/link";
 import HeroCarousel from "./HeroCarousel";
 export default function PageHero({
   eyebrow,
@@ -12,7 +11,6 @@ export default function PageHero({
   caption,
   labelIsH1 = false,
   slides,
-  showYoutubeLink = true,
 }) {
   const Title = labelIsH1 ? "div" : "h1";
   return (
@@ -23,7 +21,9 @@ export default function PageHero({
         {description && <p className="lede reveal">{description}</p>}
         {actions && <div className="hero-actions">{actions}</div>}
       </div>
-      
+      {slides ? (
+        <HeroCarousel slides={slides} />
+      ) : (
         <div className="vsl-player">
           <div className="vsl-frame">
             <iframe
@@ -35,10 +35,9 @@ export default function PageHero({
               title={videoTitle}
             />
           </div>
-        
           {videoActions && <div className="hero-actions">{videoActions}</div>}
         </div>
-    
+      )}
       {trust && <div className="service-trust">{trust}</div>}
       {caption && <div className="hero-caption">{caption}</div>}
     </section>
