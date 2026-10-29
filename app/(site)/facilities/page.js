@@ -1,9 +1,9 @@
-import PageHero from "../../page-hero";
+import PageHero from "../../components/PageHero";
 import Link from "next/link";
-import Partners from "../../partners";
+import Partners from "../../components/Partners";
 import { getContent, pageMetadata } from "../../lib/content";
-import { Faq } from "../../content/sections";
-import { Img, T } from "../../content/text";
+import { Faq } from "../../components/Faq";
+import { Img, Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("facilities");
 
@@ -17,7 +17,7 @@ export default async function Facilities() {
           title={<>{" "}{c.hero.heading}<br /><span>{c.hero.headingAccent}</span>{" "}</>}
           videoTitle={c.hero.videoTitle}
           videoId={c.hero.videoId}
-          description={<>{" "}<T v={c.hero.text} brand />{" "}</>}
+          description={<>{" "}<Text v={c.hero.text} brand />{" "}</>}
           actions={
             <>
               {" "}
@@ -33,7 +33,7 @@ export default async function Facilities() {
             <div>
               <p className="eyebrow">{c.facilities.eyebrow}</p>
               <h2>
-                <T v={c.facilities.heading} />
+                <Text v={c.facilities.heading} />
               </h2>
             </div>
             <p>
@@ -57,7 +57,7 @@ export default async function Facilities() {
             <div>
               <p className="eyebrow">{c.gallery.eyebrow}</p>
               <h2>
-                <T v={c.gallery.heading} />
+                <Text v={c.gallery.heading} />
               </h2>
             </div>
             <p>{c.gallery.text}</p>
@@ -93,7 +93,7 @@ export default async function Facilities() {
             <Img v={header.logo} />
           </Link>
           <h2>
-            <T v={c.closing.heading} />
+            <Text v={c.closing.heading} />
           </h2>
           <p>
             {c.closing.text}

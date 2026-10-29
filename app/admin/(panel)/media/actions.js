@@ -7,10 +7,10 @@ import { sql } from "../../../lib/db";
 import { audit, authorize } from "../../../lib/session";
 import { deleteObject, publicUrl, putImage, sniffImage } from "../../../lib/storage";
 
-const MAX_UPLOAD = 4 * 1024 * 1024; // Vercel's request body limit is 4.5 MB
+const MAX_UPLOAD = 4 * 1024 * 1024; 
 const PER_PAGE = 48;
 
-// Images that ship with the website (public/assets), found by walking the default content.
+
 function builtInImages() {
   const found = new Map();
   const walk = (v) => {

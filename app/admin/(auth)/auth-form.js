@@ -1,11 +1,13 @@
 "use client";
-
 import { useActionState } from "react";
 
-// fields: [{ name, label, type, autoComplete }]
+
 export default function AuthForm({ action, fields, submit, hidden = {} }) {
+
   const [state, formAction, pending] = useActionState(action, {});
+
   return (
+
     <form action={formAction} noValidate={false}>
       {state.error && <p className="notice err" role="alert">{state.error}</p>}
       {state.ok && <p className="notice ok" role="status">{state.ok}</p>}
@@ -29,5 +31,6 @@ export default function AuthForm({ action, fields, submit, hidden = {} }) {
         {pending ? "Please wait…" : submit}
       </button>
     </form>
+    
   );
 }

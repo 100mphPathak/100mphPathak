@@ -6,7 +6,7 @@ export default {
     text: "Looking for a cricket academy with hostel facilities? Explore Pathak100MPH’s 5-acre training environment and residential support in Delhi NCR. Admission begins with an assessment.",
     videoId: "-iHp0AR06XE",
     videoTitle: "Explore our academy | Pathak100MPH",
-    button: { label: "Explore admission assessments", href: "/assessment-trial/" },
+    button: { label: "Explore admission assessments", href: "/admission/" },
   },
   facilities: {
     eyebrow: "BUILT AROUND YOUR DEVELOPMENT",

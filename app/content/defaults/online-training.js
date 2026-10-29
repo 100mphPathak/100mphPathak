@@ -22,12 +22,13 @@ export default {
     eyebrow: "ONLINE FAST BOWLING TRAINING",
     heading: "Train anywhere.",
     headingAccent: "Improve with direction.",
-    text: "Personalised online fast bowling training with Coach Ankit Pathak’s team. Regular drills, video analysis and monthly live guidance, coordinated through your private WhatsApp group.",
+    text: "Personalised online fast bowling training with Coach Ankit Pathak’s team. Regular bowling drills and video analysis, coordinated through your private WhatsApp group.",
     videoId: "wzldKpk_c2Y",
     videoTitle: "How online training works | Pathak100MPH",
     button: { label: "Choose your training plan", href: "#plans" },
   },
   experiences: {
+    show: false, // hidden for now at the client's request
     eyebrow: "PLAYER EXPERIENCES",
     heading: "Online training.\nIn their own words.",
     hint: "From the Pathak100MPH community",

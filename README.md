@@ -10,9 +10,9 @@ npm run dev
 ```
 
 - Homepage: http://localhost:3000/
-- Assessment trials: http://localhost:3000/assessment-trial
-- Coach profile: http://localhost:3000/ankit-pathak
-- Online bowling training: http://localhost:3000/online-training
+- Admission (assessment): http://localhost:3000/admission/
+- Coach profile: http://localhost:3000/best-fast-bowling-coach/
+- Online bowling training: http://localhost:3000/online-bowling-training/
 - Action Analysis: http://localhost:3000/action-analysis
 - Facilities: http://localhost:3000/facilities
 - Events: http://localhost:3000/events
@@ -21,22 +21,35 @@ npm run dev
 Production: `npm run build`, then `npm start`.
 Smoke check with the server running: `node scripts/check.mjs`.
 
-## Source
+## Where things are
 
-- `app/page.js`: full homepage.
-- `app/scholarship/page.js`: eligibility criteria, sponsorship waiting list, reassessment terms, FAQs, and ₹5,000 registration preview.
-- `app/action-analysis/page.js`: session details, three-step process, testimonials, FAQs, partners, and preview booking dialog.
-- `app/online-training/page.js`: updated coaching introduction and video, YouTube/Instagram player feedback, three enrolment plans, benefits, workflow, process, FAQs, and partners.
-- `app/community-reels.js`: shared Instagram testimonials.
-- `app/ankit-pathak/page.js`: updated coach introduction, portrait biography, approach, results, coaching FAQs, partners, and ₹1,199 assessment links.
-- `app/player-results.js`: shared player results section.
-- `app/assessment-trial/page.js`: online assessment hero, updated video, process, YouTube testimonials, FAQs, partners, and closing action.
-- `app/assessment-trial/assessment-booking.js`: ₹1,199 Google Meet assessment details and unconnected booking preview.
-- `app/site-shell.js`: shared header, mobile menu, footer, callback form, and WhatsApp link.
-- `app/site-interactions.js`: route-aware event setup and cleanup, animations, menus, phone validation, keyboard rails, and responsive process steps.
-- `app/partners.js`: shared sponsor and partner section.
-- `app/globals.css`: reference responsive visual styles and Tailwind utilities.
-- `public/assets/`: original public imagery and phone validation library.
+**Pages** (each folder name is the page's address; Next.js requires the file to be called `page.js`):
+
+- `app/(site)/(home)/page.js`: home page (`/`)
+- `app/(site)/best-fast-bowling-coach/page.js`: Ankit Pathak coach page
+- `app/(site)/admission/page.js` (+ `assessment-booking.js`): admission and online assessment
+- `app/(site)/online-bowling-training/page.js`: online training plans
+- `app/(site)/action-analysis/page.js`, `scholarship/`, `facilities/`, `events/`, `blogs/`: the other pages
+- `app/(site)/layout.js`: wraps every public page with Navbar, Footer and the pop-ups
+- `app/admin/`: the CMS admin panel
+
+**Components** (`app/components/`), shared building blocks:
+
+- `Navbar.js`: skip link, announcement bar, header menu, mobile menu
+- `Footer.js`: site footer
+- `CallbackForm.js`, `CallbackPrompt.js`, `WhatsAppButton.js`: call-back pop-up, its reminder, floating WhatsApp button
+- `PageHero.js`, `HeroCarousel.js`: top section of inner pages, photo carousel
+- `PlayerResults.js`, `Partners.js` (`Partners` and `HomePartners`), `CommunityReels.js`, `VideoRail.js`
+- `Faq.js` (`Faq`, `FaqList`), `Steps.js`, `BookingDialog.js`
+- `Text.js`: `<Text>` renders CMS text (line breaks, links, brand name); `<Img>` renders CMS images
+- `SiteInteractions.js`: browser behaviour (menus, animations, carousels, form validation)
+
+**Content and styles**
+
+- `app/content/defaults/*.js`: built-in text and images for each page (also the CMS field list)
+- `app/lib/`: database, auth, permissions, content loading
+- `app/globals.css`, `app/home.css`: site styles
+- `public/assets/`: images and the phone validation library
 
 References: https://sam.harsh-4844.chatgpt.site/, https://sam.harsh-4844.chatgpt.site/assessment-trial/, https://sam.harsh-4844.chatgpt.site/ankit-pathak/, and https://sam.harsh-4844.chatgpt.site/online-training/.
 

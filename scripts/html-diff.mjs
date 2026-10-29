@@ -4,7 +4,7 @@
 // Usage: npm run build && node scripts/html-diff.mjs [page ...]
 import { readFile, readdir } from "node:fs/promises";
 
-const base = new URL("../.baseline/", import.meta.url);
+const base = new URL(`../${process.env.BASELINE ?? ".baseline"}/`, import.meta.url);
 const built = new URL("../.next/server/app/", import.meta.url);
 
 const normalize = (html) =>

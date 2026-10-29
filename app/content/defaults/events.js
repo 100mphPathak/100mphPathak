@@ -21,6 +21,6 @@ export default {
   closing: {
     heading: "Keep building.\nYour moment will come.",
     text: "Explore how you can train with Pathak100MPH today.",
-    button: { label: "Explore training", href: "/assessment-trial/" },
+    button: { label: "Explore training", href: "/admission/" },
   },
 };

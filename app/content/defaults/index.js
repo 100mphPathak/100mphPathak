@@ -42,14 +42,14 @@ export const PAGES = {
   "ankit-pathak": {
     slug: "ankit-pathak",
     title: "Ankit Pathak",
-    route: "/ankit-pathak/",
+    route: "/best-fast-bowling-coach/",
     content: ankitPathak,
     seo: seo("Ankit Pathak | Best Fast Bowling Coach for Your Game", "Looking for the best fast bowling coach for your game? Meet Ankit Pathak: 13+ years of experience and an approach built around technique, preparation and mindset."),
   },
   "assessment-trial": {
     slug: "assessment-trial",
     title: "Admission (assessment)",
-    route: "/assessment-trial/",
+    route: "/admission/",
     content: assessmentTrial,
     seo: seo("Cricket Academy Admission assessment & Online Assessment | Pathak100MPH", "Book your ₹1,199 personal online assessment with Ankit Pathak. Share your bowling videos, meet on Google Meet and discuss your development or academy admission."),
   },
@@ -63,7 +63,7 @@ export const PAGES = {
   "online-training": {
     slug: "online-training",
     title: "Online Training",
-    route: "/online-training/",
+    route: "/online-bowling-training/",
     content: onlineTraining,
     seo: seo("Online Fast Bowling Training | Pathak100MPH", "Personalised online fast bowling training with Coach Ankit Pathak’s team. Regular drills, video analysis and monthly live guidance through your private WhatsApp group."),
   },

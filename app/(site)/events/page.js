@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Partners from "../../partners";
+import Partners from "../../components/Partners";
 import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
-import { Faq } from "../../content/sections";
-import { Img, T } from "../../content/text";
+import { Faq } from "../../components/Faq";
+import { Img, Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("events");
 
@@ -12,10 +12,10 @@ export default async function Events() {
   return (
     <main id="main" className="events-page">
       <section className="wrap page-hero">
-        <p className="eyebrow reveal"><T v={c.hero.eyebrow} brand /></p>
-        <h1 className="reveal">{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></h1>
+        <p className="eyebrow reveal"><Text v={c.hero.eyebrow} brand /></p>
+        <h1 className="reveal hero-title">{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></h1>
         <p className="lede reveal">
-          <T v={c.hero.text} brand />
+          <Text v={c.hero.text} brand />
         </p>
         <div className="events-grid">
           <article className="event speed">
@@ -23,7 +23,7 @@ export default async function Events() {
             <div aria-hidden="true" className="speed-graphic">100<span>MPH</span></div>
             <div>
               <span className="pill">{c.featured.badge}</span>
-              <h3><T v={c.featured.heading} brand /></h3>
+              <h3><Text v={c.featured.heading} brand /></h3>
             </div>
           </article>
           {c.upcoming.map((event, i) => (
@@ -44,8 +44,8 @@ export default async function Events() {
         <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />
         </Link>
-        <h2><T v={c.closing.heading} /></h2>
-        <p><T v={c.closing.text} brand /></p>
+        <h2><Text v={c.closing.heading} /></h2>
+        <p><Text v={c.closing.text} brand /></p>
         <div className="actions">
           <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗</span></Link>
         </div>

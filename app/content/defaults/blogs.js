@@ -22,6 +22,6 @@ export default {
   closing: {
     heading: "Put understanding\ninto practice.",
     text: "Bring personal guidance into your training.",
-    button: { label: "Explore online training", href: "/online-training/" },
+    button: { label: "Explore online training", href: "/online-bowling-training/" },
   },
 };

@@ -1,9 +1,11 @@
-import PageHero from "../../page-hero";
-import Partners from "../../partners";
+import PageHero from "../../components/PageHero";
+import Partners from "../../components/Partners";
 import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
-import { BookingDialog, FaqList, Steps } from "../../content/sections";
-import { Img, T } from "../../content/text";
+import BookingDialog from "../../components/BookingDialog";
+import { FaqList } from "../../components/Faq";
+import Steps from "../../components/Steps";
+import { Img, Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("scholarship");
 
@@ -28,7 +30,7 @@ export default async function Scholarship() {
           <div className="section-head reveal">
             <div>
               <p className="eyebrow">{c.standard.eyebrow}</p>
-              <h2><T v={c.standard.heading} /></h2>
+              <h2><Text v={c.standard.heading} /></h2>
             </div>
             <p>{c.standard.text}</p>
           </div>
@@ -41,7 +43,7 @@ export default async function Scholarship() {
             ))}
           </div>
         </section>
-        <Steps v={c.steps} />
+        <Steps variant="journey" v={c.steps} />
         <section className="wrap two-notes">
           {c.notes.map((note, i) => (
             <article className="note reveal" key={i}>
@@ -57,7 +59,7 @@ export default async function Scholarship() {
           <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
             <Img v={header.logo} />
           </a>
-          <h2><T v={c.closing.heading} /></h2>
+          <h2><Text v={c.closing.heading} /></h2>
           <p>{c.closing.text}</p>
           <div className="actions">
             <button className="button" data-book={c.bookingDialog.heading}>{c.closing.button}{" "}<span>↗</span>

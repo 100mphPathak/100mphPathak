@@ -25,6 +25,7 @@ function refresh(slug) {
   updateTag(`page:${slug}`);
   if (!page.route) revalidatePath("/", "layout");
   else for (const route of [page.route, ...(page.alsoRevalidate ?? [])]) revalidatePath(route);
+  updateTag("sitemap");
   revalidatePath("/sitemap.xml");
 }
 

@@ -1,4 +1,5 @@
 import { DM_Sans, Manrope } from "next/font/google";
+import "./globals.css";
 import { SITE_URL } from "./seo";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });

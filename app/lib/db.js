@@ -1,6 +1,7 @@
 import { neon, Pool } from "@neondatabase/serverless";
 
 // One-shot queries over HTTP: sql`select ... where id = ${id}` (values are always parameterised).
+// Pages cache their content through unstable_cache (lib/content.js), which publishing clears by tag.
 export const sql = neon(process.env.DATABASE_URL ?? "postgresql://missing@localhost/missing");
 
 // Multi-statement transactions (publish, restore) need a real connection.

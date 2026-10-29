@@ -1,15 +1,21 @@
+import { unstable_cache } from "next/cache";
 import { PAGES } from "./content/defaults";
 import { sql } from "./lib/db";
 import { SITE_URL } from "./seo";
 
-// Published, indexable pages only. Rebuilt whenever a page is published or taken offline.
+const publishedPages = unstable_cache(
+  () => sql`
+    select p.slug, p.route, p.published_at, r.seo from pages p
+    join revisions r on r.id = p.published_revision_id
+    where p.status = 'published' and p.route like '/%'`,
+  ["sitemap"],
+  { tags: ["sitemap"] },
+);
+
 export default async function sitemap() {
   let pages;
   try {
-    pages = await sql`
-      select p.slug, p.route, p.published_at, r.seo from pages p
-      join revisions r on r.id = p.published_revision_id
-      where p.status = 'published' and p.route like '/%'`;
+    pages = await publishedPages();
     pages = pages.filter((p) => !p.seo?.noindex);
   } catch (error) {
     console.error("[cms] sitemap falling back to built-in pages:", error.message);

@@ -12,6 +12,14 @@ export default {
     // Image uploads go through a server action; 4 MB file + multipart overhead (Vercel caps bodies at 4.5 MB).
     serverActions: { bodySizeLimit: "4.4mb" },
   },
+  // Old addresses keep working (and pass their search ranking) after the client's URL changes.
+  async redirects() {
+    return [
+      { source: "/ankit-pathak/", destination: "/best-fast-bowling-coach/", permanent: true },
+      { source: "/assessment-trial/", destination: "/admission/", permanent: true },
+      { source: "/online-training/", destination: "/online-bowling-training/", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

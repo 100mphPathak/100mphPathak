@@ -36,19 +36,25 @@ p {
 }
 h1,
 h2,
-h3 {
+h3,
+.hero-title,
+.modal-title,
+.menu-title {
   font-family: var(--font-manrope), Arial, sans-serif;
   line-height: 1.08;
   letter-spacing: -0.055em;
   font-weight: 650;
 }
-h1 {
+h1,
+.hero-title {
   font-size: clamp(48px, 6.4vw, 88px);
 }
-h2 {
+h2,
+.modal-title {
   font-size: clamp(32px, 4vw, 54px);
 }
-h3 {
+h3,
+.menu-title {
   font-size: 25px;
   letter-spacing: -0.035em;
 }
@@ -320,12 +326,12 @@ nav a span {
 .hero-intro {
   position: relative;
 }
-.home-hero h1 {
+.home-hero .hero-title {
   font-size: clamp(66px, 8.9vw, 120px);
   line-height: 1.01;
   letter-spacing: -0.075em;
 }
-.home-hero h1 span {
+.home-hero .hero-title span {
   color: #858b95;
 }
 .hero-side {
@@ -521,8 +527,9 @@ nav a span {
   margin-bottom: 35px;
 }
 .section-head > p {
-  max-width: 310px;
+  max-width: 520px;
   font-size: 13px;
+  margin-top: 15px;
   line-height: 1.8;
   padding-bottom: 4px;
 }
@@ -1025,7 +1032,7 @@ nav a span {
   text-align: center;
   margin-bottom: 80px;
 }
-.page-hero h1 span {
+.page-hero .hero-title span {
   color: #858b95;
 }
 .page-hero > .lede {
@@ -1476,7 +1483,7 @@ dialog[open] {
   font-weight: 400;
   z-index: 2;
 }
-.modal-top h2,
+.modal-top .modal-title,
 dialog h2 {
   font-size: 40px;
 }
@@ -1641,7 +1648,7 @@ form .button {
     gap: 50px;
   }
   .coach-copy h2 {
-    font-size: 39px;
+    font-size: 19px;
   }
   .coach-photo {
     height: 440px;
@@ -1685,7 +1692,7 @@ form .button {
   .facts strong {
     font-size: 33px;
   }
-  .page-hero h1 {
+  .page-hero .hero-title {
     font-size: 67px;
   }
 }
@@ -1754,7 +1761,7 @@ form .button {
     letter-spacing: 0.12em;
     margin-bottom: 21px;
   }
-  .home-hero h1 {
+  .home-hero .hero-title {
     font-size: clamp(57px, 12.8vw, 90px);
     letter-spacing: -0.07em;
   }
@@ -2041,7 +2048,7 @@ form .button {
     padding-top: 45px;
     margin-bottom: 60px;
   }
-  .page-hero h1 {
+  .page-hero .hero-title {
     font-size: 44px;
     letter-spacing: -0.06em;
   }
@@ -2218,7 +2225,7 @@ form .button {
     padding: 32px 24px;
     border-radius: 17px;
   }
-  .modal-top h2,
+  .modal-top .modal-title,
   dialog h2 {
     font-size: 34px;
   }
@@ -2448,8 +2455,8 @@ nav a {
     0 3px 8px #293b5310;
   color: #59677d;
 }
-.home-hero h1 span,
-.page-hero h1 span {
+.home-hero .hero-title span,
+.page-hero .hero-title span {
   color: #7b8ba3;
   background: linear-gradient(
     175deg,
@@ -3184,7 +3191,7 @@ select {
   .brand { width: 76px; }
 }
 /* VERSION 3 — service clarity and conversion content */
-.home-hero h1 {
+.home-hero .hero-title {
   font-size: clamp(52px, 6.1vw, 84px);
   line-height: 1.06;
   max-width: 960px;
@@ -3206,7 +3213,7 @@ select {
 .hero-side .text-link {
   white-space: nowrap;
 }
-.page-hero h1 {
+.page-hero .hero-title {
   font-size: clamp(43px, 5.4vw, 74px);
 }
 .post-video-cta {
@@ -3427,7 +3434,7 @@ select {
   visibility: hidden;
 }
 @media (max-width: 760px) {
-  .home-hero h1 {
+  .home-hero .hero-title {
     font-size: clamp(38px, 10vw, 64px);
     letter-spacing: -0.065em;
   }
@@ -3443,7 +3450,7 @@ select {
     font-size: 9px;
     gap: 7px;
   }
-  .page-hero h1 {
+  .page-hero .hero-title {
     font-size: 40px;
   }
   .post-video-cta {
@@ -3563,7 +3570,7 @@ select {
 .hero-intro {
   padding-top: 0;
 }
-.hero-intro h1 {
+.hero-intro .hero-title {
   max-width: 1040px;
 }
 .glass-link {
@@ -4068,7 +4075,7 @@ td:first-child {
     letter-spacing: 0.08em;
     padding: 9px 12px;
   }
-  .home-hero h1 {
+  .home-hero .hero-title {
     font-size: clamp(35px, 8vw, 56px);
   }
   .equal-paths {
@@ -4278,7 +4285,7 @@ main > section {
   align-items: center;
   text-align: center;
 }
-.hero-intro h1 {
+.hero-intro .hero-title {
   margin-inline: auto;
   max-width: 1100px;
 }
@@ -5006,7 +5013,7 @@ footer {
   margin-bottom: 9px;
   display: block;
 }
-.menu-support h3 {
+.menu-support .menu-title {
   font-size: 23px;
 }
 .menu-support p {
@@ -5147,7 +5154,7 @@ footer {
     margin-top: 18px;
     padding-top: 18px;
   }
-  .menu-support h3 {
+  .menu-support .menu-title {
     font-size: 21px;
   }
 }
@@ -5277,7 +5284,7 @@ footer {
   justify-content: center;
   gap: 13px;
   min-height: 44px;
-  padding: 12px 22px;
+  padding: 8px 8px;
   border: 1px solid #cbdcff;
   border-radius: 999px;
   background: linear-gradient(145deg, #eef5ff, #dce9ff);
@@ -5402,7 +5409,7 @@ body .coach-copy .eyebrow,
 body .section-head .eyebrow {
   font-size: 13px;
 }
-body :is(.muted, .home-hero h1 span, .page-hero h1 span) {
+body :is(.muted, .home-hero .hero-title span, .page-hero .hero-title span) {
   color: #526783;
   background: none;
   -webkit-text-fill-color: currentColor;
@@ -5851,8 +5858,8 @@ body .page-hero {
 body .home-hero {
   margin-bottom: 0;
 }
-body .home-hero h1,
-body .page-hero h1 {
+body .home-hero .hero-title,
+body .page-hero .hero-title {
   font-size: clamp(34px, 3.7vw, 52px);
   line-height: 1.12;
   letter-spacing: -0.055em;
@@ -5917,7 +5924,7 @@ body .page-hero .events-grid {
     justify-content: flex-start;
     margin: 20px 0 0;
   }
-  body .home-hero .hero-intro h1 {
+  body .home-hero .hero-intro .hero-title {
     margin: 0;
   }
   body .home-hero .vsl-player,
@@ -5954,8 +5961,8 @@ body .page-hero .events-grid {
   body .home-hero {
     margin-bottom: 0;
   }
-  body .home-hero h1,
-  body .page-hero h1 {
+  body .home-hero .hero-title,
+  body .page-hero .hero-title {
     font-size: clamp(22px, 7.6vw, 40px);
     line-height: 1.13;
   }
@@ -5995,8 +6002,8 @@ body .page-hero .events-grid {
   line-height: 1.7;
   margin-top: 16px;
 }
-body .home-hero h1,
-body .page-hero h1 {
+body .home-hero .hero-title,
+body .page-hero .hero-title {
   font-size: clamp(34px, 3.45vw, 49px);
 }
 .seo-faq {
@@ -6052,8 +6059,8 @@ body .page-hero h1 {
   }
 }
 @media (max-width: 760px) {
-  body .home-hero h1,
-  body .page-hero h1 {
+  body .home-hero .hero-title,
+  body .page-hero .hero-title {
     font-size: clamp(22px, 7.6vw, 40px);
   }
   .home-hero .lede {
@@ -6187,7 +6194,7 @@ body footer.footer-v13 {
     order: 1;
     align-self: center;
   }
-  .mobile-video-first .hero-copy > h1 {
+  .mobile-video-first .hero-copy > .hero-title {
     order: 2;
   }
   .mobile-video-first .hero-copy > .lede {
@@ -6466,4 +6473,191 @@ body .header button.nav-enquire:is(:hover, :focus, :active) {
 }
 body .menu-contact a {
   box-shadow: none;
+}
+
+/* SEO headings placed inside FAQ/step summaries and hero labels keep the look of their container. */
+.inline-heading {
+  display: inline;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-transform: inherit;
+}
+
+/* Coach page hero image carousel (app/hero-carousel.js). Native scroll-snap; JS only adds autoplay and controls. */
+.carousel-frame {
+  position: relative;
+  background: #e8edf3;
+}
+.carousel-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.carousel-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.carousel-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+body .page-carousel .carousel-controls button.carousel-dot,
+body .page-carousel .carousel-controls button.carousel-arrow {
+  min-height: 0;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid #c9d6e4;
+  background: #fff;
+  background-image: none;
+  box-shadow: none;
+  animation: none;
+  filter: none;
+  color: #25334a;
+}
+body .page-carousel .carousel-controls button.carousel-dot {
+  width: 9px;
+  height: 9px;
+  background: #c9d6e4;
+}
+body .page-carousel .carousel-controls button.carousel-dot[aria-current="true"] {
+  width: 26px;
+  background: #25334a;
+  border-color: #25334a;
+}
+body .page-carousel .carousel-controls button.carousel-arrow {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  line-height: 1;
+}
+body .page-carousel .carousel-controls button.carousel-arrow:hover {
+  background: #eef3f9;
+}
+
+/* Player results rail: smooth touch scrolling, no swipe-back gesture, no hidden cards. */
+.player-rail {
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: 2px;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+.player {
+  scroll-snap-stop: always;
+}
+@media (hover: none) {
+  .player:hover img {
+    transform: none;
+  }
+}
+/* Hero labels that are the page's <h1> keep the body font of a normal label. */
+h1.eyebrow {
+  font-family: var(--font-dm-sans), Arial, sans-serif;
+}
+
+/* Reference v17: home photo carousel and player-results controls, copied as-is. */
+.hero-carousel{width:100%;max-width:960px;min-width:0;position:relative}
+
+.hero-slides {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  border-radius: 28px;
+  background: #e8edf1;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
+}
+
+.hero-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 360px;
+}
+
+.hero-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.hero-slide figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 20px 20px;
+  background: linear-gradient(transparent, #152231b3);
+  color: white;
+  font-size: 14px;
+  text-align: center;
+}
+
+.hero-slide figcaption{position:absolute;bottom:0;left:0;right:0;padding:40px 20px 20px;background:linear-gradient(transparent,#152231b3);color:white;font-size:14px;text-align:center}
+.hero-carousel .carousel-controls{justify-content:center;align-items:center;gap:18px;margin-top:12px}
+.hero-carousel .carousel-controls button{width:40px;height:40px;padding:0!important;min-height:40px}
+.carousel-count{font-size:12px;color:#56647a;min-width:42px}
+.results .player-rail{display:flex;gap:20px;width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#b5c2d4 transparent;overscroll-behavior-x:contain;touch-action:pan-x pan-y;padding:4px 0 16px}
+.results-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:12px}
+.results-controls span{font-size:12px;color:#69788c}
+.results-controls button{width:40px;height:40px;padding:0!important;min-height:40px}
+.results-controls button:disabled{opacity:.35;cursor:default}
+.hero-slides:focus-visible,.player-rail:focus-visible{outline:2px solid #38649b;outline-offset:5px}
+@media(max-width:760px){.hero-slide{height:285px}}
+@media(max-width:760px){.hero-slides{border-radius:22px}}
+@media(max-width:760px){.results .player-rail{gap:14px}}
+@media(prefers-reduced-motion:reduce){.hero-slides,.results .player-rail{scroll-behavior:auto}}
+body .hero-carousel .carousel-controls{display:flex!important}
+
+/* Home carousel: the frame uses the photos' own proportions (set from the first photo in
+   app/(site)/(home)/page.js), so photos of that shape fill it with no crop, stretch or gaps. */
+body .home-page .hero-slide {
+  height: auto;
+  aspect-ratio: var(--slide-ratio, 1920 / 912);
+}
+body .home-page .hero-slide img {
+  object-fit: cover;
+}
+
+/* Player result cards: "Pathak100MPH PLAYER" label and brand name in headings use the partners-heading blue. */
+body .player .tiny { color: #526783; }
+body :is(h1, h2, h3) .brand-name { color: #526783; }
+
+/* Mobile: hide every scrollbar (swipeable card rails still scroll). */
+@media (max-width: 760px) {
+  * { scrollbar-width: none !important; }
+  *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 }

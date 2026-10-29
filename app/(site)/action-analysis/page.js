@@ -1,9 +1,10 @@
-import PageHero from "../../page-hero";
-import Partners from "../../partners";
-import CommunityReels from "../../community-reels";
+import PageHero from "../../components/PageHero";
+import Partners from "../../components/Partners";
+import CommunityReels from "../../components/CommunityReels";
 import { getContent, pageMetadata } from "../../lib/content";
-import { BookingDialog, FaqList } from "../../content/sections";
-import { T } from "../../content/text";
+import BookingDialog from "../../components/BookingDialog";
+import { FaqList } from "../../components/Faq";
+import { Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("action-analysis");
 
@@ -22,7 +23,7 @@ export default async function ActionAnalysis() {
         <section className="wrap v3-section reveal">
           <p className="eyebrow">{c.benefits.eyebrow}</p>
           <h2>
-            <T v={c.benefits.heading} />
+            <Text v={c.benefits.heading} />
           </h2>
           <div className="v3-benefits">
             {c.benefits.items.map((item, i) => (
@@ -54,7 +55,7 @@ export default async function ActionAnalysis() {
         <section className="closing wrap reveal">
           <p className="eyebrow">{c.closing.eyebrow}</p>
           <h2>
-            <T v={c.closing.heading} />
+            <Text v={c.closing.heading} />
           </h2>
           <p>{c.closing.text}</p>
           <div className="actions">

@@ -1,8 +1,12 @@
 import Script from "next/script";
 import { draftMode } from "next/headers";
 import "../globals.css";
-import SiteShell from "../site-shell";
-import SiteInteractions from "../site-interactions";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import CallbackForm from "../components/CallbackForm";
+import WhatsAppButton from "../components/WhatsAppButton";
+import CallbackPrompt from "../components/CallbackPrompt";
+import SiteInteractions from "../components/SiteInteractions";
 
 export default async function SiteLayout({ children }) {
   const preview = (await draftMode()).isEnabled;
@@ -14,8 +18,14 @@ export default async function SiteLayout({ children }) {
           <a href="/admin/preview/exit" style={{ color: "#fff" }}>Exit preview</a>
         </div>
       )}
-      <SiteShell>{children}</SiteShell>
-      {/* Only the callback form uses this; site-interactions reads it via window.libphonenumber?. */}
+      <Navbar />
+      {children}
+
+      <Footer />
+      <CallbackForm />
+      <WhatsAppButton />
+      <CallbackPrompt />
+      {/* Only the callback form uses this; SiteInteractions reads it via window.libphonenumber?. */}
       <Script src="/assets/libphonenumber-max.js" strategy="lazyOnload" />
       <SiteInteractions />
     </>
