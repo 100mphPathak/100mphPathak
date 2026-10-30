@@ -9,9 +9,9 @@ export const metadata = { title: "Users" };
 export default async function Users() {
   const me = await requirePage("users.manage");
   const users = await sql`
-    select u.id::text, u.name, u.email, u."createdAt" as created_at, c.role
-    from neon_auth."user" u left join cms_users c on c.user_id = u.id
-    order by (c.role is null) desc, u."createdAt" desc
+    select u.id::text, u.raw_user_meta_data->>'name' as name, u.email, u.created_at, c.role
+    from auth.users u left join cms_users c on c.user_id = u.id
+    order by (c.role is null) desc, u.created_at desc
     limit 200`;
   return (
     <>

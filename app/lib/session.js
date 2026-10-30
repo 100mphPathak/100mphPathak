@@ -1,16 +1,15 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
-import { auth } from "./auth";
 import { sql } from "./db";
 import { can } from "./permissions";
+import { supabase } from "./auth";
 
 // The signed-in user plus their CMS role (null = signed in but not approved yet).
 export const currentUser = cache(async () => {
-  const { data } = await auth.getSession();
-  const user = data?.user;
-  if (!user || user.banned) return null;
+  const { data: { user } } = await (await supabase()).auth.getUser();
+  if (!user) return null;
   const [row] = await sql`select role from cms_users where user_id = ${user.id}`;
-  return { id: user.id, email: user.email, name: user.name, role: row?.role ?? null };
+  return { id: user.id, email: user.email, name: user.user_metadata?.name ?? "", role: row?.role ?? null };
 });
 
 // For admin pages: sends visitors to sign-in, unapproved users to the waiting page,

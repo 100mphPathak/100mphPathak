@@ -1,7 +1,7 @@
--- CMS schema. Auth users live in neon_auth."user" (managed by Neon Auth).
+-- CMS schema. Auth users live in auth.users (managed by Supabase Auth).
 
 create table cms_users (
-  user_id uuid primary key references neon_auth."user"(id) on delete cascade,
+  user_id uuid primary key references auth.users(id) on delete cascade,
   role text not null check (role in ('super_admin', 'content_admin', 'editor')),
   granted_by uuid,
   granted_at timestamptz not null default now()

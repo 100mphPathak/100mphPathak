@@ -2,14 +2,14 @@
 // keeping all history. Use after changing defaults in code, e.g. a client copy update.
 // Refuses to touch a page that has unpublished admin edits unless you pass --force.
 // Usage: node --env-file=.env.local scripts/publish-defaults.mjs "Client updates" [slug ...] [--force]
-import { neon } from "@neondatabase/serverless";
+import postgres from "postgres";
 import { PAGES } from "../app/content/defaults/index.js";
 
 const args = process.argv.slice(2);
 const force = args.includes("--force");
 const [note = "Published from code", ...only] = args.filter((a) => a !== "--force");
 const slugs = only.length ? only : Object.keys(PAGES);
-const sql = neon(process.env.DATABASE_URL);
+const sql = postgres(process.env.DATABASE_URL, { prepare: false });
 
 for (const slug of slugs) {
   const page = PAGES[slug];
@@ -49,3 +49,4 @@ if (origin && process.env.REVALIDATE_SECRET) {
     console.log(`${origin} is not reachable; the new content shows after the next build/deploy.`);
   }
 }
+await sql.end();

@@ -11,7 +11,7 @@ export async function setRole(userId, role) {
   if (error) return { error };
   if (role !== null && !(role in ROLES)) return { error: "Unknown role." };
   if (userId === user.id) return { error: "You can’t change your own access. Ask another super administrator." };
-  const [target] = await sql`select email from neon_auth."user" where id = ${userId}`;
+  const [target] = await sql`select email from auth.users where id = ${userId}`;
   if (!target) return { error: "That account no longer exists." };
 
   if (role) {

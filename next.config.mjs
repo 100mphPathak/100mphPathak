@@ -1,5 +1,5 @@
-// Uploaded media lives in the Neon storage bucket; next/image may only fetch from there.
-const mediaBase = process.env.AWS_ENDPOINT_URL_S3 && `${process.env.AWS_ENDPOINT_URL_S3}/${process.env.MEDIA_BUCKET ?? "media"}/**`;
+// Uploaded media lives in the Supabase storage bucket; next/image may only fetch from there.
+const mediaBase = process.env.NEXT_PUBLIC_SUPABASE_URL && `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${process.env.MEDIA_BUCKET ?? "media"}/**`;
 
 export default {
   devIndicators: false,

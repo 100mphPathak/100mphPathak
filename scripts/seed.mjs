@@ -1,10 +1,10 @@
 // Creates every CMS page with today's built-in content as published revision 1.
 // Safe to re-run: pages that already exist are left alone.
 // Usage: node --env-file=.env.local scripts/seed.mjs
-import { neon } from "@neondatabase/serverless";
+import postgres from "postgres";
 import { PAGES } from "../app/content/defaults/index.js";
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = postgres(process.env.DATABASE_URL, { prepare: false });
 
 for (const page of Object.values(PAGES)) {
   const [created] = await sql`
@@ -24,3 +24,4 @@ for (const page of Object.values(PAGES)) {
   await sql`insert into audit_log (actor_email, action, resource_type, resource_id) values ('seed', 'page.seed', 'page', ${page.slug})`;
   console.log("seeded ", page.slug);
 }
+await sql.end();

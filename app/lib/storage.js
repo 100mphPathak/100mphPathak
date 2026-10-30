@@ -10,8 +10,8 @@ const client = new S3Client({
   requestChecksumCalculation: "WHEN_REQUIRED",
 });
 
-// The bucket is public-read, so this URL is what pages render.
-export const publicUrl = (key) => `${process.env.AWS_ENDPOINT_URL_S3}/${BUCKET}/${key}`;
+// The bucket is public, so this URL is what pages render.
+export const publicUrl = (key) => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${key}`;
 
 export async function putImage(key, body, contentType) {
   await client.send(

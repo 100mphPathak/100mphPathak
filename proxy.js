@@ -1,19 +1,28 @@
 import { NextResponse } from "next/server";
-import { auth } from "./app/lib/auth";
+import { createServerClient } from "@supabase/ssr";
 
-// First line of defence for /admin: no session, no admin pages.
-// Roles are checked again in every admin page and server action (app/lib/session.js).
 const PUBLIC_ADMIN = ["/admin/sign-in", "/admin/sign-up", "/admin/forgot-password", "/admin/reset-password"];
-const protect = auth.middleware({ loginUrl: "/admin/sign-in" });
 
-export default function proxy(request) {
-  const { pathname } = request.nextUrl;
-  if (PUBLIC_ADMIN.some((path) => pathname.startsWith(path))) {
-    const response = NextResponse.next();
+export default async function proxy(request) {
+  let response = NextResponse.next({ request });
+  const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+    cookies: {
+      getAll: () => request.cookies.getAll(),
+      setAll: (list) => {
+        list.forEach(({ name, value }) => request.cookies.set(name, value));
+        response = NextResponse.next({ request });
+        list.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+      },
+    },
+  });
+  const { data: { user } } = await supabase.auth.getUser(); // also refreshes the session cookie
+
+  if (PUBLIC_ADMIN.some((path) => request.nextUrl.pathname.startsWith(path))) {
     response.headers.set("X-Robots-Tag", "noindex");
     return response;
   }
-  return protect(request);
+  if (!user) return NextResponse.redirect(new URL("/admin/sign-in/", request.url));
+  return response;
 }
 
 export const config = { matcher: ["/admin/:path*"] };

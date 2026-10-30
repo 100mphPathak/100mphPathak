@@ -1,6 +1,15 @@
-import { createNeonAuth } from "@neondatabase/auth/next/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL,
-  cookies: { secret: process.env.NEON_AUTH_COOKIE_SECRET },
-});
+// Supabase client for server code; the login session lives in cookies.
+export async function supabase() {
+  const store = await cookies();
+  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+    cookies: {
+      getAll: () => store.getAll(),
+      // Pages can't set cookies (only actions and routes can); the proxy refreshes them instead.
+      setAll: (list) => { try { list.forEach(({ name, value, options }) => store.set(name, value, options)); } catch {} },
+    },
+  });
+} 
+
