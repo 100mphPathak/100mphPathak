@@ -81,8 +81,17 @@ test("permission table: each role gets exactly its level", () => {
   assert.ok(!can("content_admin", "users.manage"));
   assert.ok(can("super_admin", "users.manage"));
   assert.ok(!can(null, "page.view"));
-  assert.ok(!can("admin", "page.view")); // Better Auth's own role grants nothing here
+  assert.ok(!can("admin", "page.view")); // an unknown role grants nothing
   assert.throws(() => can("super_admin", "page.typo"));
+});
+
+test("blog permissions: editors write, content admins publish and manage categories", () => {
+  assert.ok(can("editor", "post.edit"));
+  assert.ok(!can("editor", "post.publish"));
+  assert.ok(!can("editor", "category.manage"));
+  assert.ok(can("content_admin", "post.publish"));
+  assert.ok(can("content_admin", "category.manage"));
+  assert.ok(can("super_admin", "post.publish"));
 });
 
 test("upload type is decided by file bytes, not by name", () => {

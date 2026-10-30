@@ -2,7 +2,8 @@
 import postgres from "postgres";
 import { readdir, readFile } from "node:fs/promises";
 
-const sql = postgres(process.env.DATABASE_URL, { prepare: false });
+// onnotice: hides Postgres' "already exists, skipping" notices, which are expected here.
+const sql = postgres(process.env.DATABASE_URL, { prepare: false, onnotice: () => {} });
 const dir = new URL("../db/migrations/", import.meta.url);
 
 await sql`create table if not exists _migrations (name text primary key, applied_at timestamptz not null default now())`;

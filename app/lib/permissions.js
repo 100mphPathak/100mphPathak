@@ -13,7 +13,10 @@ const NEEDS = {
   "page.preview": 1,
   "media.view": 1,
   "media.upload": 1,
+  "post.edit": 1, // write blog posts, save drafts
   "page.publish": 2,
+  "post.publish": 2, // publish, unpublish, restore posts
+  "category.manage": 2, // add, rename, delete blog categories
   "page.unpublish": 2,
   "page.restore": 2,
   "page.seo": 2,
