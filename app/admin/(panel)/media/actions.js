@@ -82,12 +82,23 @@ export async function updateAlt(id, alt) {
   return { ok: "Description saved." };
 }
 
-// Pages whose current draft or live version uses this image.
+// Pages and blog posts whose current draft or live version uses this image.
 async function usage(url) {
   return sql`
-    select distinct p.slug, p.title from pages p
-    join revisions r on r.id in (p.draft_revision_id, p.published_revision_id)
-    where strpos(r.content::text, ${url}) > 0 or strpos(r.seo::text, ${url}) > 0`;
+    select p.title from pages p
+    where exists (
+      select 1 from revisions r
+      where r.id in (p.draft_revision_id, p.published_revision_id)
+        and (strpos(r.content::text, ${url}) > 0 or strpos(r.seo::text, ${url}) > 0))
+    union all
+    select 'Blog: ' || d.title from posts po
+    join post_revisions d on d.id = po.draft_revision_id
+    where exists (
+      select 1 from post_revisions pr
+      where pr.id in (po.draft_revision_id, po.published_revision_id)
+        and (strpos(coalesce(pr.cover_image::text, ''), ${url}) > 0
+          or strpos(pr.body::text, ${url}) > 0
+          or strpos(pr.seo::text, ${url}) > 0))`;
 }
 
 export async function mediaUsage(id) {

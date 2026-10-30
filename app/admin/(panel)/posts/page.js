@@ -66,7 +66,7 @@ export default async function Posts({ searchParams }) {
             {rows.map((row) => (
               <tr key={row.id}>
                 <td>
-                  {row.title}
+                  <Link href={`/admin/posts/${row.id}`}>{row.title}</Link>
                   {row.has_draft && <> <span className="badge draft">unpublished changes</span></>}
                   <div className="small muted">/blogs/{row.slug}/</div>
                 </td>

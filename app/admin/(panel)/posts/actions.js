@@ -5,8 +5,12 @@ import { redirect } from "next/navigation";
 import { transaction } from "../../../lib/db";
 import { authorize } from "../../../lib/session";
 import { slugify } from "../../../lib/slug";
+import { publicUrl } from "../../../lib/storage";
 
-// Creates a draft post (title + category) and its first revision.
+const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/; // same rule as the database (003_blog.sql)
+const STALE = "Someone else saved this post while you were editing. Reload to see their changes, then make yours again.";
+
+// Creates a draft post (title + category) and its first revision, then opens it in the editor.
 // Used with useActionState: returns { error } to show in the form, or redirects on success.
 export async function createPost(_prev, formData) {
   const { user, error } = await authorize("post.edit");
@@ -19,8 +23,9 @@ export async function createPost(_prev, formData) {
   if (title.length > 200) return { error: "Keep the title under 200 characters.", ...keep };
   if (!Number.isInteger(categoryId)) return { error: "Choose a category.", ...keep };
 
+  let postId;
   try {
-    await transaction(async (db) => {
+    postId = await transaction(async (db) => {
       // Never trust the form: the category must really exist.
       const { rows: [category] } = await db.query(`select id from categories where id = $1`, [categoryId]);
       if (!category) throw new UserError("That category no longer exists. Reload and choose another.");
@@ -46,6 +51,7 @@ export async function createPost(_prev, formData) {
         `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'post.create', 'post', $3, $4)`,
         [user.id, user.email, slug, { title }],
       );
+      return post.id;
     });
   } catch (e) {
     if (e instanceof UserError) return { error: e.message, ...keep };
@@ -56,7 +62,116 @@ export async function createPost(_prev, formData) {
   }
 
   revalidatePath("/admin/posts");
-  redirect("/admin/posts"); // Post/Redirect/Get: refreshing the list can't create the post twice
+  redirect(`/admin/posts/${postId}`); // Post/Redirect/Get: refreshing can't create the post twice
+}
+
+// Saves the editor's fields as a new draft revision. The article body and SEO are carried
+// over from the current draft until their editors exist (Tasks 4 and 5).
+// baseRevisionId = the draft the editor started from; if someone saved since, we refuse (optimistic locking).
+export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
+  const { user, error } = await authorize("post.edit");
+  if (error) return { error };
+
+  const data = cleanFields(fields);
+  if (data.error) return { error: data.error };
+
+  try {
+    return await transaction(async (db) => {
+      // "for update" locks this post's row until we commit, so two saves can't interleave.
+      const { rows: [post] } = await db.query(`select draft_revision_id from posts where id = $1 for update`, [postId]);
+      if (!post) throw new UserError("This post no longer exists.");
+      if (String(post.draft_revision_id) !== String(baseRevisionId)) return { error: STALE, stale: true };
+
+      const { rows: [category] } = await db.query(`select id from categories where id = $1`, [data.categoryId]);
+      if (!category) throw new UserError("That category no longer exists. Choose another.");
+      const { rows: [clash] } = await db.query(`select 1 from posts where slug = $1 and id <> $2`, [data.slug, postId]);
+      if (clash) throw new UserError(`Another post already uses /blogs/${data.slug}/. Choose a different address.`);
+
+      const { rows: [rev] } = await db.query(
+        `insert into post_revisions (post_id, number, title, excerpt, author, category_id, cover_image, body, seo, note, created_by)
+         select $1, (select max(number) + 1 from post_revisions where post_id = $1), $2, $3, $4, $5, $6, d.body, d.seo, $7, $8
+         from post_revisions d where d.id = $9 -- d = the current draft (checked above)
+         returning id, number`,
+        [postId, data.title, data.excerpt, data.author, data.categoryId, data.coverImage, String(note).trim().slice(0, 300) || null, user.email, baseRevisionId],
+      );
+      await db.query(
+        `update posts set slug = $1, draft_revision_id = $2, updated_by = $3, updated_at = now() where id = $4`,
+        [data.slug, rev.id, user.email, postId],
+      );
+      await db.query(
+        `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'post.save_draft', 'post', $3, $4)`,
+        [user.id, user.email, data.slug, { revision: rev.number }],
+      );
+      return { ok: `Draft saved (version ${rev.number}).`, revisionId: String(rev.id), number: rev.number };
+    });
+  } catch (e) {
+    if (e instanceof UserError) return { error: e.message };
+    if (e.code === "23505") return { error: `Another post already uses /blogs/${data.slug}/. Choose a different address.` };
+    console.error("[cms] savePostDraft failed", e);
+    return { error: "Could not save. Your changes are still in the editor — try again." };
+  } finally {
+    revalidatePath("/admin/posts");
+  }
+}
+
+// Removes a post that has never been published (e.g. a test post), with all its versions.
+// Published posts are taken offline instead, so their history is kept.
+export async function deleteDraftPost(postId) {
+  const { user, error } = await authorize("post.edit");
+  if (error) return { error };
+  try {
+    await transaction(async (db) => {
+      const { rows: [post] } = await db.query(
+        `select p.slug, p.published_at, r.title from posts p join post_revisions r on r.id = p.draft_revision_id where p.id = $1 for update of p`,
+        [postId],
+      );
+      if (!post) throw new UserError("This post no longer exists.");
+      if (post.published_at) throw new UserError("This post has been published, so it can’t be deleted. Take it offline instead.");
+      await db.query(`delete from posts where id = $1`, [postId]); // its revisions go too (on delete cascade)
+      await db.query(
+        `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'post.delete', 'post', $3, $4)`,
+        [user.id, user.email, post.slug, { title: post.title }],
+      );
+    });
+  } catch (e) {
+    if (e instanceof UserError) return { error: e.message };
+    console.error("[cms] deleteDraftPost failed", e);
+    return { error: "Could not delete the post. Try again." };
+  }
+  revalidatePath("/admin/posts");
+  redirect("/admin/posts");
+}
+
+// Checks and tidies what the editor sent. Returns the clean fields, or { error }.
+// The browser form has the same limits, but anyone can bypass a browser, so the server decides.
+function cleanFields(fields) {
+  const text = (v) => String(v ?? "").trim();
+  const title = text(fields?.title);
+  const slug = text(fields?.slug);
+  const excerpt = text(fields?.excerpt);
+  const author = text(fields?.author);
+  const categoryId = Number.parseInt(fields?.categoryId, 10);
+
+  if (!title) return { error: "Give the post a title." };
+  if (title.length > 200) return { error: "Keep the title under 200 characters." };
+  if (!SLUG.test(slug) || slug.length > 80) return { error: "The address may only use lowercase letters, numbers and single dashes (up to 80 characters)." };
+  if (excerpt.length > 300) return { error: "Keep the excerpt under 300 characters." };
+  if (author.length > 100) return { error: "Keep the author name under 100 characters." };
+  if (!Number.isInteger(categoryId)) return { error: "Choose a category." };
+
+  const coverImage = cleanImage(fields?.coverImage);
+  if (coverImage === undefined) return { error: "The cover photo must come from the media library." };
+  return { title, slug, excerpt, author, categoryId, coverImage };
+}
+
+// null = no cover. undefined = not allowed. Only our own storage or the site's /assets.
+function cleanImage(image) {
+  if (!image?.src) return null;
+  const src = String(image.src);
+  const ours = src.startsWith(publicUrl("")) || (src.startsWith("/assets/") && !src.includes(".."));
+  const width = Number(image.width), height = Number(image.height);
+  if (!ours || !Number.isInteger(width) || !Number.isInteger(height) || width <= 0 || height <= 0) return undefined;
+  return { src, alt: String(image.alt ?? "").trim().slice(0, 200), width, height };
 }
 
 // An error whose message is safe to show to the person using the form.

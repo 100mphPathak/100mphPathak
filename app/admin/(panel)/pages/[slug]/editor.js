@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { createContext, useContext, useEffect, useState, useTransition } from "react";
-import MediaPicker from "../../media/picker";
+import ImageField from "../../image-field";
 import { publish, saveDraft, setUnpublished } from "./actions";
 
 const SECTION_LABELS = {
@@ -202,7 +202,7 @@ function Field({ name, template, value, path, onChange, bare = false }) {
   const label = labelFor(name);
 
   if (Array.isArray(template)) return <ListField label={label} onChange={onChange} path={path} template={template} value={value} />;
-  if (isImage(template)) return <ImageField label={label} onChange={onChange} path={path} value={value} />;
+  if (isImage(template)) return <ImageField label={label} onChange={onChange} path={path} removable={path.at(-1) === "ogImage"} value={value} />;
   if (isLink(template)) {
     return (
       <fieldset className="group">
@@ -297,39 +297,7 @@ function ListField({ label, template, value, path, onChange }) {
   );
 }
 
-function ImageField({ label, value, path, onChange }) {
-  const [picking, setPicking] = useState(false);
-  return (
-    <fieldset className="group">
-      <legend>{label}</legend>
-      <div className="image-field">
-        {value.src ? <img alt="" src={value.src} /> : <div className="muted small">No image</div>}
-        <div className="image-meta">
-          <p className="small muted" style={{ wordBreak: "break-all" }}>{value.src || "—"} {value.src && `(${value.width}×${value.height})`}</p>
-          <div className="actions-row" style={{ marginBottom: 10 }}>
-            <button className="btn secondary small" onClick={() => setPicking(true)} type="button">Choose image</button>
-            {value.src && path.at(-1) === "ogImage" && (
-              <button className="btn secondary small" onClick={() => onChange(path, { ...value, src: "", alt: "" })} type="button">Remove</button>
-            )}
-          </div>
-          <label className="field">
-            <span>{LABELS.alt}</span>
-            <input onChange={(e) => onChange([...path, "alt"], e.target.value)} type="text" value={value.alt} />
-          </label>
-        </div>
-      </div>
-      {picking && (
-        <MediaPicker
-          onClose={() => setPicking(false)}
-          onPick={(media) => {
-            onChange(path, { src: media.url, alt: value.alt || media.alt, width: media.width, height: media.height });
-            setPicking(false);
-          }}
-        />
-      )}
-    </fieldset>
-  );
-}
+
 
 function Counter({ value, limit }) {
   return <span className={`hint ${value.length > limit ? "over" : ""}`}>{value.length} characters · aim for {limit} or fewer so search results don’t cut it off.</span>;
@@ -363,7 +331,7 @@ function SeoForm({ value, onChange, permissions, slug }) {
       <p className="small muted">Leave empty to reuse the page title and description.</p>
       {text("ogTitle", "Sharing title", 60)}
       {text("ogDescription", "Sharing description", 160)}
-      {!disabled && <ImageField label="Sharing image (1200×630 works best)" onChange={onChange} path={["ogImage"]} value={value.ogImage} />}
+      {!disabled && <ImageField label="Sharing image (1200×630 works best)" onChange={onChange} path={["ogImage"]} removable value={value.ogImage} />}
     </div>
   );
 }
