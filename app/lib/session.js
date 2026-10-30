@@ -4,12 +4,15 @@ import { sql } from "./db";
 import { can } from "./permissions";
 import { supabase } from "./auth";
 
-// The signed-in user plus their CMS role (null = signed in but not approved yet).
+// Who is signed in, and their CMS role (null = signed in but not approved yet).
+// getClaims() verifies the login token locally; access itself comes from cms_users,
+// which is read fresh on every request, so removing a role takes effect immediately.
 export const currentUser = cache(async () => {
-  const { data: { user } } = await (await supabase()).auth.getUser();
-  if (!user) return null;
-  const [row] = await sql`select role from cms_users where user_id = ${user.id}`;
-  return { id: user.id, email: user.email, name: user.user_metadata?.name ?? "", role: row?.role ?? null };
+  // A malformed cookie makes getClaims() throw: treat it as signed out.
+  const claims = await (await supabase()).auth.getClaims().then((r) => r.data?.claims, () => null);
+  if (!claims?.sub) return null;
+  const [row] = await sql`select role from cms_users where user_id = ${claims.sub}`;
+  return { id: claims.sub, email: claims.email, name: claims.user_metadata?.name ?? "", role: row?.role ?? null };
 });
 
 // For admin pages: sends visitors to sign-in, unapproved users to the waiting page,

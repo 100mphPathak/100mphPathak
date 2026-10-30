@@ -15,13 +15,17 @@ export default async function proxy(request) {
       },
     },
   });
-  const { data: { user } } = await supabase.auth.getUser(); // also refreshes the session cookie
+  // Checks the login token's signature locally with Supabase's public key (no network trip),
+  // and refreshes the session cookie when the token is about to expire.
+  // A malformed cookie makes getClaims() throw: treat it as signed out, so the sign-in page still opens.
+  const claims = await supabase.auth.getClaims().then((r) => r.data?.claims, () => null);
+  const signedIn = Boolean(claims?.sub);
 
   if (PUBLIC_ADMIN.some((path) => request.nextUrl.pathname.startsWith(path))) {
     response.headers.set("X-Robots-Tag", "noindex");
     return response;
   }
-  if (!user) return NextResponse.redirect(new URL("/admin/sign-in/", request.url));
+  if (!signedIn) return NextResponse.redirect(new URL("/admin/sign-in/", request.url));
   return response;
 }
 
