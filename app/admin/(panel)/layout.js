@@ -13,6 +13,7 @@ export default async function PanelLayout({ children }) {
         <nav aria-label="Admin">
           <NavLink href="/admin">Dashboard</NavLink>
           <NavLink href="/admin/pages">Pages</NavLink>
+          {can(user.role, "post.edit") && <NavLink href="/admin/posts">Blog</NavLink>}
           <NavLink href="/admin/media">Media</NavLink>
           {can(user.role, "global.edit") && <NavLink href="/admin/pages/global">Site-wide settings</NavLink>}
           {can(user.role, "users.manage") && <NavLink href="/admin/users">Users</NavLink>}

@@ -6,6 +6,7 @@ import { merge, validate } from "../app/content/shape.js";
 import { can } from "../app/lib/permissions.js";
 import { sniffImage } from "../app/lib/storage.js";
 import { seo } from "../app/seo.js";
+import { slugify } from "../app/lib/slug.js";
 
 const clone = (v) => structuredClone(v);
 const messages = (r) => r.errors.map((e) => `${e.path} ${e.message}`).join("\n");
@@ -83,6 +84,17 @@ test("permission table: each role gets exactly its level", () => {
   assert.ok(!can(null, "page.view"));
   assert.ok(!can("admin", "page.view")); // an unknown role grants nothing
   assert.throws(() => can("super_admin", "page.typo"));
+});
+
+test("slugify: titles become safe addresses", () => {
+  const rule = /^[a-z0-9]+(-[a-z0-9]+)*$/; // the same rule the database enforces (003_blog.sql)
+  assert.equal(slugify("How to Bowl Faster!"), "how-to-bowl-faster");
+  assert.equal(slugify("  Pace & Performance -- 2026  "), "pace-performance-2026");
+  assert.equal(slugify("Café élite"), "cafe-elite");
+  assert.equal(slugify("तेज़ गेंदबाज़ी"), "post"); // nothing usable left
+  const long = slugify("word ".repeat(40));
+  assert.ok(long.length <= 80 && !long.endsWith("-"));
+  for (const s of ["How to Bowl Faster!", "Café élite", "तेज़", "word ".repeat(40), "---"]) assert.match(slugify(s), rule);
 });
 
 test("blog permissions: editors write, content admins publish and manage categories", () => {
