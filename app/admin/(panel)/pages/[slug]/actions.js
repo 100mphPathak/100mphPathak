@@ -55,12 +55,12 @@ export async function saveDraft(slug, baseRevisionId, content, seo, note = "") {
         `insert into revisions (page_slug, number, content, seo, note, created_by)
          select $1, coalesce(max(number), 0) + 1, $2, $3, $4, $5 from revisions where page_slug = $1
          returning id, number`,
-        [slug, JSON.stringify(content), JSON.stringify(slug === "global" ? {} : seo), String(note).slice(0, 300) || null, user.email],
+        [slug, content, slug === "global" ? {} : seo, String(note).slice(0, 300) || null, user.email],
       );
       await db.query(`update pages set draft_revision_id = $1, updated_by = $2, updated_at = now() where slug = $3`, [rev.id, user.email, slug]);
       await db.query(
         `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'page.save_draft', 'page', $3, $4)`,
-        [user.id, user.email, slug, JSON.stringify({ revision: rev.number })],
+        [user.id, user.email, slug, { revision: rev.number }],
       );
       return { ok: `Draft saved (version ${rev.number}).`, revisionId: String(rev.id), number: rev.number };
     });
@@ -84,7 +84,7 @@ export async function publish(slug, revisionId) {
       );
       await db.query(
         `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'page.publish', 'page', $3, $4)`,
-        [user.id, user.email, slug, JSON.stringify({ revisionId: String(revisionId) })],
+        [user.id, user.email, slug, { revisionId: String(revisionId) }],
       );
       return { ok: "Published. The live website now shows this version." };
     });
@@ -128,12 +128,12 @@ export async function restoreRevision(slug, revisionId) {
       const { rows: [rev] } = await db.query(
         `insert into revisions (page_slug, number, content, seo, note, created_by)
          select $1, max(number) + 1, $2, $3, $4, $5 from revisions where page_slug = $1 returning id, number`,
-        [slug, JSON.stringify(old.content), JSON.stringify(old.seo), `Restored from version ${old.number}`, user.email],
+        [slug, old.content, old.seo, `Restored from version ${old.number}`, user.email],
       );
       await db.query(`update pages set draft_revision_id = $1, updated_by = $2, updated_at = now() where slug = $3`, [rev.id, user.email, slug]);
       await db.query(
         `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'page.restore', 'page', $3, $4)`,
-        [user.id, user.email, slug, JSON.stringify({ from: old.number, to: rev.number })],
+        [user.id, user.email, slug, { from: old.number, to: rev.number }],
       );
       return { ok: `Version ${old.number} restored as a new draft (version ${rev.number}). Review it, then publish.` };
     });

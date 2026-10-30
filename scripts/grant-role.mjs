@@ -21,6 +21,6 @@ await sql`
   insert into cms_users (user_id, role) values (${user.id}, ${role})
   on conflict (user_id) do update set role = excluded.role, granted_at = now()`;
 await sql`insert into audit_log (actor_email, action, resource_type, resource_id, details)
-          values ('grant-role script', 'user.set_role', 'user', ${user.email}, ${JSON.stringify({ role })})`;
+          values ('grant-role script', 'user.set_role', 'user', ${user.email}, ${{ role }})`;
 console.log(`${user.email} is now ${role}.`);
 await sql.end();

@@ -33,5 +33,5 @@ export async function authorize(action) {
 export async function audit(user, action, resourceType, resourceId, details = {}) {
   await sql`
     insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details)
-    values (${user?.id ?? null}, ${user?.email ?? null}, ${action}, ${resourceType}, ${resourceId}, ${JSON.stringify(details)})`;
+    values (${user?.id ?? null}, ${user?.email ?? null}, ${action}, ${resourceType}, ${resourceId}, ${details})`;
 }

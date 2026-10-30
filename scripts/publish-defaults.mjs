@@ -26,7 +26,7 @@ for (const slug of slugs) {
   const route = page.route ?? `#${slug}`;
   const [rev] = await sql`
     insert into revisions (page_slug, number, content, seo, note, created_by)
-    select ${slug}, max(number) + 1, ${JSON.stringify(page.content)}, ${JSON.stringify(page.seo)}, ${note}, 'publish-defaults script'
+    select ${slug}, max(number) + 1, ${page.content}, ${page.seo}, ${note}, 'publish-defaults script'
     from revisions where page_slug = ${slug}
     returning id, number`;
   await sql`
@@ -34,7 +34,7 @@ for (const slug of slugs) {
       route = ${route}, title = ${page.title}, published_at = now(), updated_at = now(), updated_by = 'publish-defaults script'
     where slug = ${slug}`;
   await sql`insert into audit_log (actor_email, action, resource_type, resource_id, details)
-            values ('publish-defaults script', 'page.publish', 'page', ${slug}, ${JSON.stringify({ revision: rev.number, note })})`;
+            values ('publish-defaults script', 'page.publish', 'page', ${slug}, ${{ revision: rev.number, note }})`;
   console.log("published", slug, "version", rev.number);
 }
 
