@@ -14,9 +14,10 @@ export const COLORS = { blue: "art-0", sand: "art-1", green: "art-2", purple: "a
 
 const isObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 
-function mediaPrefix() {
-  const endpoint = process.env.AWS_ENDPOINT_URL_S3;
-  return endpoint ? `${endpoint}/${process.env.MEDIA_BUCKET ?? "media"}/` : null;
+// Public address of uploaded images (same as publicUrl("") in lib/storage.js, without loading the S3 client).
+export function mediaPrefix() {
+  const site = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return site ? `${site}/storage/v1/object/public/${process.env.MEDIA_BUCKET ?? "media"}/` : null;
 }
 
 function checkString(key, value, template) {

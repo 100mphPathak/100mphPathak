@@ -14,7 +14,7 @@ export default async function EditPost({ params }) {
   const [[post], categories] = await Promise.all([
     sql`
       select p.id::text, p.slug, p.status, p.published_at is not null as was_published,
-        r.id::text as revision_id, r.number, r.title, r.excerpt, r.author, r.category_id::text, r.cover_image
+        r.id::text as revision_id, r.number, r.title, r.excerpt, r.author, r.category_id::text, r.cover_image, r.body
       from posts p join post_revisions r on r.id = p.draft_revision_id
       where p.id = ${id}`,
     sql`select id::text, name from categories order by name`,

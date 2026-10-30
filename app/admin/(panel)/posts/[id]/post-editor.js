@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
 import { slugify } from "../../../../lib/slug";
 import ImageField from "../../image-field";
+import ArticleEditor from "./article-editor";
 import { deleteDraftPost, savePostDraft } from "../actions";
 
 // The post editor form. Holds every field in state; nothing is stored until "Save draft".
@@ -15,9 +16,11 @@ export default function PostEditor({ post, categories }) {
     author: post.author,
     categoryId: post.category_id,
     coverImage: post.cover_image,
+    body: post.body,
   });
   const [revision, setRevision] = useState({ id: post.revision_id, number: post.number });
   const [savedSlug, setSavedSlug] = useState(post.slug);
+  const [bodyVersion, setBodyVersion] = useState(0); // bumped to reload the editor with what the server kept
   const [note, setNote] = useState("");
   const [dirty, setDirty] = useState(false);
   const [message, setMessage] = useState(null);
@@ -45,6 +48,12 @@ export default function PostEditor({ post, categories }) {
       const result = await savePostDraft(post.id, revision.id, fields, note);
       setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
       if (result.ok) {
+        // The server removes anything not allowed (e.g. images pasted from other websites); show what was kept.
+        if (result.removed) {
+          setFields((f) => ({ ...f, body: result.body }));
+          setBodyVersion((v) => v + 1);
+          setMessage({ type: "ok", text: `${result.ok} Some pasted content (outside images or unsafe links) was removed.` });
+        }
         setRevision({ id: result.revisionId, number: result.number });
         setSavedSlug(fields.slug);
         setDirty(false);
@@ -118,7 +127,7 @@ export default function PostEditor({ post, categories }) {
 
         <fieldset className="group">
           <legend>Article</legend>
-          <p className="muted small">The article editor (headings, images, links, YouTube, tables…) comes in the next step.</p>
+          <ArticleEditor content={fields.body} key={bodyVersion} onChange={(body) => set("body", body)} />
         </fieldset>
       </div>
 

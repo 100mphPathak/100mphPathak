@@ -7,6 +7,9 @@ import { can } from "../app/lib/permissions.js";
 import { sniffImage } from "../app/lib/storage.js";
 import { seo } from "../app/seo.js";
 import { slugify } from "../app/lib/slug.js";
+import { getSchema } from "@tiptap/core";
+import { cleanArticle, youtubeId } from "../app/content/article.js";
+import { articleExtensions } from "../app/content/article-extensions.js";
 
 const clone = (v) => structuredClone(v);
 const messages = (r) => r.errors.map((e) => `${e.path} ${e.message}`).join("\n");
@@ -131,4 +134,74 @@ test("SEO: sharing fields fall back to the page title and description", () => {
   assert.equal(custom.openGraph.description, "Upcoming events");
   assert.equal(custom.openGraph.images[0].url, "/assets/ground.webp");
   assert.equal(custom.twitter.images[0], "/assets/ground.webp");
+});
+
+test("article cleaner keeps normal writing and removes anything unsafe", () => {
+  process.env.NEXT_PUBLIC_SUPABASE_URL = "https://abc.supabase.co";
+  const p = (...content) => ({ type: "paragraph", content });
+  const t = (text, marks) => (marks ? { type: "text", text, marks } : { type: "text", text });
+  const ours = "https://abc.supabase.co/storage/v1/object/public/media/uploads/2026/a.webp";
+  const body = {
+    type: "doc",
+    content: [
+      { type: "heading", attrs: { level: 2, textAlign: "center" }, content: [t("Arm speed")] },
+      p(t("It comes from the "), t("whole body", [{ type: "bold" }]), t(".")),
+      p(t("evil", [{ type: "link", attrs: { href: "javascript:alert(1)" } }]), t("good", [{ type: "link", attrs: { href: "/admission/" } }])),
+      p(t("red", [{ type: "textStyle", attrs: { color: "#D92D20" } }]), t("css", [{ type: "textStyle", attrs: { color: "red; background:url(x)" } }])),
+      { type: "script", content: [t("alert(1)")] },
+      { type: "paragraph", attrs: { onclick: "alert(1)", textAlign: "middle" }, content: [t("x")] },
+      { type: "image", attrs: { src: ours, alt: "Run-up", width: 800, height: 600, onerror: "alert(1)" } },
+      { type: "image", attrs: { src: "https://evil.example/track.png" } },
+      { type: "youtube", attrs: { src: "https://youtu.be/-iHp0AR06XE?t=5", start: 5 } },
+      { type: "youtube", attrs: { src: "https://evil.example/embed/-iHp0AR06XE" } },
+      { type: "ctaButton", attrs: { label: "Book now", href: "/assessment-booking/" } },
+      { type: "ctaButton", attrs: { label: "Click", href: "data:text/html,hi" } },
+      { type: "bulletList", content: [{ type: "listItem", content: [{ type: "script" }] }] },
+    ],
+  };
+  const { doc, removed } = cleanArticle(body);
+  assert.deepEqual(doc.content[0], { type: "heading", attrs: { level: 2, textAlign: "center" }, content: [t("Arm speed")] });
+  assert.deepEqual(doc.content[1], body.content[1]); // normal paragraph unchanged
+  assert.deepEqual(doc.content[2], p(t("evil"), t("good", [{ type: "link", attrs: { href: "/admission/" } }])));
+  assert.deepEqual(doc.content[3], p(t("red", [{ type: "textStyle", attrs: { color: "#d92d20" } }]), t("css")));
+  assert.deepEqual(doc.content[4], p(t("x"))); // script gone, unknown attributes gone
+  assert.deepEqual(doc.content[5], { type: "image", attrs: { src: ours, alt: "Run-up", width: 800, height: 600 } });
+  assert.deepEqual(doc.content[6], { type: "youtube", attrs: { src: "https://www.youtube.com/watch?v=-iHp0AR06XE", start: 5 } });
+  assert.deepEqual(doc.content[7], { type: "ctaButton", attrs: { label: "Book now", href: "/assessment-booking/" } });
+  assert.equal(doc.content.length, 8); // foreign image, fake video, unsafe button and emptied list removed
+  assert.ok(removed >= 8);
+  assert.equal(cleanArticle(doc).removed, 0); // cleaning twice changes nothing
+  getSchema(articleExtensions).nodeFromJSON(doc).check(); // what the cleaner keeps, the editor can open
+
+  assert.ok(cleanArticle({ type: "doc", content: [p(t("x".repeat(600_000)))] }).error);
+  assert.ok(cleanArticle("<script>").error);
+  assert.deepEqual(cleanArticle(null).doc, { type: "doc", content: [] });
+  assert.equal(youtubeId("https://www.youtube.com/watch?v=-iHp0AR06XE&list=x"), "-iHp0AR06XE");
+  assert.equal(youtubeId("https://www.youtube.com.evil.example/watch?v=-iHp0AR06XE"), null);
+});
+
+test("the editor's blocks and styles are exactly the ones the cleaner allows", () => {
+  const schema = getSchema(articleExtensions);
+  const t = { type: "text", text: "x" };
+  const cell = (type) => ({ type, content: [{ type: "paragraph", content: [t] }] });
+  const sample = {
+    type: "doc",
+    content: [
+      { type: "paragraph", content: [t, { type: "hardBreak" }, { type: "text", text: "y", marks: ["bold", "italic", "underline", "strike"].map((type) => ({ type })) }] },
+      { type: "blockquote", content: [{ type: "paragraph", content: [t] }] },
+      { type: "orderedList", attrs: { start: 3 }, content: [{ type: "listItem", content: [{ type: "paragraph", content: [t] }] }] },
+      { type: "bulletList", content: [{ type: "listItem", content: [{ type: "paragraph", content: [t] }] }] },
+      { type: "horizontalRule" },
+      { type: "table", content: [{ type: "tableRow", content: [cell("tableHeader")] }, { type: "tableRow", content: [cell("tableCell")] }] },
+      { type: "image", attrs: { src: "/assets/ground.webp", alt: "Ground", width: 10, height: 10 } },
+      { type: "youtube", attrs: { src: "https://www.youtube.com/watch?v=-iHp0AR06XE" } },
+      { type: "ctaButton", attrs: { label: "Go", href: "/" } },
+    ],
+  };
+  const { doc, removed } = cleanArticle(sample);
+  assert.equal(removed, 0);
+  schema.nodeFromJSON(doc).check();
+  // Code blocks are switched off in the editor, so the cleaner must not know them either.
+  assert.equal(schema.nodes.codeBlock, undefined);
+  assert.equal(cleanArticle({ type: "doc", content: [{ type: "codeBlock", content: [t] }] }).removed, 1);
 });

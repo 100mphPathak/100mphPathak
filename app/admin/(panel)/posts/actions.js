@@ -6,6 +6,7 @@ import { transaction } from "../../../lib/db";
 import { authorize } from "../../../lib/session";
 import { slugify } from "../../../lib/slug";
 import { publicUrl } from "../../../lib/storage";
+import { cleanArticle } from "../../../content/article";
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/; // same rule as the database (003_blog.sql)
 const STALE = "Someone else saved this post while you were editing. Reload to see their changes, then make yours again.";
@@ -65,8 +66,8 @@ export async function createPost(_prev, formData) {
   redirect(`/admin/posts/${postId}`); // Post/Redirect/Get: refreshing can't create the post twice
 }
 
-// Saves the editor's fields as a new draft revision. The article body and SEO are carried
-// over from the current draft until their editors exist (Tasks 4 and 5).
+// Saves the editor's fields as a new draft revision. SEO is carried over from the current
+// draft until its editor exists (Task 5).
 // baseRevisionId = the draft the editor started from; if someone saved since, we refuse (optimistic locking).
 export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
   const { user, error } = await authorize("post.edit");
@@ -89,10 +90,10 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
 
       const { rows: [rev] } = await db.query(
         `insert into post_revisions (post_id, number, title, excerpt, author, category_id, cover_image, body, seo, note, created_by)
-         select $1, (select max(number) + 1 from post_revisions where post_id = $1), $2, $3, $4, $5, $6, d.body, d.seo, $7, $8
+         select $1, (select max(number) + 1 from post_revisions where post_id = $1), $2, $3, $4, $5, $6, $10, d.seo, $7, $8
          from post_revisions d where d.id = $9 -- d = the current draft (checked above)
          returning id, number`,
-        [postId, data.title, data.excerpt, data.author, data.categoryId, data.coverImage, String(note).trim().slice(0, 300) || null, user.email, baseRevisionId],
+        [postId, data.title, data.excerpt, data.author, data.categoryId, data.coverImage, String(note).trim().slice(0, 300) || null, user.email, baseRevisionId, data.body],
       );
       await db.query(
         `update posts set slug = $1, draft_revision_id = $2, updated_by = $3, updated_at = now() where id = $4`,
@@ -102,7 +103,7 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
         `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'post.save_draft', 'post', $3, $4)`,
         [user.id, user.email, data.slug, { revision: rev.number }],
       );
-      return { ok: `Draft saved (version ${rev.number}).`, revisionId: String(rev.id), number: rev.number };
+      return { ok: `Draft saved (version ${rev.number}).`, revisionId: String(rev.id), number: rev.number, body: data.body, removed: data.removed };
     });
   } catch (e) {
     if (e instanceof UserError) return { error: e.message };
@@ -161,7 +162,9 @@ function cleanFields(fields) {
 
   const coverImage = cleanImage(fields?.coverImage);
   if (coverImage === undefined) return { error: "The cover photo must come from the media library." };
-  return { title, slug, excerpt, author, categoryId, coverImage };
+  const article = cleanArticle(fields?.body);
+  if (article.error) return { error: article.error };
+  return { title, slug, excerpt, author, categoryId, coverImage, body: article.doc, removed: article.removed };
 }
 
 // null = no cover. undefined = not allowed. Only our own storage or the site's /assets.

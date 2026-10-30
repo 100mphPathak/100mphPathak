@@ -128,3 +128,29 @@ dialog.a-dialog::backdrop { background: #0d172a99; }
 .diff .before { background: #fdf0ef; }
 .diff .after { background: #edf8f0; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Blog article editor (Tiptap) */
+.article-editor { border: 1px solid #c6cdd8; border-radius: 8px; background: #fff; margin-bottom: 14px; }
+.article-toolbar { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding: 6px; background: #f7f8fa; border-bottom: 1px solid var(--a-line); border-radius: 8px 8px 0 0; }
+.article-toolbar.sub { position: static; border-radius: 0; background: #eef3fb; }
+.article-toolbar button { min-width: 32px; height: 32px; padding: 0 8px; font: inherit; font-size: 14px; border: 1px solid transparent; border-radius: 6px; background: none; color: var(--a-ink); cursor: pointer; }
+.article-toolbar button:hover:not(:disabled) { background: #e6eaf0; }
+.article-toolbar button.on { background: var(--a-accent); color: #fff; }
+.article-toolbar button:disabled { opacity: .35; cursor: default; }
+.article-toolbar select { width: auto; padding: 5px 8px; font-size: 14px; }
+.article-toolbar .sep { width: 1px; height: 22px; background: var(--a-line); margin: 0 4px; }
+.article-body { min-height: 320px; max-height: 70vh; overflow-y: auto; padding: 16px 20px; outline: none; line-height: 1.65; }
+.article-body:focus-visible { box-shadow: inset 0 0 0 2px #7aa2e3; }
+.article-body > * + * { margin-top: .75em; }
+.article-body h2 { font-size: 1.5em; margin: 1.2em 0 .4em; }
+.article-body h3 { font-size: 1.2em; margin: 1em 0 .3em; }
+.article-body a { color: #2458ee; }
+.article-body blockquote { margin: 1em 0; padding: 4px 16px; border-left: 4px solid #526783; color: #3d4757; }
+.article-body img { max-width: 100%; height: auto; border-radius: 6px; }
+.article-body div[data-youtube-video] iframe { width: 100%; max-width: 640px; height: auto; aspect-ratio: 16 / 9; border: 0; }
+.article-body table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.article-body th, .article-body td { border: 1px solid #c6cdd8; padding: 6px 8px; vertical-align: top; }
+.article-body th { background: #f1f4f8; }
+.article-body .selectedCell { background: #dfe9fb; }
+.article-body .article-cta { text-align: center; }
+.article-body .ProseMirror-selectednode { outline: 3px solid #7aa2e3; outline-offset: 2px; }
