@@ -43,7 +43,8 @@ export async function requestReset(_prev, formData) {
   if (!email) return { error: "Enter your email." };
   // Never build this from the Host header: a forged host would send the reset link elsewhere.
   const origin = process.env.ADMIN_ORIGIN ?? SITE_URL;
-  await (await supabase()).auth.resetPasswordForEmail(email, { redirectTo: `${origin}/api/auth/callback/?next=/admin/reset-password/` });
+  const { error } = await (await supabase()).auth.resetPasswordForEmail(email, { redirectTo: `${origin}/api/auth/callback/?next=/admin/reset-password/` });
+  if (error) console.error("Password reset email failed:", error.message); // shows in Vercel → Logs
   // Same answer whether or not the account exists, so emails can't be probed.
   return { ok: "If that email has an account, a reset link is on its way." };
 }
