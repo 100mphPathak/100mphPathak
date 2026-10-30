@@ -11,7 +11,6 @@ const LINK_RULE = "Use an address starting with https://, /, #, mailto: or tel:"
 
 // The WordPress-style article editor. `content` is the saved JSON; every change is reported to onChange.
 export default function ArticleEditor({ content, onChange }) {
-  const [picking, setPicking] = useState(false);
   const editor = useEditor({
     extensions: articleExtensions,
     content,
@@ -20,11 +19,25 @@ export default function ArticleEditor({ content, onChange }) {
     onUpdate: ({ editor: e }) => onChange(e.getJSON()),
   });
 
+  // The editor is created after the first render, so it's null for a moment. The toolbar is drawn only
+  // once it exists: useEditorState reads its first value immediately and would keep a null forever.
+  if (!editor) return <p className="muted small">Loading the editor…</p>;
+  return (
+    <div className="article-editor">
+      <Toolbar editor={editor} />
+      <EditorContent editor={editor} />
+    </div>
+  );
+}
+
+function Toolbar({ editor }) {
+  const [picking, setPicking] = useState(false);
+
   // The toolbar only re-renders when one of these values changes, not on every keystroke.
   const s = useEditorState({
     editor,
     selector: ({ editor: e }) =>
-      e && {
+      ({
         block: e.isActive("heading", { level: 2 }) ? "h2" : e.isActive("heading", { level: 3 }) ? "h3" : "p",
         bold: e.isActive("bold"),
         italic: e.isActive("italic"),
@@ -39,10 +52,9 @@ export default function ArticleEditor({ content, onChange }) {
         table: e.isActive("table"),
         undo: e.can().undo(),
         redo: e.can().redo(),
-      },
+      }),
   });
 
-  if (!editor || !s) return <p className="muted small">Loading the editor…</p>;
   const run = () => editor.chain().focus();
 
   const setBlock = (value) => {
@@ -80,7 +92,7 @@ export default function ArticleEditor({ content, onChange }) {
   };
 
   return (
-    <div className="article-editor">
+    <>
       <div aria-label="Formatting" className="article-toolbar" role="toolbar">
         <select aria-label="Text type" onChange={(e) => setBlock(e.target.value)} value={s.block}>
           <option value="p">Paragraph</option>
@@ -132,15 +144,14 @@ export default function ArticleEditor({ content, onChange }) {
         </div>
       )}
 
-      <EditorContent editor={editor} />
       {picking && <MediaPicker onClose={() => setPicking(false)} onPick={addImage} />}
-    </div>
+    </>
   );
 }
 
 function Tool({ label, on, disabled, onClick, children }) {
   return (
-    <button aria-label={label} aria-pressed={on} className={on ? "on" : ""} disabled={disabled} onClick={onClick} title={label} type="button">
+    <button aria-label={label} aria-pressed={on} className={on ? "tool on" : "tool"} disabled={disabled} onClick={onClick} title={label} type="button">
       {children}
     </button>
   );
