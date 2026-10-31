@@ -6,10 +6,10 @@ import { slugify } from "../../../../lib/slug";
 import ImageField from "../../image-field";
 import ArticleEditor from "./article-editor";
 import SeoPanel from "./seo-panel";
-import { deleteDraftPost, savePostDraft } from "../actions";
+import { deleteDraftPost, publishPost, savePostDraft, setPostOffline } from "../actions";
 
 // The post editor form. Holds every field in state; nothing is stored until "Save draft".
-export default function PostEditor({ post, categories }) {
+export default function PostEditor({ post, categories, canPublish }) {
   const [fields, setFields] = useState({
     title: post.title,
     slug: post.slug,
@@ -22,6 +22,8 @@ export default function PostEditor({ post, categories }) {
   });
   const [revision, setRevision] = useState({ id: post.revision_id, number: post.number });
   const [savedSlug, setSavedSlug] = useState(post.slug);
+  const [status, setStatus] = useState(post.status);
+  const [liveRevisionId, setLiveRevisionId] = useState(post.published_revision_id);
   const [bodyVersion, setBodyVersion] = useState(0); // bumped to reload the editor with what the server kept
   const [note, setNote] = useState("");
   const [dirty, setDirty] = useState(false);
@@ -64,6 +66,27 @@ export default function PostEditor({ post, categories }) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+  // Publish / take offline / put back online. All refuse while there are unsaved changes.
+  const act = (action, after) =>
+    startTransition(async () => {
+      const result = await action();
+      setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
+      if (result.ok) after();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  const publish = () => {
+    if (!window.confirm(post.was_published || liveRevisionId ? "Publish these changes to the live blog?" : "Publish this post? It will appear on the blog.")) return;
+    act(() => publishPost(post.id, revision.id), () => {
+      setStatus("published");
+      setLiveRevisionId(revision.id);
+    });
+  };
+  const toggleOffline = () => {
+    const offline = status !== "unpublished";
+    if (offline && !window.confirm("Take this post offline? Visitors will get “page not found” until you put it back.")) return;
+    act(() => setPostOffline(post.id, offline), () => setStatus(offline ? "unpublished" : "published"));
+  };
+
   const remove = () => {
     if (!window.confirm(`Delete “${fields.title}” and all its versions? This can’t be undone.`)) return;
     setDirty(false); // the page is about to go away on purpose
@@ -73,7 +96,8 @@ export default function PostEditor({ post, categories }) {
     });
   };
 
-  const canDelete = !post.was_published;
+  const canDelete = !post.was_published && !liveRevisionId;
+  const hasUnpublished = revision.id !== liveRevisionId;
   const slugChangedAfterPublish = post.was_published && fields.slug !== savedSlug;
 
   return (
@@ -138,8 +162,30 @@ export default function PostEditor({ post, categories }) {
       <div className="a-card actions-row">
         <label className="sr-only" htmlFor="note">Note about this change</label>
         <input id="note" maxLength={300} onChange={(e) => setNote(e.target.value)} placeholder="Note about this change (optional)" style={{ flex: "1 1 260px" }} type="text" value={note} />
-        <button className="btn" disabled={pending || !dirty} onClick={save} type="button">{pending ? "Saving…" : "Save draft"}</button>
+        <button className="btn" disabled={pending || !dirty} onClick={save} type="button">{pending ? "Working…" : "Save draft"}</button>
       </div>
+
+      <div className="a-card actions-row">
+        <span className={`badge ${status}`}>{status}</span>
+        {liveRevisionId && hasUnpublished && <span className="badge draft">unpublished changes</span>}
+        <span style={{ flex: 1 }} />
+        <Link className="btn secondary" href={`/admin/posts/${post.id}/revisions`}>Version history</Link>
+        {canPublish ? (
+          <>
+            {liveRevisionId && (
+              <button className="btn danger" disabled={pending || dirty} onClick={toggleOffline} type="button">
+                {status === "unpublished" ? "Put back online" : "Take offline"}
+              </button>
+            )}
+            <button className="btn" disabled={pending || dirty || !hasUnpublished} onClick={publish} title={dirty ? "Save your draft first" : undefined} type="button">
+              Publish
+            </button>
+          </>
+        ) : (
+          <span className="small muted">A content administrator will publish your saved draft.</span>
+        )}
+      </div>
+      {canPublish && dirty && <p className="small muted">Save your draft before publishing.</p>}
     </>
   );
 }

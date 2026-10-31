@@ -114,6 +114,99 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
   }
 }
 
+// Makes the current draft the live version. revisionId = the draft the editor shows; if someone saved
+// since, we refuse, so nobody publishes a version they haven't seen.
+export async function publishPost(postId, revisionId) {
+  const { user, error } = await authorize("post.publish");
+  if (error) return { error };
+  try {
+    const result = await transaction(async (db) => {
+      const { rows: [post] } = await db.query(`select slug, draft_revision_id from posts where id = $1 for update`, [postId]);
+      if (!post) return { error: "This post no longer exists." };
+      if (String(post.draft_revision_id) !== String(revisionId)) return { error: STALE, stale: true };
+      // published_at is the date shown on the article: set the first time only, kept when fixing typos later.
+      await db.query(
+        `update posts set published_revision_id = draft_revision_id, status = 'published', published_at = coalesce(published_at, now()),
+           updated_by = $1, updated_at = now() where id = $2`,
+        [user.email, postId],
+      );
+      await db.query(
+        `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'post.publish', 'post', $3, $4)`,
+        [user.id, user.email, post.slug, { revisionId: String(revisionId) }],
+      );
+      return { ok: "Published. The live blog now shows this version.", slug: post.slug };
+    });
+    if (result.ok) refreshPublic(result.slug); // only after the transaction committed
+    return result;
+  } catch (e) {
+    console.error("[cms] publishPost failed", e);
+    return { error: "Publishing failed. The live blog is unchanged." };
+  }
+}
+
+// Takes a published post offline (visitors get "not found") or puts it back. Its versions are kept.
+export async function setPostOffline(postId, offline) {
+  const { user, error } = await authorize("post.publish");
+  if (error) return { error };
+  try {
+    const result = await transaction(async (db) => {
+      const { rows: [post] } = await db.query(`select slug, published_revision_id from posts where id = $1 for update`, [postId]);
+      if (!post) return { error: "This post no longer exists." };
+      if (!post.published_revision_id) return { error: "This post has never been published. Use Publish instead." };
+      await db.query(`update posts set status = $1, updated_by = $2, updated_at = now() where id = $3`, [offline ? "unpublished" : "published", user.email, postId]);
+      await db.query(
+        `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id) values ($1, $2, $3, 'post', $4)`,
+        [user.id, user.email, offline ? "post.unpublish" : "post.republish", post.slug],
+      );
+      return { ok: offline ? "The post is offline. Visitors now get “page not found”." : "The post is live again.", slug: post.slug };
+    });
+    if (result.ok) refreshPublic(result.slug);
+    return result;
+  } catch (e) {
+    console.error("[cms] setPostOffline failed", e);
+    return { error: "Could not change the post’s status." };
+  }
+}
+
+// Copies an old version into a new draft. History is never rewritten; nothing goes live until published.
+export async function restorePostRevision(postId, revisionId) {
+  const { user, error } = await authorize("post.publish");
+  if (error) return { error };
+  try {
+    return await transaction(async (db) => {
+      const { rows: [post] } = await db.query(`select slug from posts where id = $1 for update`, [postId]);
+      if (!post) return { error: "This post no longer exists." };
+      const { rows: [old] } = await db.query(`select number from post_revisions where id = $1 and post_id = $2`, [revisionId, postId]);
+      if (!old) return { error: "That version no longer exists." };
+      const { rows: [rev] } = await db.query(
+        `insert into post_revisions (post_id, number, title, excerpt, author, category_id, cover_image, body, seo, note, created_by)
+         select post_id, (select max(number) + 1 from post_revisions where post_id = $1), title, excerpt, author, category_id, cover_image, body, seo, $3, $4
+         from post_revisions where id = $2
+         returning id, number`,
+        [postId, revisionId, `Restored from version ${old.number}`, user.email],
+      );
+      await db.query(`update posts set draft_revision_id = $1, updated_by = $2, updated_at = now() where id = $3`, [rev.id, user.email, postId]);
+      await db.query(
+        `insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details) values ($1, $2, 'post.restore', 'post', $3, $4)`,
+        [user.id, user.email, post.slug, { from: old.number, to: rev.number }],
+      );
+      return { ok: `Version ${old.number} restored as a new draft (version ${rev.number}). Review it, then publish.` };
+    });
+  } catch (e) {
+    console.error("[cms] restorePostRevision failed", e);
+    return { error: "Could not restore that version." };
+  } finally {
+    revalidatePath("/admin/posts");
+  }
+}
+
+// The admin list, plus the public blog pages (built in Task 7) so visitors see the change right away.
+function refreshPublic(slug) {
+  revalidatePath("/admin/posts");
+  revalidatePath("/blogs/");
+  revalidatePath(`/blogs/${slug}/`);
+}
+
 // Removes a post that has never been published (e.g. a test post), with all its versions.
 // Published posts are taken offline instead, so their history is kept.
 export async function deleteDraftPost(postId) {
