@@ -16,7 +16,9 @@ export default function ArticleEditor({ content, onChange }) {
     content,
     immediatelyRender: false, // the page is rendered on the server first; the editor starts in the browser
     editorProps: { attributes: { class: "article-body", "aria-label": "Article" } },
-    onUpdate: ({ editor: e }) => onChange(e.getJSON()),
+    // getJSON() reuses ProseMirror's attribute objects, which have no prototype (e.g. a link's { href }).
+    // React sends those to the server as unreadable placeholders, so copy everything into plain data first.
+    onUpdate: ({ editor: e }) => onChange(JSON.parse(JSON.stringify(e.getJSON()))),
   });
 
   // The editor is created after the first render, so it's null for a moment. The toolbar is drawn only
