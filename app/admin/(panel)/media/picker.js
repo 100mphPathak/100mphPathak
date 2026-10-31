@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { listMedia, uploadMedia } from "./actions";
+import { callServer } from "../call-server";
 import { prepareUpload, sendUpload } from "./prepare-upload";
 
 // Modal to choose an image (uploaded or built-in) or upload a new one.
@@ -12,7 +13,12 @@ export default function MediaPicker({ onPick, onClose }) {
   const [message, setMessage] = useState(null);
   const [pending, startTransition] = useTransition();
 
-  const load = (query = q) => startTransition(async () => setData(await listMedia({ q: query })));
+  const load = (query = q) =>
+    startTransition(async () => {
+      const result = await callServer(() => listMedia({ q: query }));
+      if (result.error) setMessage({ type: "err", text: result.error });
+      else setData(result);
+    });
 
   useEffect(() => {
     dialog.current?.showModal();

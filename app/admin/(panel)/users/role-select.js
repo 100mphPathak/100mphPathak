@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { ROLES } from "../../../lib/permissions";
+import { callServer } from "../call-server";
 import { setRole } from "./actions";
 
 export default function RoleSelect({ userId, role }) {
@@ -12,7 +13,7 @@ export default function RoleSelect({ userId, role }) {
     const label = next ? ROLES[next] : "no access";
     if (!window.confirm(`Change this person’s access to: ${label}?`)) return;
     startTransition(async () => {
-      const result = await setRole(userId, next || null);
+      const result = await callServer(() => setRole(userId, next || null));
       setMessage(result.ok ?? result.error);
       if (result.ok) setValue(next);
     });

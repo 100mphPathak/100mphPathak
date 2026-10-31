@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { createContext, useContext, useEffect, useState, useTransition } from "react";
 import ImageField from "../../image-field";
+import { callServer } from "../../call-server";
 import { publish, saveDraft, setUnpublished } from "./actions";
 
 const SECTION_LABELS = {
@@ -87,7 +88,7 @@ export default function Editor(props) {
 
   const run = (fn, after) =>
     startTransition(async () => {
-      const result = await fn();
+      const result = await callServer(fn);
       setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error, errors: result.errors });
       if (result.ok) after?.(result);
       window.scrollTo({ top: 0, behavior: "smooth" });

@@ -6,6 +6,7 @@ import { slugify } from "../../../../lib/slug";
 import ImageField from "../../image-field";
 import ArticleEditor from "./article-editor";
 import SeoPanel from "./seo-panel";
+import { callServer } from "../../call-server";
 import { deleteDraftPost, publishPost, savePostDraft, setPostOffline } from "../actions";
 
 // The post editor form. Holds every field in state; nothing is stored until "Save draft".
@@ -49,7 +50,7 @@ export default function PostEditor({ post, categories, canPublish }) {
 
   const save = () =>
     startTransition(async () => {
-      const result = await savePostDraft(post.id, revision.id, fields, note);
+      const result = await callServer(() => savePostDraft(post.id, revision.id, fields, note));
       setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
       if (result.ok) {
         // The server removes anything not allowed (e.g. images pasted from other websites); show what was kept.
@@ -69,7 +70,7 @@ export default function PostEditor({ post, categories, canPublish }) {
   // Publish / take offline / put back online. All refuse while there are unsaved changes.
   const act = (action, after) =>
     startTransition(async () => {
-      const result = await action();
+      const result = await callServer(action);
       setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
       if (result.ok) after();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -91,7 +92,7 @@ export default function PostEditor({ post, categories, canPublish }) {
     if (!window.confirm(`Delete “${fields.title}” and all its versions? This can’t be undone.`)) return;
     setDirty(false); // the page is about to go away on purpose
     startTransition(async () => {
-      const result = await deleteDraftPost(post.id); // on success the server redirects to the list
+      const result = await callServer(() => deleteDraftPost(post.id)); // on success the server redirects to the list
       if (result?.error) setMessage({ type: "err", text: result.error });
     });
   };

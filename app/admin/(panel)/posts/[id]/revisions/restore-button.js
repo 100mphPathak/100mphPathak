@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { callServer } from "../../../call-server";
 import { restorePostRevision } from "../../actions";
 
 export default function RestoreButton({ postId, revisionId, number }) {
@@ -10,7 +11,7 @@ export default function RestoreButton({ postId, revisionId, number }) {
   const restore = () => {
     if (!window.confirm(`Restore version ${number} as a new draft? Nothing goes live until you publish it.`)) return;
     startTransition(async () => {
-      const result = await restorePostRevision(postId, revisionId);
+      const result = await callServer(() => restorePostRevision(postId, revisionId));
       window.alert(result.ok ?? result.error);
       if (result.ok) router.push(`/admin/posts/${postId}`);
     });

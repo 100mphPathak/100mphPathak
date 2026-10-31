@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { bytes, when } from "../format";
 import { deleteMedia, listMedia, mediaUsage, updateAlt, uploadMedia } from "./actions";
+import { callServer } from "../call-server";
 import { prepareUpload, sendUpload } from "./prepare-upload";
 
 export default function Library({ canDelete }) {
@@ -12,14 +13,19 @@ export default function Library({ canDelete }) {
   const [message, setMessage] = useState(null);
   const [pending, startTransition] = useTransition();
 
-  const load = (query = q, p = page) => startTransition(async () => setData(await listMedia({ q: query, page: p })));
+  const load = (query = q, p = page) =>
+    startTransition(async () => {
+      const result = await callServer(() => listMedia({ q: query, page: p }));
+      if (result.error) setMessage({ type: "err", text: result.error });
+      else setData(result);
+    });
   useEffect(() => load("", 1), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const act = (fn) =>
     startTransition(async () => {
-      const result = await fn();
+      const result = await callServer(fn);
       setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
-      if (result.ok) setData(await listMedia({ q, page }));
+      if (result.ok) load();
     });
 
   const pages = data ? Math.max(1, Math.ceil(data.total / data.perPage)) : 1;
@@ -111,7 +117,7 @@ function MediaTile({ item, canDelete, disabled, onAct }) {
       </label>
       <div className="actions-row">
         <button className="btn secondary small" disabled={disabled || alt === item.alt} onClick={() => onAct(() => updateAlt(item.id, alt))} type="button">Save</button>
-        <button className="btn secondary small" onClick={async () => setUsed(await mediaUsage(item.id))} type="button">Where used?</button>
+        <button className="btn secondary small" onClick={async () => setUsed(await callServer(() => mediaUsage(item.id)))} type="button">Where used?</button>
         {canDelete && (
           <button
             className="btn danger small"
@@ -123,7 +129,7 @@ function MediaTile({ item, canDelete, disabled, onAct }) {
           </button>
         )}
       </div>
-      {used && <span className="small">{used.pages?.length ? `Used on: ${used.pages.map((p) => p.title).join(", ")}` : "Not used on any page."}</span>}
+      {used && <span className="small">{used.error ? used.error : used.pages?.length ? `Used on: ${used.pages.map((p) => p.title).join(", ")}` : "Not used on any page."}</span>}
       <span className="small muted">Note: changing the description here doesn’t change text already placed on pages.</span>
     </div>
   );
