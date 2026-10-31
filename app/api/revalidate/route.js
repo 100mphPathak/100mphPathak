@@ -11,6 +11,7 @@ export async function POST(request) {
     
   for (const slug of Object.keys(PAGES)) revalidateTag(`page:${slug}`, { expire: 0 });
   revalidateTag("sitemap", { expire: 0 });
+  revalidateTag("posts", { expire: 0 }); // blog posts (POSTS_TAG in lib/posts.js)
   revalidatePath("/", "layout");
   return Response.json({ ok: true, cleared: Object.keys(PAGES).length });
 

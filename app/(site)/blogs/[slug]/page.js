@@ -64,7 +64,7 @@ export default async function BlogPost({ params }) {
         </p>
       </article>
       {/* JSON.stringify escapes quotes; "<" is escaped too so text can never close the script tag. */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
     </main>
   );
 }

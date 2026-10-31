@@ -23,6 +23,17 @@ export default {
   async headers() {
     return [
       {
+        // Basic browser protections for every page.
+        source: "/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" }, // no clickjacking: other sites can't show us in a frame
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" }, // same rule, modern form
+          { key: "X-Content-Type-Options", value: "nosniff" }, // files are only treated as what they say they are
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" }, // other sites see our domain, not full addresses
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+      {
         // public/assets filenames aren't hashed, so cache for a week and revalidate in the background.
         source: "/assets/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }],
