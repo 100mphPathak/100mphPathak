@@ -118,7 +118,7 @@ export default {
       { photo: { src: "/assets/player3.webp", alt: "Akash Gautam", width: 500, height: 500 }, tag: "Pathak100MPH PLAYER", name: "Akash Gautam", team: "Indian Street Premier League" },
     ],
   },
-  // Partners section shown on most pages (Action Analysis has its own copy).
+  // Partners section shown on most pages.
   partners: {
     eyebrow: "STRONGER, TOGETHER.",
     heading: "Partners of Pathak100MPH",

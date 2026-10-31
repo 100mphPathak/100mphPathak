@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Script from "next/script";
 
 export default function SiteInteractions() {
   const pathname = usePathname();
@@ -318,13 +317,5 @@ export default function SiteInteractions() {
         .forEach((dialog) => dialog.close());
     };
   }, [pathname]);
-  return ["/action-analysis"].some(
-    (route) => pathname.startsWith(route),
-  ) ? (
-    <Script
-      src="https://www.instagram.com/embed.js"
-      strategy="afterInteractive"
-      onReady={() => window.instgrm?.Embeds.process()}
-    />
-  ) : null;
+  return null;
 }

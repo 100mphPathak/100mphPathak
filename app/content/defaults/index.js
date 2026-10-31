@@ -4,7 +4,6 @@ import blogs from "./blogs.js";
 import events from "./events.js";
 import ankitPathak from "./ankit-pathak.js";
 import assessmentTrial from "./assessment-trial.js";
-import actionAnalysis from "./action-analysis.js";
 import facilities from "./facilities.js";
 import onlineTraining from "./online-training.js";
 import scholarship from "./scholarship.js";
@@ -66,13 +65,6 @@ export const PAGES = {
     route: "/online-bowling-training/",
     content: onlineTraining,
     seo: seo("Online Fast Bowling Training | Pathak100MPH", "Personalised online fast bowling training with Coach Ankit Pathak’s team. Regular drills, video analysis and monthly live guidance through your private WhatsApp group."),
-  },
-  "action-analysis": {
-    slug: "action-analysis",
-    title: "Action Analysis",
-    route: "/action-analysis/",
-    content: actionAnalysis,
-    seo: seo("Bowling Action Analysis with Ankit Pathak | ₹499", "Personal fast bowling action analysis with Ankit Pathak on Google Meet for ₹499. Share your videos and get guidance on your next steps."),
   },
   scholarship: {
     slug: "scholarship",

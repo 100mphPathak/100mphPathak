@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { listMedia, uploadMedia } from "./actions";
+import { prepareUpload, sendUpload } from "./prepare-upload";
 
 // Modal to choose an image (uploaded or built-in) or upload a new one.
 export default function MediaPicker({ onPick, onClose }) {
@@ -20,7 +21,7 @@ export default function MediaPicker({ onPick, onClose }) {
 
   const upload = (form) =>
     startTransition(async () => {
-      const result = await uploadMedia(new FormData(form));
+      const result = await sendUpload(uploadMedia, await prepareUpload(form));
       if (result.error) return setMessage({ type: "err", text: result.error });
       onPick(result.item);
     });
@@ -40,7 +41,7 @@ export default function MediaPicker({ onPick, onClose }) {
         }}
       >
         <label className="small" style={{ flex: "1 1 220px" }}>
-          Upload a new image (JPEG, PNG, WebP or AVIF, up to 4 MB)
+          Upload a new image (JPEG, PNG, WebP or AVIF; large photos are resized automatically)
           <input accept="image/jpeg,image/png,image/webp,image/avif" name="file" required type="file" />
         </label>
         <input aria-label="Image description" name="alt" placeholder="Describe the image" style={{ flex: "1 1 200px" }} type="text" />

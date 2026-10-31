@@ -6,7 +6,7 @@ import ImageField from "../../image-field";
 import { publish, saveDraft, setUnpublished } from "./actions";
 
 const SECTION_LABELS = {
-  seo: "Default SEO and sharing",
+  seo: "Google & link previews (used when a page has none of its own)",
   announcement: "Announcement bar (top of every page)",
   header: "Header and main menu",
   mobileMenu: "Mobile menu",
@@ -138,7 +138,7 @@ export default function Editor(props) {
           {seo && (
             <div className="tabs" role="tablist">
               <button aria-selected={tab === "content"} onClick={() => setTab("content")} role="tab" type="button">Content</button>
-              <button aria-selected={tab === "seo"} onClick={() => setTab("seo")} role="tab" type="button">SEO &amp; sharing</button>
+              <button aria-selected={tab === "seo"} onClick={() => setTab("seo")} role="tab" type="button">Google &amp; link preview</button>
             </div>
           )}
           {tab === "content" ? (
@@ -318,20 +318,25 @@ function SeoForm({ value, onChange, permissions, slug }) {
   );
   return (
     <div className="a-card">
-      {disabled && <p className="notice warn">Only content administrators can change SEO settings.</p>}
-      {text("title", "Page title (shown in Google and the browser tab)", 60)}
-      {text("description", "Meta description (the snippet under the title in Google)", 160)}
+      {disabled && <p className="notice warn">Only content administrators can change how this page appears on Google and in link previews.</p>}
+      <p className="small muted">
+        <strong>Google</strong>: the blue title and the short text people see for this page in Google search results.{" "}
+        <strong>Link preview</strong>: the picture, title and text that appear when someone sends this page’s link on WhatsApp, Facebook or LinkedIn.
+      </p>
+      <h3>On Google</h3>
+      {text("title", "Title on Google (also shown on the browser tab)", 60)}
+      {text("description", "Short description on Google (the text under the title)", 160)}
       {text("canonical", "Canonical address (leave empty to use this page’s own address)", 0, <span className="hint">Only set this if another page should rank instead, e.g. /blogs/</span>)}
       <label className="checkbox">
         <input checked={value.noindex} disabled={disabled || !permissions.robots} onChange={(e) => onChange(["noindex"], e.target.checked)} type="checkbox" />
         Hide this page from search engines (noindex)
       </label>
       {value.noindex && <p className="notice warn">This page will disappear from Google. {slug === "home" && "This is your home page — are you sure?"}</p>}
-      <h3>Social sharing (WhatsApp, Facebook, LinkedIn)</h3>
-      <p className="small muted">Leave empty to reuse the page title and description.</p>
-      {text("ogTitle", "Sharing title", 60)}
-      {text("ogDescription", "Sharing description", 160)}
-      {!disabled && <ImageField label="Sharing image (1200×630 works best)" onChange={onChange} path={["ogImage"]} removable value={value.ogImage} />}
+      <h3>Link preview (WhatsApp, Facebook, LinkedIn)</h3>
+      <p className="small muted">Leave these empty to reuse the Google title and description above.</p>
+      {text("ogTitle", "Link preview title", 60)}
+      {text("ogDescription", "Link preview text", 160)}
+      {!disabled && <ImageField label="Link preview picture (a wide photo, 1200×630, works best)" onChange={onChange} path={["ogImage"]} removable value={value.ogImage} />}
     </div>
   );
 }

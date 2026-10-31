@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { bytes, when } from "../format";
 import { deleteMedia, listMedia, mediaUsage, updateAlt, uploadMedia } from "./actions";
+import { prepareUpload, sendUpload } from "./prepare-upload";
 
 export default function Library({ canDelete }) {
   const [q, setQ] = useState("");
@@ -31,14 +32,14 @@ export default function Library({ canDelete }) {
           e.preventDefault();
           const form = e.currentTarget;
           act(async () => {
-            const result = await uploadMedia(new FormData(form));
+            const result = await sendUpload(uploadMedia, await prepareUpload(form));
             if (result.ok) form.reset();
             return result;
           });
         }}
       >
         <label className="small" style={{ flex: "1 1 240px" }}>
-          Upload an image (JPEG, PNG, WebP or AVIF, up to 4 MB)
+          Upload an image (JPEG, PNG, WebP or AVIF; large photos are resized automatically)
           <input accept="image/jpeg,image/png,image/webp,image/avif" name="file" required type="file" />
         </label>
         <input aria-label="Image description" name="alt" placeholder="Describe the image (for screen readers)" style={{ flex: "1 1 240px" }} type="text" />

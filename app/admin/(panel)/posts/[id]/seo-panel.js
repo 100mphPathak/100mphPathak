@@ -15,7 +15,12 @@ export default function SeoPanel({ seo, onChange, post }) {
 
   return (
     <fieldset className="group">
-      <legend>Search &amp; sharing</legend>
+      <legend>Google &amp; link preview</legend>
+      <p className="small muted">
+        <strong>Google</strong>: the blue title and short text people see for this post in Google search results.{" "}
+        <strong>Link preview</strong>: the picture, title and text shown when someone sends this post’s link on WhatsApp, Facebook or LinkedIn.
+        Leave anything empty to use the post’s own title, excerpt and cover photo.
+      </p>
 
       <p className="small muted">How this post looks in Google:</p>
       <div className="google-preview" aria-label="Google preview">
@@ -25,18 +30,18 @@ export default function SeoPanel({ seo, onChange, post }) {
       </div>
 
       <label className="field">
-        <span>Search title</span>
+        <span>Title on Google</span>
         <input maxLength={200} onChange={(e) => onChange("title", e.target.value)} placeholder={post.title} type="text" value={seo.title} />
         <Counter limit={60} value={title} />
       </label>
 
       <label className="field">
-        <span>Search description</span>
+        <span>Short description on Google</span>
         <textarea maxLength={400} onChange={(e) => onChange("description", e.target.value)} placeholder={post.excerpt || "A one- or two-sentence summary of the post"} rows={3} value={seo.description} />
         <Counter limit={160} value={description} />
       </label>
 
-      <ImageField label="Sharing image (leave empty to use the cover photo)" onChange={setImage} path={["ogImage"]} removable value={seo.ogImage} />
+      <ImageField label="Link preview picture (shown when the link is sent on WhatsApp, Facebook…; empty = cover photo)" onChange={setImage} path={["ogImage"]} removable value={seo.ogImage} />
     </fieldset>
   );
 }

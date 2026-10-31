@@ -18,6 +18,7 @@ export default {
       { source: "/ankit-pathak/", destination: "/best-fast-bowling-coach/", permanent: true },
       { source: "/assessment-trial/", destination: "/admission/", permanent: true },
       { source: "/online-training/", destination: "/online-bowling-training/", permanent: true },
+      { source: "/action-analysis/", destination: "/admission/", permanent: true }, // page removed; assessment is the closest service
     ];
   },
   async headers() {
