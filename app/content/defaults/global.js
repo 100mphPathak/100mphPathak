@@ -6,7 +6,7 @@ export default {
     title: "Pathak100MPH | High-Performance Cricket Academy",
     description:
       "High-performance bowling and batting coaching. Explore trials, online bowling training and personal action analysis with Ankit Pathak.",
-    ogImage: { src: "/assets/team.webp", alt: "Ankit Pathak with Pathak100MPH players", width: 825, height: 1024 },
+    ogImage: { src: "/assets/nepal-team.webp", alt: "Pathak100MPH players with the Nepal team", width: 1920, height: 912 },
   },
   announcement: {
     lead: "Your next step starts here.",

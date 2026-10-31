@@ -1,7 +1,7 @@
 export const SITE_URL = "https://www.pathak100mph.com";
 
 // Fallback share image; pages and site-wide settings can override it from the CMS.
-const image = { url: "/assets/team.webp", width: 825, height: 1024, alt: "Ankit Pathak with Pathak100MPH players" };
+const image = { url: "/assets/nepal-team.webp", width: 1920, height: 912, alt: "Pathak100MPH players with the Nepal team" };
 
 // Next merges metadata shallowly, so each page needs its own full openGraph/twitter block.
 export function seo(path, title, description, { ogTitle, ogDescription, ogImage } = {}) {
