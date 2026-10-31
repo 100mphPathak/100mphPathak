@@ -22,8 +22,6 @@ export default async function SignIn({ searchParams }) {
         />
         <p className="small" style={{ marginTop: 16 }}>
           <Link href="/admin/forgot-password">Forgot your password?</Link>
-          {" · "}
-          <Link href="/admin/sign-up">Request an account</Link>
         </p>
       </div>
     </main>

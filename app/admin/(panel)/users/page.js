@@ -17,7 +17,11 @@ export default async function Users() {
     <>
       <div className="a-top"><h1>Users</h1></div>
       <div className="a-card small">
-        <p>New people request an account at <code>/admin/sign-up</code>. They can’t see or change anything until you give them a role here.</p>
+        <p>
+          Public sign-up is closed. To add someone: in Supabase, open <strong>Authentication → Users → Add user → Create new user</strong>{" "}
+          (tick “Auto Confirm User”), then they set their own password with “Forgot your password?” on the sign-in page.
+          They appear in this list right away, and can’t see or change anything until you give them a role.
+        </p>
         <ul>
           <li><strong>{ROLES.editor}</strong>: edit and save drafts, upload images, preview.</li>
           <li><strong>{ROLES.content_admin}</strong>: everything an editor can do, plus publish, take pages offline, SEO, restore versions, delete unused images.</li>

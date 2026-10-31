@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PUBLIC_ADMIN = ["/admin/sign-in", "/admin/sign-up", "/admin/forgot-password", "/admin/reset-password"];
+const PUBLIC_ADMIN = ["/admin/sign-in", "/admin/forgot-password", "/admin/reset-password"];
 
 export default async function proxy(request) {
   let response = NextResponse.next({ request });

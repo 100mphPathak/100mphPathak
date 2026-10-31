@@ -21,23 +21,6 @@ export async function signIn(_prev, formData) {
   redirect("/admin");
 }
 
-export async function signUp(_prev, formData) {
-  const name = text(formData, "name");
-  const email = text(formData, "email").toLowerCase();
-  const password = String(formData.get("password") ?? "");
-  if (!name || !email) return { error: "Enter your name and email.", name, email };
-  if (password.length < 10) return { error: "Use a password of at least 10 characters.", name, email };
-  const origin = process.env.ADMIN_ORIGIN ?? SITE_URL;
-  const { data, error } = await (await supabase()).auth.signUp({
-    email, password,
-    options: { data: { name }, emailRedirectTo: `${origin}/api/auth/callback/?next=/admin/pending/` },
-  });
-  if (error) return { error: error.message || "Could not create the account.", name, email };
-  await audit({ id: data.user.id, email }, "auth.sign_up", "user", data.user.id);
-  if (!data.session) return { ok: "Check your email and click the link to confirm your account." };
-  redirect("/admin/pending");
-}
-
 export async function requestReset(_prev, formData) {
   const email = text(formData, "email").toLowerCase();
   if (!email) return { error: "Enter your email." };

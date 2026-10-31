@@ -1,4 +1,5 @@
 import HeroCarousel from "./HeroCarousel";
+import YouTubePlayer from "./YouTubePlayer";
 export default function PageHero({
   eyebrow,
   title,
@@ -26,14 +27,7 @@ export default function PageHero({
       ) : (
         <div className="vsl-player">
           <div className="vsl-frame">
-            <iframe
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="strict-origin-when-cross-origin"
-              src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
-              title={videoTitle}
-            />
+            <YouTubePlayer title={videoTitle} videoId={videoId} />
           </div>
           {videoActions && <div className="hero-actions">{videoActions}</div>}
         </div>
