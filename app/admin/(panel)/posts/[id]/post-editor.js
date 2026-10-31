@@ -169,6 +169,16 @@ export default function PostEditor({ post, categories, canPublish }) {
         <span className={`badge ${status}`}>{status}</span>
         {liveRevisionId && hasUnpublished && <span className="badge draft">unpublished changes</span>}
         <span style={{ flex: 1 }} />
+        <a
+          aria-disabled={dirty}
+          className="btn secondary"
+          href={dirty ? undefined : `/admin/preview/post/${post.id}`}
+          rel="noopener"
+          target="_blank"
+          title={dirty ? "Save your changes first" : "Opens the saved draft in a new tab"}
+        >
+          Preview ↗
+        </a>
         <Link className="btn secondary" href={`/admin/posts/${post.id}/revisions`}>Version history</Link>
         {canPublish ? (
           <>

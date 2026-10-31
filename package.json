@@ -23,6 +23,7 @@
     "@tiptap/pm": "^3.32.2",
     "@tiptap/react": "^3.32.2",
     "@tiptap/starter-kit": "^3.32.2",
+    "@tiptap/static-renderer": "^3.32.2",
     "image-size": "^2.0.4",
     "next": "^16.4.2",
     "postgres": "^4.0.0",

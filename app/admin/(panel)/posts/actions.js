@@ -1,12 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { transaction } from "../../../lib/db";
 import { authorize } from "../../../lib/session";
 import { slugify } from "../../../lib/slug";
 import { publicUrl } from "../../../lib/storage";
 import { cleanArticle } from "../../../content/article";
+import { POSTS_TAG } from "../../../lib/posts";
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/; // same rule as the database (003_blog.sql)
 const STALE = "Someone else saved this post while you were editing. Reload to see their changes, then make yours again.";
@@ -110,7 +111,8 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
     console.error("[cms] savePostDraft failed", e);
     return { error: "Could not save. Your changes are still in the editor — try again." };
   } finally {
-    revalidatePath("/admin/posts");
+    // The address lives on the post itself, so renaming a published post changes the live blog too.
+    refreshPublic();
   }
 }
 
@@ -136,7 +138,7 @@ export async function publishPost(postId, revisionId) {
       );
       return { ok: "Published. The live blog now shows this version.", slug: post.slug };
     });
-    if (result.ok) refreshPublic(result.slug); // only after the transaction committed
+    if (result.ok) refreshPublic(); // only after the transaction committed
     return result;
   } catch (e) {
     console.error("[cms] publishPost failed", e);
@@ -160,7 +162,7 @@ export async function setPostOffline(postId, offline) {
       );
       return { ok: offline ? "The post is offline. Visitors now get “page not found”." : "The post is live again.", slug: post.slug };
     });
-    if (result.ok) refreshPublic(result.slug);
+    if (result.ok) refreshPublic();
     return result;
   } catch (e) {
     console.error("[cms] setPostOffline failed", e);
@@ -200,11 +202,14 @@ export async function restorePostRevision(postId, revisionId) {
   }
 }
 
-// The admin list, plus the public blog pages (built in Task 7) so visitors see the change right away.
-function refreshPublic(slug) {
+// The admin list, plus the public blog pages, so visitors see the change right away.
+function refreshPublic() {
+  updateTag(POSTS_TAG);
   revalidatePath("/admin/posts");
+  revalidatePath("/blogs/[slug]", "page");
   revalidatePath("/blogs/");
-  revalidatePath(`/blogs/${slug}/`);
+  revalidatePath("/");
+  revalidatePath("/sitemap.xml");
 }
 
 // Removes a post that has never been published (e.g. a test post), with all its versions.
