@@ -66,8 +66,7 @@ export async function createPost(_prev, formData) {
   redirect(`/admin/posts/${postId}`); // Post/Redirect/Get: refreshing can't create the post twice
 }
 
-// Saves the editor's fields as a new draft revision. SEO is carried over from the current
-// draft until its editor exists (Task 5).
+// Saves the editor's fields (details, article, SEO) as a new draft revision.
 // baseRevisionId = the draft the editor started from; if someone saved since, we refuse (optimistic locking).
 export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
   const { user, error } = await authorize("post.edit");
@@ -90,10 +89,10 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
 
       const { rows: [rev] } = await db.query(
         `insert into post_revisions (post_id, number, title, excerpt, author, category_id, cover_image, body, seo, note, created_by)
-         select $1, (select max(number) + 1 from post_revisions where post_id = $1), $2, $3, $4, $5, $6, $10, d.seo, $7, $8
+         select $1, (select max(number) + 1 from post_revisions where post_id = $1), $2, $3, $4, $5, $6, $10, $11, $7, $8
          from post_revisions d where d.id = $9 -- d = the current draft (checked above)
          returning id, number`,
-        [postId, data.title, data.excerpt, data.author, data.categoryId, data.coverImage, String(note).trim().slice(0, 300) || null, user.email, baseRevisionId, data.body],
+        [postId, data.title, data.excerpt, data.author, data.categoryId, data.coverImage, String(note).trim().slice(0, 300) || null, user.email, baseRevisionId, data.body, data.seo],
       );
       await db.query(
         `update posts set slug = $1, draft_revision_id = $2, updated_by = $3, updated_at = now() where id = $4`,
@@ -143,8 +142,7 @@ export async function deleteDraftPost(postId) {
   redirect("/admin/posts");
 }
 
-// Checks and tidies what the editor sent. Returns the clean fields, or { error }.
-// The browser form has the same limits, but anyone can bypass a browser, so the server decides.
+
 function cleanFields(fields) {
   const text = (v) => String(v ?? "").trim();
   const title = text(fields?.title);
@@ -164,7 +162,9 @@ function cleanFields(fields) {
   if (coverImage === undefined) return { error: "The cover photo must come from the media library." };
   const article = cleanArticle(fields?.body);
   if (article.error) return { error: article.error };
-  return { title, slug, excerpt, author, categoryId, coverImage, body: article.doc, removed: article.removed };
+  const seo = cleanSeo(fields?.seo);
+  if (seo.error) return { error: seo.error };
+  return { title, slug, excerpt, author, categoryId, coverImage, body: article.doc, removed: article.removed, seo };
 }
 
 // null = no cover. undefined = not allowed. Only our own storage or the site's /assets.
@@ -175,6 +175,17 @@ function cleanImage(image) {
   const width = Number(image.width), height = Number(image.height);
   if (!ours || !Number.isInteger(width) || !Number.isInteger(height) || width <= 0 || height <= 0) return undefined;
   return { src, alt: String(image.alt ?? "").trim().slice(0, 200), width, height };
+}
+
+// Search and sharing settings. Empty title/description = use the post's title/excerpt when the page is shown,
+// so they stay right if the post is renamed later. Returns { title, description, ogImage } or { error }.
+function cleanSeo(seo) {
+  const text = (v) => String(v ?? "").trim();
+  const title = text(seo?.title).slice(0, 200);
+  const description = text(seo?.description).slice(0, 400);
+  const ogImage = cleanImage(seo?.ogImage);
+  if (ogImage === undefined) return { error: "The sharing image must come from the media library." };
+  return { title, description, ogImage };
 }
 
 // An error whose message is safe to show to the person using the form.

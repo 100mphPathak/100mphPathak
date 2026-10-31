@@ -5,6 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import { slugify } from "../../../../lib/slug";
 import ImageField from "../../image-field";
 import ArticleEditor from "./article-editor";
+import SeoPanel from "./seo-panel";
 import { deleteDraftPost, savePostDraft } from "../actions";
 
 // The post editor form. Holds every field in state; nothing is stored until "Save draft".
@@ -17,6 +18,7 @@ export default function PostEditor({ post, categories }) {
     categoryId: post.category_id,
     coverImage: post.cover_image,
     body: post.body,
+    seo: { title: "", description: "", ogImage: null, ...post.seo }, // old posts have seo = {}
   });
   const [revision, setRevision] = useState({ id: post.revision_id, number: post.number });
   const [savedSlug, setSavedSlug] = useState(post.slug);
@@ -129,6 +131,8 @@ export default function PostEditor({ post, categories }) {
           <legend>Article</legend>
           <ArticleEditor content={fields.body} key={bodyVersion} onChange={(body) => set("body", body)} />
         </fieldset>
+
+        <SeoPanel onChange={(key, value) => set("seo", { ...fields.seo, [key]: value })} post={fields} seo={fields.seo} />
       </div>
 
       <div className="a-card actions-row">
