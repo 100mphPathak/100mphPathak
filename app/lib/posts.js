@@ -56,6 +56,16 @@ export const listPublishedPosts = unstable_cache(
   { tags: [POSTS_TAG] },
 );
 
+// Like listPublishedPosts, but never breaks a page: if the database is unreachable the page shows no posts.
+export async function publishedPosts(limit) {
+  try {
+    return await listPublishedPosts(limit);
+  } catch (error) {
+    console.error("[cms] could not load blog posts:", error.message);
+    return [];
+  }
+}
+
 // "31 October 2026", in India's time zone.
 export const postDate = (date) =>
   new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" }).format(new Date(date));

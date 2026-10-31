@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { PAGES } from "./content/defaults";
 import { sql } from "./lib/db";
+import { publishedPosts } from "./lib/posts";
 import { SITE_URL } from "./seo";
 
 const publishedPages = unstable_cache(
@@ -21,6 +22,12 @@ export default async function sitemap() {
     console.error("[cms] sitemap falling back to built-in pages:", error.message);
     pages = Object.values(PAGES).filter((p) => p.route);
   }
+  const posts = (await publishedPosts(1000)).map((post) => ({
+    url: `${SITE_URL}/blogs/${post.slug}/`,
+    lastModified: post.updated_at,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
   return pages
     .sort((a, b) => a.route.localeCompare(b.route))
     .map((page) => ({
@@ -28,5 +35,6 @@ export default async function sitemap() {
       ...(page.published_at && { lastModified: page.published_at }),
       changeFrequency: page.route === "/blogs/" ? "weekly" : "monthly",
       priority: page.route === "/" ? 1 : 0.8,
-    }));
+    }))
+    .concat(posts);
 }

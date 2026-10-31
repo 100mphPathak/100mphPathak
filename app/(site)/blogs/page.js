@@ -4,11 +4,13 @@ import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
 import { COLORS } from "../../content/shape";
 import { Img, Text } from "../../components/Text";
+import PostCard from "../../components/PostCard";
+import { publishedPosts } from "../../lib/posts";
 
 export const generateMetadata = () => pageMetadata("blogs");
 
 export default async function Blogs() {
-  const [c, { header }] = await Promise.all([getContent("blogs"), getContent("global")]);
+  const [c, { header }, live] = await Promise.all([getContent("blogs"), getContent("global"), publishedPosts()]);
   return (
     <main id="main">
       <section className="wrap page-hero">
@@ -20,7 +22,9 @@ export default async function Blogs() {
       </section>
       <section className="wrap blog-list">
         <div className="blog-grid">
-          {c.posts.map((post, i) => (
+          {/* Posts written in the CMS. Until the first one is published, the original cards stay. */}
+          {live.length > 0 && live.map((post, i) => <PostCard index={i} key={post.id} post={post} reveal={i < 4} />)}
+          {live.length === 0 && c.posts.map((post, i) => (
             <a className={i < 4 ? "blog-card reveal" : "blog-card"} href={post.href} key={i}>
               <div className={`blog-art ${COLORS[post.color]}`}><span><Text v={post.art} /></span><b>↗</b></div>
               <p className="tiny">{post.category}</p>

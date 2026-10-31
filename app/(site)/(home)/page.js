@@ -5,13 +5,15 @@ import { HomePartners } from "../../components/Partners";
 import { getContent, pageMetadata } from "../../lib/content";
 import { COLORS } from "../../content/shape";
 import { Img, Text } from "../../components/Text";
+import PostCard from "../../components/PostCard";
+import { publishedPosts } from "../../lib/posts";
 
 export const generateMetadata = () => pageMetadata("home");
 
 // Markup mirrors the reference homepage (sam.harsh-4844.chatgpt.site, v17).
 // The results arrows are wired up in SiteInteractions.js.
 export default async function Home() {
-  const [c, { posts }, { header }] = await Promise.all([getContent("home"), getContent("blogs"), getContent("global")]);
+  const [c, { posts }, { header }, live] = await Promise.all([getContent("home"), getContent("blogs"), getContent("global"), publishedPosts(3)]);
   return (
     <main id="main" className="home-page">
       <PageHero
@@ -74,7 +76,9 @@ export default async function Home() {
           <p>{c.insights.text}</p>
         </div>
         <div className="blog-grid" tabIndex="0">
-          {posts.slice(0, 3).map((post, i) => (
+          {/* The 3 newest CMS posts; the original cards until the first post is published. */}
+          {live.length > 0 && live.map((post, i) => <PostCard index={i} key={post.id} post={post} />)}
+          {live.length === 0 && posts.slice(0, 3).map((post, i) => (
             <a className="blog-card reveal" href={post.href} key={i}>
               <div className={`blog-art ${COLORS[post.color]}`}>
                 <span><Text v={post.art} /></span>
