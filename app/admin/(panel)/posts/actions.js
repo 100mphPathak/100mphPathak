@@ -73,10 +73,10 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
   const { user, error } = await authorize("post.edit");
   if (error) return { error };
 
-  const data = cleanFields(fields);
-  if (data.error) return { error: data.error };
-
+  let data;
   try {
+    data = cleanFields(fields); // inside try: an unexpected value can't crash the request
+    if (data.error) return { error: data.error };
     return await transaction(async (db) => {
       // "for update" locks this post's row until we commit, so two saves can't interleave.
       const { rows: [post] } = await db.query(`select draft_revision_id from posts where id = $1 for update`, [postId]);
@@ -107,7 +107,7 @@ export async function savePostDraft(postId, baseRevisionId, fields, note = "") {
     });
   } catch (e) {
     if (e instanceof UserError) return { error: e.message };
-    if (e.code === "23505") return { error: `Another post already uses /blogs/${data.slug}/. Choose a different address.` };
+    if (e?.code === "23505") return { error: `Another post already uses /blogs/${data?.slug}/. Choose a different address.` };
     console.error("[cms] savePostDraft failed", e);
     return { error: "Could not save. Your changes are still in the editor — try again." };
   } finally {
@@ -203,13 +203,18 @@ export async function restorePostRevision(postId, revisionId) {
 }
 
 // The admin list, plus the public blog pages, so visitors see the change right away.
+// A failed refresh is logged, never turned into a failed save (the change is already stored).
 function refreshPublic() {
-  updateTag(POSTS_TAG);
-  revalidatePath("/admin/posts");
-  revalidatePath("/blogs/[slug]", "page");
-  revalidatePath("/blogs/");
-  revalidatePath("/");
-  revalidatePath("/sitemap.xml");
+  try {
+    updateTag(POSTS_TAG);
+    revalidatePath("/admin/posts");
+    revalidatePath("/blogs/[slug]", "page");
+    revalidatePath("/blogs/");
+    revalidatePath("/");
+    revalidatePath("/sitemap.xml");
+  } catch (e) {
+    console.error("[cms] refreshing blog pages failed", e);
+  }
 }
 
 // Removes a post that has never been published (e.g. a test post), with all its versions.
