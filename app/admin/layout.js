@@ -1,4 +1,5 @@
 import "./admin.css";
+import AdminFeedback from "./feedback";
 
 // Everything under /admin depends on the signed-in user.
 export const dynamic = "force-dynamic";
@@ -9,5 +10,10 @@ export const metadata = {
 };
 
 export default function AdminLayout({ children }) {
-  return children;
+  return (
+    <>
+      {children}
+      <AdminFeedback />
+    </>
+  );
 }

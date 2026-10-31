@@ -1,16 +1,16 @@
 "use client";
 import { useActionState } from "react";
+import { useResultToast } from "../feedback";
 
 
 export default function AuthForm({ action, fields, submit, hidden = {} }) {
 
   const [state, formAction, pending] = useActionState(action, {});
+  useResultToast(state);
 
   return (
 
     <form action={formAction} noValidate={false}>
-      {state.error && <p className="notice err" role="alert">{state.error}</p>}
-      {state.ok && <p className="notice ok" role="status">{state.ok}</p>}
       {Object.entries(hidden).map(([name, value]) => (
         <input key={name} name={name} type="hidden" value={value} />
       ))}

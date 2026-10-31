@@ -6,6 +6,7 @@ import { slugify } from "../../../../lib/slug";
 import ImageField from "../../image-field";
 import ArticleEditor from "./article-editor";
 import SeoPanel from "./seo-panel";
+import { askConfirm, showResult, toast } from "../../../feedback";
 import { callServer } from "../../call-server";
 import { deleteDraftPost, publishPost, savePostDraft, setPostOffline } from "../actions";
 
@@ -28,7 +29,6 @@ export default function PostEditor({ post, categories, canPublish }) {
   const [bodyVersion, setBodyVersion] = useState(0); // bumped to reload the editor with what the server kept
   const [note, setNote] = useState("");
   const [dirty, setDirty] = useState(false);
-  const [message, setMessage] = useState(null);
   const [pending, startTransition] = useTransition();
 
   // Warn before closing the tab with unsaved changes.
@@ -51,49 +51,47 @@ export default function PostEditor({ post, categories, canPublish }) {
   const save = () =>
     startTransition(async () => {
       const result = await callServer(() => savePostDraft(post.id, revision.id, fields, note));
-      setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
+      if (!result.ok) return void toast.error(result.error);
       if (result.ok) {
         // The server removes anything not allowed (e.g. images pasted from other websites); show what was kept.
         if (result.removed) {
           setFields((f) => ({ ...f, body: result.body }));
           setBodyVersion((v) => v + 1);
-          setMessage({ type: "ok", text: `${result.ok} Some pasted content (outside images or unsafe links) was removed.` });
-        }
+          toast.success(`${result.ok} Some pasted content (outside images or unsafe links) was removed.`, { duration: 8000 });
+        } else toast.success(result.ok);
         setRevision({ id: result.revisionId, number: result.number });
         setSavedSlug(fields.slug);
         setDirty(false);
         setNote("");
       }
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
   // Publish / take offline / put back online. All refuse while there are unsaved changes.
   const act = (action, after) =>
     startTransition(async () => {
       const result = await callServer(action);
-      setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
+      showResult(result);
       if (result.ok) after();
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-  const publish = () => {
-    if (!window.confirm(post.was_published || liveRevisionId ? "Publish these changes to the live blog?" : "Publish this post? It will appear on the blog.")) return;
+  const publish = async () => {
+    if (!(await askConfirm(post.was_published || liveRevisionId ? "Publish these changes to the live blog?" : "Publish this post? It will appear on the blog."))) return;
     act(() => publishPost(post.id, revision.id), () => {
       setStatus("published");
       setLiveRevisionId(revision.id);
     });
   };
-  const toggleOffline = () => {
+  const toggleOffline = async () => {
     const offline = status !== "unpublished";
-    if (offline && !window.confirm("Take this post offline? Visitors will get “page not found” until you put it back.")) return;
+    if (offline && !(await askConfirm("Take this post offline? Visitors will get “page not found” until you put it back.", { danger: true }))) return;
     act(() => setPostOffline(post.id, offline), () => setStatus(offline ? "unpublished" : "published"));
   };
 
-  const remove = () => {
-    if (!window.confirm(`Delete “${fields.title}” and all its versions? This can’t be undone.`)) return;
+  const remove = async () => {
+    if (!(await askConfirm(`Delete “${fields.title}” and all its versions? This can’t be undone.`, { danger: true }))) return;
     setDirty(false); // the page is about to go away on purpose
     startTransition(async () => {
       const result = await callServer(() => deleteDraftPost(post.id)); // on success the server redirects to the list
-      if (result?.error) setMessage({ type: "err", text: result.error });
+      if (result?.error) toast.error(result.error);
     });
   };
 
@@ -111,7 +109,6 @@ export default function PostEditor({ post, categories, canPublish }) {
         {canDelete && <button className="btn danger small" disabled={pending} onClick={remove} type="button">Delete draft</button>}
       </div>
 
-      {message && <div className={`notice ${message.type}`} role={message.type === "err" ? "alert" : "status"}>{message.text}</div>}
 
       <div className="a-card">
         <label className="field">

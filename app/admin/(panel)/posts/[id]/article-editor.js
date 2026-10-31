@@ -5,6 +5,7 @@ import { useState } from "react";
 import { articleExtensions } from "../../../../content/article-extensions";
 import { PALETTE, youtubeId } from "../../../../content/article";
 import { SAFE_HREF } from "../../../../content/shape";
+import { askText, toast } from "../../../feedback";
 import MediaPicker from "../../media/picker";
 
 const LINK_RULE = "Use an address starting with https://, /, #, mailto: or tel:";
@@ -64,32 +65,33 @@ function Toolbar({ editor }) {
     else run().setHeading({ level: value === "h2" ? 2 : 3 }).run();
   };
 
-  const editLink = () => {
-    const href = window.prompt(`Link address (leave empty to remove the link).\n${LINK_RULE}`, editor.getAttributes("link").href ?? "https://");
+  // The editor keeps its selection while the dialog is open; run() puts the cursor back afterwards.
+  const editLink = async () => {
+    const href = await askText(`Link address (leave empty to remove the link).\n${LINK_RULE}`, editor.getAttributes("link").href ?? "https://");
     if (href === null) return;
     if (!href.trim() || href.trim() === "https://") return run().extendMarkRange("link").unsetLink().run();
-    if (!SAFE_HREF.test(href.trim())) return window.alert(LINK_RULE);
+    if (!SAFE_HREF.test(href.trim())) return toast.error(LINK_RULE);
     run().extendMarkRange("link").setLink({ href: href.trim() }).run();
   };
 
-  const addVideo = () => {
-    const url = window.prompt("Paste the YouTube video address (e.g. https://www.youtube.com/watch?v=…)");
+  const addVideo = async () => {
+    const url = await askText("Paste the YouTube video address (e.g. https://www.youtube.com/watch?v=…)");
     if (!url) return;
-    if (!youtubeId(url)) return window.alert("That doesn’t look like a YouTube video address.");
+    if (!youtubeId(url)) return toast.error("That doesn’t look like a YouTube video address.");
     run().setYoutubeVideo({ src: url }).run();
   };
 
-  const addButton = () => {
-    const label = window.prompt("Button text", "Book an assessment");
+  const addButton = async () => {
+    const label = await askText("Button text", "Book an assessment");
     if (!label?.trim()) return;
-    const href = window.prompt(`Where should the button go?\n${LINK_RULE}`, "/assessment-booking/");
-    if (!href || !SAFE_HREF.test(href.trim())) return href && window.alert(LINK_RULE);
+    const href = await askText(`Where should the button go?\n${LINK_RULE}`, "/assessment-booking/");
+    if (!href || !SAFE_HREF.test(href.trim())) return href && toast.error(LINK_RULE);
     run().insertContent({ type: "ctaButton", attrs: { label: label.trim().slice(0, 80), href: href.trim() } }).run();
   };
 
-  const addImage = (media) => {
+  const addImage = async (media) => {
     setPicking(false);
-    const alt = window.prompt("Describe the image for people who can’t see it (alt text)", media.alt ?? "");
+    const alt = await askText("Describe the image for people who can’t see it (alt text)", media.alt ?? "");
     run().setImage({ src: media.url, alt: (alt ?? media.alt ?? "").slice(0, 200), width: media.width, height: media.height }).run();
   };
 

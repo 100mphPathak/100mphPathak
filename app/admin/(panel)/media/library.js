@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { bytes, when } from "../format";
 import { deleteMedia, listMedia, mediaUsage, updateAlt, uploadMedia } from "./actions";
+import { askConfirm, showResult, toast } from "../../feedback";
 import { callServer } from "../call-server";
 import { prepareUpload, sendUpload } from "./prepare-upload";
 
@@ -10,13 +11,12 @@ export default function Library({ canDelete }) {
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
-  const [message, setMessage] = useState(null);
   const [pending, startTransition] = useTransition();
 
   const load = (query = q, p = page) =>
     startTransition(async () => {
       const result = await callServer(() => listMedia({ q: query, page: p }));
-      if (result.error) setMessage({ type: "err", text: result.error });
+      if (result.error) toast.error(result.error);
       else setData(result);
     });
   useEffect(() => load("", 1), []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -24,14 +24,13 @@ export default function Library({ canDelete }) {
   const act = (fn) =>
     startTransition(async () => {
       const result = await callServer(fn);
-      setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error });
+      showResult(result);
       if (result.ok) load();
     });
 
   const pages = data ? Math.max(1, Math.ceil(data.total / data.perPage)) : 1;
   return (
     <>
-      {message && <p className={`notice ${message.type}`} role={message.type === "err" ? "alert" : "status"}>{message.text}</p>}
       <form
         className="a-card actions-row"
         onSubmit={(e) => {
@@ -122,7 +121,7 @@ function MediaTile({ item, canDelete, disabled, onAct }) {
           <button
             className="btn danger small"
             disabled={disabled}
-            onClick={() => window.confirm(`Delete ${item.filename}? This can’t be undone.`) && onAct(() => deleteMedia(item.id))}
+            onClick={async () => (await askConfirm(`Delete ${item.filename}? This can’t be undone.`, { danger: true })) && onAct(() => deleteMedia(item.id))}
             type="button"
           >
             Delete

@@ -1,14 +1,15 @@
 "use client";
 
 import { useActionState } from "react";
+import { useResultToast } from "../../../feedback";
 import { createPost } from "../actions";
 
 // Runs in the browser only to show errors and the "Creating…" state; saving happens in createPost() on the server.
 export default function NewPostForm({ categories }) {
   const [state, formAction, pending] = useActionState(createPost, {});
+  useResultToast(state);
   return (
     <form action={formAction}>
-      {state.error && <p className="notice err" role="alert">{state.error}</p>}
       <label className="field">
         <span>Title</span>
         <input defaultValue={state.title} maxLength={200} name="title" required type="text" />

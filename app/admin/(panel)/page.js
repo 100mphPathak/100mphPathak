@@ -2,6 +2,7 @@ import Link from "next/link";
 import { sql } from "../../lib/db";
 import { requirePage } from "../../lib/session";
 import { can } from "../../lib/permissions";
+import { ToastOnLoad } from "../feedback";
 import { when } from "./format";
 
 export const metadata = { title: "Dashboard" };
@@ -24,7 +25,7 @@ export default async function Dashboard({ searchParams }) {
   return (
     <>
       <div className="a-top"><h1>Dashboard</h1></div>
-      {denied && <p className="notice warn">You don’t have permission to open that page.</p>}
+      {denied && <ToastOnLoad text="You don’t have permission to open that page." type="error" />}
       <div className="a-grid">
         <div className="a-card a-stat"><strong>{counts.total}</strong>Managed pages</div>
         <div className="a-card a-stat"><strong>{counts.published}</strong>Published</div>

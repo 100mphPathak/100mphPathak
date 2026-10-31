@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { createContext, useContext, useEffect, useState, useTransition } from "react";
 import ImageField from "../../image-field";
+import { askConfirm, showResult, toast } from "../../../feedback";
 import { callServer } from "../../call-server";
 import { publish, saveDraft, setUnpublished } from "./actions";
 
@@ -72,7 +73,7 @@ export default function Editor(props) {
   const [status, setStatus] = useState(props.status);
   const [dirty, setDirty] = useState(false);
   const [note, setNote] = useState("");
-  const [message, setMessage] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState([]); // shown next to each field
   const [tab, setTab] = useState("content");
   const [pending, startTransition] = useTransition();
 
@@ -89,9 +90,16 @@ export default function Editor(props) {
   const run = (fn, after) =>
     startTransition(async () => {
       const result = await callServer(fn);
-      setMessage(result.ok ? { type: "ok", text: result.ok } : { type: "err", text: result.error, errors: result.errors });
+      setFieldErrors(result.errors ?? []);
+      if (result.errors?.length) {
+        toast.error(
+          <span>
+            {result.error}
+            <ul style={{ margin: "6px 0 0", paddingLeft: 18 }}>{result.errors.slice(0, 6).map((e) => <li key={e.path}><strong>{e.path}</strong> {e.message}</li>)}</ul>
+          </span>,
+        );
+      } else showResult(result);
       if (result.ok) after?.(result);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
   const save = () =>
@@ -102,18 +110,18 @@ export default function Editor(props) {
       setNote("");
     });
 
-  const doPublish = () => {
-    if (!window.confirm(`Publish version ${revision.number} of “${title}” to the live website?`)) return;
+  const doPublish = async () => {
+    if (!(await askConfirm(`Publish version ${revision.number} of “${title}” to the live website?`))) return;
     run(() => publish(slug, revision.id), () => { setHasUnpublished(false); setStatus("published"); });
   };
 
-  const toggleOnline = () => {
+  const toggleOnline = async () => {
     const goingOffline = status !== "unpublished";
-    if (goingOffline && !window.confirm(`Take “${title}” offline? Visitors will see “page not found” until you put it back.`)) return;
+    if (goingOffline && !(await askConfirm(`Take “${title}” offline? Visitors will see “page not found” until you put it back.`, { danger: true }))) return;
     run(() => setUnpublished(slug, goingOffline), () => setStatus(goingOffline ? "unpublished" : "published"));
   };
 
-  const errors = Object.fromEntries((message?.errors ?? []).map((e) => [e.path, e.message]));
+  const errors = Object.fromEntries(fieldErrors.map((e) => [e.path, e.message]));
 
   return (
     <Ctx.Provider value={{ errors, colors }}>
@@ -124,15 +132,6 @@ export default function Editor(props) {
         </div>
         {route && <a className="btn secondary" href={route} rel="noopener" target="_blank">View live page ↗</a>}
       </div>
-
-      {message && (
-        <div className={`notice ${message.type}`} role={message.type === "err" ? "alert" : "status"}>
-          {message.text}
-          {message.errors?.length > 0 && (
-            <ul>{message.errors.map((e) => <li key={e.path}><strong>{e.path}</strong> {e.message}</li>)}</ul>
-          )}
-        </div>
-      )}
 
       <div className="editor">
         <div>
@@ -283,7 +282,7 @@ function ListField({ label, template, value, path, onChange }) {
               <button
                 aria-label={`Remove item ${i + 1}`}
                 className="btn danger small"
-                onClick={() => window.confirm("Remove this item?") && update(value.filter((_, j) => j !== i))}
+                onClick={async () => (await askConfirm("Remove this item?", { danger: true })) && update(value.filter((_, j) => j !== i))}
                 type="button"
               >
                 Remove

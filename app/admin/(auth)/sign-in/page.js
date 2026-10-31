@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AuthForm from "../auth-form";
+import { ToastOnLoad } from "../../feedback";
 import { signIn } from "../actions";
 
 export const metadata = { title: "Sign in" };
@@ -11,7 +12,7 @@ export default async function SignIn({ searchParams }) {
       <div className="a-card">
         <h1>Pathak100MPH admin</h1>
         <p className="muted">Sign in to manage the website.</p>
-        {reset && <p className="notice ok">Password updated. Sign in with your new password.</p>}
+        {reset && <ToastOnLoad text="Password updated. Sign in with your new password." />}
         <AuthForm
           action={signIn}
           fields={[
