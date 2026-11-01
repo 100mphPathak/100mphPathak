@@ -229,7 +229,7 @@ body .home-page .hero-caption{display:block;width:100%;font-weight:700;text-alig
 @media(max-width:1000px){.home-page .coach-copy{text-align:center}
 .home-page .coach-copy p{margin-left:auto;margin-right:auto}
 .home-page .coach-copy .text-link{margin-left:auto;margin-right:auto}}
-@media(min-width:1001px){.home-page .coach-feature{grid-template-columns:1.06fr 1fr}.home-page .coach-photo{order:2}}
+@media(min-width:1001px){.home-page .coach-feature{grid-template-columns:1fr 1.06fr}} /* desktop: photo left, text right */
 .home-page .path-card{align-items:center;text-align:center;padding:30px 24px;background:linear-gradient(160deg,#fff 0%,#eef3f9 45%,#d6e2ec 100%);border-color:#d8e1ec;box-shadow:0 24px 48px -18px rgba(23,44,71,.32),0 6px 16px -6px rgba(23,44,71,.14),inset 0 1px 0 #fff}
 .home-page .path-card h3{font-size:27px;min-height:64px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:.25em}
 .home-page .path-card p{margin-bottom:24px}
@@ -291,7 +291,6 @@ body .partners .partner-feature .partner-visit span[aria-hidden]{font-size:20px;
 .coach-academy .coach-facts div{display:flex;flex-direction:column;gap:6px;padding:16px 14px;border:1px solid #d8e1ec;border-radius:16px;background:linear-gradient(160deg,#fff 0%,#eef3f9 55%,#dde7f0 100%);box-shadow:0 14px 30px -20px rgba(23,44,71,.35)}
 .coach-academy .coach-facts strong{font-family:var(--font-manrope),Arial,sans-serif;font-size:clamp(20px,2vw,28px);line-height:1.05;font-weight:700;letter-spacing:-.03em;color:#18202e}
 .coach-academy .coach-facts span{font-size:12px;line-height:1.35;color:#536176}
-@media(min-width:1001px){.coach-academy{grid-template-columns:1.06fr 1fr}.coach-academy .coach-photo{order:2}}
 @media(max-width:760px){.coach-academy .coach-facts{gap:8px;margin-top:20px}.coach-academy .coach-facts div{padding:12px 8px;text-align:center;align-items:center}.coach-academy .coach-facts strong{font-size:18px}.coach-academy .coach-facts span{font-size:11px}}
 /* Coach page approach: three cards (numbered badge + title, then text), same finish as the path cards. */
 .approach-timeline .section-head{margin-bottom:36px}

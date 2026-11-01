@@ -42,7 +42,7 @@ export default async function Home() {
         </div>
         <div className="coach-copy">
           <p className="eyebrow">{c.coach.eyebrow}</p>
-          <h2><Text v={c.coach.heading} brand /></h2>
+          <h2><Text v={c.coach.heading} brand highlight="Ankit Pathak" /></h2>
           <p>{c.coach.text}</p>
           <a className="text-link home-capsule" href={c.coach.button.href}>{c.coach.button.label}<span aria-hidden="true">↗</span></a>
         </div>

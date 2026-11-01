@@ -3,13 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { INLINE_LINK, SAFE_HREF } from "../content/shape";
 
-const BRAND = /(Pathak100MPH|PATHAK100MPH)/;
+const BRAND_WORDS = "Pathak100MPH|PATHAK100MPH";
+const BRAND = new RegExp(`(${BRAND_WORDS})`);
 const LINK_SPLIT = new RegExp(INLINE_LINK.source); // non-global copy for split()
 
 // Renders editor text safely (React escapes everything): "\n" becomes <br />,
 // [label](/path) becomes a link when the target is safe, and with `brand` the academy
-// name gets the existing .brand-name span. No HTML is ever parsed.
-export function Text({ v, brand = false }) {
+// name gets the existing .brand-name span. `highlight` gives another phrase the same colour (e.g. "Ankit Pathak").
+// No HTML is ever parsed.
+export function Text({ v, brand = false, highlight }) {
+  const pattern = brand || highlight ? new RegExp(`(${[brand && BRAND_WORDS, highlight && escapeRegExp(highlight)].filter(Boolean).join("|")})`) : null;
   return String(v ?? "")
     .split("\n")
     .map((line, i) => (
@@ -17,7 +20,7 @@ export function Text({ v, brand = false }) {
         {i > 0 && <br />}
         {splitLinks(line).map((part, j) =>
           typeof part === "string" ? (
-            <Fragment key={j}>{brand ? withBrand(part) : part || null}</Fragment>
+            <Fragment key={j}>{pattern ? withBrand(part, pattern) : part || null}</Fragment>
           ) : (
             <Link href={part.href} key={j}>{part.label}</Link>
           ),
@@ -36,8 +39,10 @@ function splitLinks(line) {
   return parts;
 }
 
-const withBrand = (text) =>
-  text.split(BRAND).map((part, j) => (!part ? null : j % 2 ? <span className="brand-name" key={j}>{part}</span> : part));
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const withBrand = (text, pattern = BRAND) =>
+  text.split(pattern).map((part, j) => (!part ? null : j % 2 ? <span className="brand-name" key={j}>{part}</span> : part));
 
 // Image field: { src, alt, width, height }.
 export function Img({ v, ...props }) {
