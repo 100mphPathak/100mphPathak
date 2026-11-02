@@ -6744,15 +6744,36 @@ body .coach-feature.coach-academy > .coach-copy p:not(.eyebrow) {
   text-align: center;
 }
 
-/* One size for every section heading and hero title on computers (client request). Older per-section
-   sizes above are overridden; !important is needed because some of them use it too. Not changed:
-   headings inside blog articles and pop-up windows. Phones keep their own sizes. */
-@media (min-width: 1001px) {
-  main h2:not(.post-body h2):not(dialog h2):not(.blog-card h2),
-  main .hero-title {
-    font-size: 43px !important;
+/* ===== Type scale (client request: consistent, balanced headings, comfortable reading) =====
+   One size per kind of text on every page. Desktop = wider than 1000px, phone = up to 1000px.
+   !important because many older per-section rules above set their own sizes. Not affected:
+   headings inside blog articles, pop-up windows and the decorative event cards. */
+:root {
+  --fs-hero: 44px; --fs-h2: 38px; --fs-cta: 38px; --fs-card: 22px;
+  --fs-lede: 13px; --fs-intro: 13px; --fs-body: 13px; --fs-label: 12px; --fs-button: 14px; /* all descriptions and card texts 13px (client) */
+  --fs-partner-name: 22px; --fs-partner-text: 13px; --fs-partner-button: 14px; --fs-cta-text: 13px;
+}
+@media (max-width: 1000px) {
+  :root {
+    --fs-hero: 30px; --fs-h2: 28px; --fs-cta: 28px; --fs-card: 20px;
+    --fs-lede: 13px; --fs-intro: 13px; --fs-body: 13px; --fs-label: 11px; --fs-button: 13px;
+    --fs-partner-name: 20px; --fs-partner-text: 13px; --fs-partner-button: 13px; --fs-cta-text: 13px;
   }
 }
+main .hero-title { font-size: var(--fs-hero) !important; }
+main h2:not(.hero-title):not(.post-body h2):not(dialog h2):not(.blog-card h2):not(.closing h2) { font-size: var(--fs-h2) !important; }
+main .closing h2 { font-size: var(--fs-cta) !important; }
+main .page-hero .lede { font-size: var(--fs-lede) !important; }
+main .section-head > p:not(.eyebrow), main .partners-showcase .ps-head > p:last-child { font-size: var(--fs-intro) !important; }
+main section:not(.page-hero) .eyebrow { font-size: var(--fs-label) !important; }
+main section:not(.page-hero):not(.partners-showcase):not(.events-grid) h3:not(.inline-heading),
+main .blog-card :is(h2, h3) { font-size: var(--fs-card) !important; }
+main .partners-showcase .ps-card h3 { font-size: var(--fs-partner-name) !important; }
+main .partners-showcase .ps-text { font-size: var(--fs-partner-text) !important; }
+main .partners-showcase .ps-action { font-size: var(--fs-partner-button) !important; }
+main .closing > p { font-size: var(--fs-cta-text) !important; }
+main section:not(.page-hero):not(.closing):not(.partners-showcase) :is(.path-card, .blog-card, .timeline li, .v3-benefits article, .faqs details, .seo-faq details, .facility-list article, .two-notes article, .cm-copy, .coach-copy, .assessment-book > div:first-child) p:not(.eyebrow):not(.tiny) { font-size: var(--fs-body) !important; }
+main :is(.button, .home-capsule, .glass-link, .text-link) { font-size: var(--fs-button) !important; }
 
 /* Partners of Pathak100MPH: three equal cards (components/Partners.js) */
 .partners-showcase { margin-top: 64px; margin-bottom: 64px; }
@@ -6812,33 +6833,30 @@ body .coach-feature.coach-academy > .coach-copy p:not(.eyebrow) {
 }
 
 /* Centred section headers on every page (client request): the small label, the heading and the intro line.
-   Not changed: the hero and the sections with a photo beside the text. */
-main#main > :not(.page-hero, .coach-feature, .coach-meet):has(> h2),
-main#main > :not(.page-hero, .coach-feature, .coach-meet) :is(.section-head, div:has(> h2)) {
+   Not changed: the hero, the sections with a photo beside the text, and Admission "Your Videos" (beside its price card). */
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book):has(> h2),
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) :is(.section-head, div:has(> h2)) {
   text-align: center;
 }
-main#main > :not(.page-hero, .coach-feature, .coach-meet) .section-head {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .section-head {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-main#main > :not(.page-hero, .coach-feature, .coach-meet) :is(.section-head, div:has(> h2)) > :is(p, h2) {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) :is(.section-head, div:has(> h2)) > :is(p, h2) {
   margin-left: auto;
   margin-right: auto;
 }
-main#main > :not(.page-hero, .coach-feature, .coach-meet) .section-head > p:not(.eyebrow) {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .section-head > p:not(.eyebrow) {
   max-width: 640px;
   margin-top: 14px;
 }
 /* Online Training packages: centred header (client request; it sits right below the hero) */
 #plans .section-head { display: block; text-align: center; margin-left: auto; margin-right: auto; }
 #plans .section-head h2 { margin-left: auto; margin-right: auto; }
-/* Admission "Your Videos. Your Assessment.": its description sits outside the header block, centre it with the heading */
-.assessment-book > div:first-child { text-align: center; }
-.assessment-book > div:first-child > p { margin-left: auto; margin-right: auto; }
 /* Computers: section descriptions use the full width, so a normal sentence fits on one line */
 @media (min-width: 1001px) {
-  main#main > :not(.page-hero, .coach-feature, .coach-meet) .section-head > p:not(.eyebrow) { max-width: none; }
+  main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .section-head > p:not(.eyebrow) { max-width: none; }
 }
 /* Blog page: post titles are h2 (SEO) but look exactly like the card titles elsewhere (h3) */
 main .blog-card h2 {
