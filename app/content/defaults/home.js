@@ -48,8 +48,18 @@ export default {
   insights: {
     eyebrow: "FROM THE COACHING DESK",
     heading: "Fast Bowling Insights",
-    text: "Practical insights on technique, pace and performance. New perspectives every week.",
+    text: "Practical insights on fast bowling technique, pace, strength and performance. New coaching perspectives every week.",
     button: link("Explore all insights", "/blogs/"),
+  },
+  faq: {
+    eyebrow: "A LITTLE MORE CLARITY",
+    heading: "Good questions.\nClear answers.",
+    text: "Everything you need to take the next step.",
+    items: [
+      { question: "Where is Pathak100MPH Cricket Academy located?", answer: "Pathak100MPH is based in Delhi NCR, Uttar Pradesh, India. Selected players train at the academy’s on-ground high-performance facility." },
+      { question: "How do I join Pathak100MPH Cricket Academy?", answer: "Academy admission starts with an online assessment with Coach Ankit Pathak. The next step depends on the player’s current level, goals, selection and seat availability." },
+      { question: "Does Pathak100MPH offer online fast bowling training?", answer: "Yes. Fast bowlers can train from anywhere with personalised drills and regular video analysis and WhatsApp support." },
+    ],
   },
   closing: {
     heading: "Start Your Journey at Pathak100MPH",

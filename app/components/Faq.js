@@ -21,13 +21,14 @@ export function Faq({ v }) {
 }
 
 // Larger FAQ list with a "+" marker: { eyebrow, heading, text, items: [{ question, answer }] }.
-export function FaqList({ v }) {
+// `highlight`: a phrase in the heading shown in the accent colour (e.g. "Clear answers.").
+export function FaqList({ v, highlight }) {
   return (
     <section className="wrap faq-section">
       <div className="section-head reveal">
         <div>
           <p className="eyebrow">{v.eyebrow}</p>
-          <h2><Text v={v.heading} /></h2>
+          <h2><Text highlight={highlight} v={v.heading} /></h2>
         </div>
         <p>{v.text}</p>
       </div>

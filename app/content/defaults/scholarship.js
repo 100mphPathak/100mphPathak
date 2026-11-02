@@ -7,6 +7,9 @@ export default {
     videoId: "-iHp0AR06XE",
     videoTitle: "The scholarship explained | Pathak100MPH",
     button: { label: "Register for assessment · ₹5,000", href: "#scholarship-booking" },
+    // Hero photo (replaces the video; if this list is emptied, the video shows instead).
+    slides: [{ src: "/assets/academy-squad.webp", alt: "Ankit Pathak and coaches with Pathak100MPH academy players at the nets", width: 1920, height: 912 }],
+    trustLine: "The opportunity is real. So is the standard.",
   },
   standard: {
     eyebrow: "THE STANDARD",

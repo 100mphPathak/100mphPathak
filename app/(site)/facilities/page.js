@@ -1,8 +1,9 @@
 import PageHero from "../../components/PageHero";
+import { Insights, SiteFaq } from "../../components/SiteSections";
+import "../../home.css";
 import Link from "next/link";
 import Partners from "../../components/Partners";
 import { getContent, pageMetadata } from "../../lib/content";
-import { Faq } from "../../components/Faq";
 import { Img, Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("facilities");
@@ -14,6 +15,9 @@ export default async function Facilities() {
       <main id="main" className="facilities-page">
         <PageHero
           eyebrow={<> {c.hero.eyebrow} </>}
+          labelIsH1
+          slides={c.hero.slides}
+          trust={c.hero.trustLine}
           title={<>{" "}{c.hero.heading}<br /><span>{c.hero.headingAccent}</span>{" "}</>}
           videoTitle={c.hero.videoTitle}
           videoId={c.hero.videoId}
@@ -33,7 +37,7 @@ export default async function Facilities() {
             <div>
               <p className="eyebrow">{c.facilities.eyebrow}</p>
               <h2>
-                <Text v={c.facilities.heading} />
+                <Text brand v={c.facilities.heading} />
               </h2>
             </div>
             <p>
@@ -57,7 +61,7 @@ export default async function Facilities() {
             <div>
               <p className="eyebrow">{c.gallery.eyebrow}</p>
               <h2>
-                <Text v={c.gallery.heading} />
+                <Text highlight="Training Environment" v={c.gallery.heading} />
               </h2>
             </div>
             <p>{c.gallery.text}</p>
@@ -82,8 +86,9 @@ export default async function Facilities() {
             ))}
           </div>
         </section>
-        <Faq v={c.faq} />
-        <Partners current />
+        <Partners />
+        <Insights />
+        <SiteFaq items={c.faq.items} />
         <section className="closing wrap reveal">
           <Link
             aria-label="Pathak100MPH home"

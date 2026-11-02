@@ -1,10 +1,10 @@
 import PageHero from "../../components/PageHero";
+import { Insights, SiteFaq } from "../../components/SiteSections";
 import { HomePartners } from "../../components/Partners";
 import PlayerResults from "../../components/PlayerResults";
 import AssessmentBooking from "./assessment-booking";
 import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
-import { FaqList } from "../../components/Faq";
 import VideoRail from "../../components/VideoRail";
 import Steps from "../../components/Steps";
 import { Img, Text } from "../../components/Text";
@@ -26,11 +26,12 @@ export default async function AssessmentTrial() {
         trust={c.hero.trustLine}
       />
       <AssessmentBooking v={c.booking} />
-      <Steps variant="journey" v={c.steps} />
+      <Steps highlight="Online Assessment Works" variant="journey" v={c.steps} />
       {c.videos.show && <VideoRail v={c.videos} />}
       <PlayerResults />
-      <FaqList v={c.faq} />
       <HomePartners />
+      <Insights />
+      <SiteFaq items={c.faq.items} />
       <section className="closing wrap reveal">
         <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

@@ -2,18 +2,16 @@ import "../../home.css";
 import PageHero from "../../components/PageHero";
 import PlayerResults from "../../components/PlayerResults";
 import { HomePartners } from "../../components/Partners";
+import { Insights, SiteFaq } from "../../components/SiteSections";
 import { getContent, pageMetadata } from "../../lib/content";
-import { COLORS } from "../../content/shape";
 import { Img, Text } from "../../components/Text";
-import PostCard from "../../components/PostCard";
-import { publishedPosts } from "../../lib/posts";
 
 export const generateMetadata = () => pageMetadata("home");
 
 // Markup mirrors the reference homepage (sam.harsh-4844.chatgpt.site, v17).
 // The results arrows are wired up in SiteInteractions.js.
 export default async function Home() {
-  const [c, { posts }, { header }, live] = await Promise.all([getContent("home"), getContent("blogs"), getContent("global"), publishedPosts(3)]);
+  const [c, { header }] = await Promise.all([getContent("home"), getContent("global")]);
   return (
     <main id="main" className="home-page">
       <PageHero
@@ -51,7 +49,7 @@ export default async function Home() {
         <div className="section-head reveal">
           <div>
             <p className="eyebrow">{c.pathways.eyebrow}</p>
-            <h2><Text v={c.pathways.heading} brand /></h2>
+            <h2><Text v={c.pathways.heading} highlight="Training Programs" /></h2>
           </div>
         </div>
         <div className="equal-paths three-paths">
@@ -67,31 +65,8 @@ export default async function Home() {
       </section>
       <PlayerResults />
       <HomePartners />
-      <section className="wrap insights">
-        <div className="section-head reveal">
-          <div>
-            <p className="eyebrow">{c.insights.eyebrow}</p>
-            <h2><Text v={c.insights.heading} brand /></h2>
-          </div>
-          <p>{c.insights.text}</p>
-        </div>
-        <div className="blog-grid" tabIndex="0">
-          {/* The 3 newest CMS posts; the original cards until the first post is published. */}
-          {live.length > 0 && live.map((post, i) => <PostCard index={i} key={post.id} post={post} />)}
-          {live.length === 0 && posts.slice(0, 3).map((post, i) => (
-            <a className="blog-card reveal" href={post.href} key={i}>
-              <div className={`blog-art ${COLORS[post.color]}`}>
-                <span><Text v={post.art} /></span>
-                <b>↗</b>
-              </div>
-              <p className="tiny">{post.category}</p>
-              <h3><Text v={post.title} brand /></h3>
-              <p><Text v={post.text} brand /></p>
-            </a>
-          ))}
-        </div>
-        <a className="text-link centered glass-link" href={c.insights.button.href}>{c.insights.button.label}<span aria-hidden="true">↗</span></a>
-      </section>
+      <Insights />
+      <SiteFaq />
       <section className="closing wrap reveal">
         <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

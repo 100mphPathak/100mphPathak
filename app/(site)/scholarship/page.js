@@ -1,9 +1,9 @@
 import PageHero from "../../components/PageHero";
+import { Insights, SiteFaq } from "../../components/SiteSections";
 import Partners from "../../components/Partners";
 import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
 import BookingDialog from "../../components/BookingDialog";
-import { FaqList } from "../../components/Faq";
 import Steps from "../../components/Steps";
 import { Img, Text } from "../../components/Text";
 
@@ -16,15 +16,18 @@ export default async function Scholarship() {
       <main id="main" className="scholarship-page">
         <PageHero
           eyebrow={c.hero.eyebrow}
+          labelIsH1
           title={<>{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></>}
           description={c.hero.text}
+          slides={c.hero.slides}
           videoTitle={c.hero.videoTitle}
           videoId={c.hero.videoId}
-          videoActions={
+          actions={
             <a className="button" href={c.hero.button.href}>
               {c.hero.button.label}{" "}<span aria-hidden="true">↗</span>
             </a>
           }
+          trust={c.hero.trustLine}
         />
         <section className="wrap scholarship-standard">
           <div className="section-head reveal">
@@ -53,8 +56,9 @@ export default async function Scholarship() {
             </article>
           ))}
         </section>
-        <FaqList v={c.faq} />
-        <Partners current />
+        <Partners />
+        <Insights />
+        <SiteFaq items={c.faq.items} />
         <section className="closing wrap reveal" id="scholarship-booking">
           <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
             <Img v={header.logo} />

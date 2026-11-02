@@ -110,7 +110,7 @@ export default {
   playerResults: {
     eyebrow: "THE WORK SHOWS",
     heading: "Player Results at Pathak100MPH",
-    text: "65+ selections across district, state, national and franchise cricket in just 5 years.",
+    text: "65+ player selections across district, state and national cricket in five years.",
     players: [
       { photo: { src: "/assets/player0.webp", alt: "Swayam Srivastav", width: 500, height: 500 }, tag: "Pathak100MPH PLAYER", name: "Swayam Srivastav", team: "Odisha Pro T20 League" },
       { photo: { src: "/assets/player1.webp", alt: "Vishal Thakur", width: 500, height: 500 }, tag: "Pathak100MPH PLAYER", name: "Vishal Thakur", team: "Ranji Trophy · Services" },
@@ -131,8 +131,8 @@ export default {
       logo: { src: "/assets/stag-global.png", alt: "STAG Global", width: 500, height: 500 },
     },
     cards: [
-      { logo: { src: "/assets/naturaltein.svg", alt: "Naturaltein", width: 500, height: 500 }, wideLogo: false, role: "Pathak100MPH NUTRITION PARTNER", name: "Naturaltein", codeLabel: "USE CODE", code: "100MPH", href: "https://naturaltein.in/", linkDescription: "Code 100MPH. Visit Naturaltein" },
-      { logo: { src: "/assets/apx-official.png", alt: "APX Collection", width: 720, height: 406 }, wideLogo: true, role: "Pathak100MPH CRICKET GEAR PARTNER", name: "APX Collection", codeLabel: "USE CODE", code: "100MPH", href: "https://stag.global/collections/cricket", linkDescription: "Code 100MPH. Visit cricket collection" },
+      { logo: { src: "/assets/naturaltein.svg", alt: "Naturaltein", width: 500, height: 500 }, wideLogo: false, role: "OUR NUTRITION PARTNER", name: "Naturaltein", text: "Naturaltein supports our athletes with high-quality nutrition for performance, recovery and everyday training.", codeLabel: "USE CODE", code: "100MPH", href: "https://naturaltein.in/", linkDescription: "Code 100MPH. Visit Naturaltein" },
+      { logo: { src: "/assets/apx-official.png", alt: "APX Collection", width: 720, height: 406 }, wideLogo: true, role: "OUR CRICKET GEAR PARTNER", name: "APX Collection", text: "APX Collection creates performance-focused cricket gear for players who train and compete at a higher standard.", codeLabel: "USE CODE", code: "100MPH", href: "https://stag.global/collections/cricket", linkDescription: "Code 100MPH. Visit cricket collection" },
     ],
   },
 };

@@ -26,6 +26,7 @@ export default {
     videoId: "wzldKpk_c2Y",
     videoTitle: "How online training works | Pathak100MPH",
     button: { label: "Choose your training plan", href: "#plans" },
+    trustLine: "Train from anywhere · Built specifically for bowlers.",
   },
   experiences: {
     show: false, // hidden for now at the client's request
@@ -42,13 +43,13 @@ export default {
     heading: "One coaching approach.\nThree ways to begin.",
     items: [
       plan("STARTER", "1 month", "₹3,999", "A focused start.", "https://pages.razorpay.com/ot-1m", false, ""),
-      plan("ELITE", "6 months", "₹9,999", "Time to build consistency.", "https://pages.razorpay.com/ot-6m", true, "6-MONTH PLAN"),
+      plan("ELITE", "6 months", "₹9,999", "Time to build consistency.", "https://pages.razorpay.com/ot-6m", true, "MOST ENROLLED"),
       plan("CHAMPION", "12 months", "₹14,999", "Commit to the long game.", "https://pages.razorpay.com/ot-12m", false, ""),
     ],
   },
   benefits: {
     eyebrow: "WHAT YOUR PLAN GIVES YOU",
-    heading: "Know what to train.\nKnow what to work on.",
+    heading: "Know what to train.\nKnow how to train.",
     items: [
       { heading: "Your daily work", text: "Personalised bowling drills and strength & conditioning plans delivered through WhatsApp." },
       { heading: "Your weekly review", text: "Submit bowling footage for technical analysis and feedback on your next areas of focus." },

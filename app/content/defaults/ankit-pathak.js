@@ -1,5 +1,3 @@
-import { heroSlides } from "./home.js";
-
 const book = { label: "Book online assessment · ₹1,199", href: "/admission/" };
 
 export default {
@@ -8,21 +6,22 @@ export default {
     heading: "Your action. Your ambition.",
     headingAccent: "His attention.",
     text: "Meet Ankit Pathak, Founder and Head Coach of Pathak100MPH, with 13+ years of experience in fast bowling coaching, player development, technique, physical preparation and mindset.",
-    slides: heroSlides,
+    videoId: "-iHp0AR06XE",
+    videoTitle: "Meet Coach Ankit Pathak | Pathak100MPH",
     button: book,
+    trustLine: "Coaching built around technique, preparation and mindset.",
   },
   coach: {
-    photo: { src: "/assets/practice.webp", alt: "Ankit Pathak with a player at the Pathak100MPH ground", width: 1512, height: 2016 },
+    photo: { src: "/assets/portrait.webp", alt: "Ankit Pathak at the cricket ground", width: 952, height: 1023 },
     photoCredit: "ANKIT PATHAK\nFOUNDER & HEAD COACH",
-    eyebrow: "THE COACH & THE ACADEMY",
-    heading: "13+ years of experience.",
-    headingAccent: "5 years of Pathak100MPH.",
+    eyebrow: "MEET YOUR COACH",
+    heading: "Helping Fast Bowlers",
+    headingAccent: "Build Strong Action",
     facts: [
-      { value: "13+", label: "Years coaching" },
-      { value: "1 Oct 2021", label: "Academy founded" },
+      { value: "13+", label: "Years of experience" },
       { value: "65+", label: "Selections in 5 years" },
     ],
-    text: "Technique, physical preparation and mindset, shaped around the individual player.",
+    text: "A coaching approach built on technique, physical preparation and mindset, helping fast bowlers develop a stronger, more repeatable action and perform better over time.",
     button: book,
   },
   approach: {
@@ -39,9 +38,9 @@ export default {
     eyebrow: "BEFORE YOUR NEXT STEP",
     heading: "Clear answers.\nConfident decisions.",
     items: [
-      { question: "How do I choose the best fast bowling coach for me?", answer: "Look for a coach who understands your action, explains the purpose of training, gives useful feedback and considers your goals. Review the coaching approach and player experiences, then choose the level of support you need." },
-      { question: "Can I work with Ankit Pathak online?", answer: "Yes. Book a [personal online assessment session](/admission/) on Google Meet or explore [ongoing online training](/online-bowling-training/) with Ankit sir and the team." },
-      { question: "How much coaching experience does Ankit Pathak have?", answer: "Ankit Pathak has 13+ years of experience. He founded Pathak100MPH on 1 October 2021 and is its head coach." },
+      { question: "Who is Ankit Pathak?", answer: "Ankit Pathak is the Founder and Head Coach of Pathak100MPH and a fast bowling coach with 13+ years of experience in player development, bowling technique, physical preparation and performance training." },
+      { question: "Can I Train With Ankit Pathak Online?", answer: "Yes. Pathak100MPH’s Online Fast Bowling Training program gives players structured coaching with Coach Ankit Pathak, wherever they are in the world." },
+      { question: "How Much Fast Bowling Coaching Experience Does Ankit Pathak Have?", answer: "Ankit Pathak has 13+ years of experience. He founded Pathak100MPH on 1 October 2021 and continues to lead its fast bowling coaching and player development programs." },
     ],
   },
   closing: {

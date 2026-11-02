@@ -23,12 +23,12 @@ export default async function Blogs() {
       <section className="wrap blog-list">
         <div className="blog-grid">
           {/* Posts written in the CMS. Until the first one is published, the original cards stay. */}
-          {live.length > 0 && live.map((post, i) => <PostCard index={i} key={post.id} post={post} reveal={i < 4} />)}
+          {live.length > 0 && live.map((post, i) => <PostCard headingLevel="h2" index={i} key={post.id} post={post} reveal={i < 4} />)}
           {live.length === 0 && c.posts.map((post, i) => (
             <a className={i < 4 ? "blog-card reveal" : "blog-card"} href={post.href} key={i}>
               <div className={`blog-art ${COLORS[post.color]}`}><span><Text v={post.art} /></span><b>↗</b></div>
               <p className="tiny">{post.category}</p>
-              <h3><Text v={post.title} brand /></h3>
+              <h2><Text v={post.title} brand /></h2>
               <p><Text v={post.text} brand /></p>
             </a>
           ))}

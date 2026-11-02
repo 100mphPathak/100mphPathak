@@ -3,10 +3,13 @@ export default {
     eyebrow: "CRICKET ACADEMY WITH HOSTEL",
     heading: "Room to train.",
     headingAccent: "Space to grow.",
-    text: "Looking for a cricket academy with hostel facilities? Explore Pathak100MPH’s 5-acre training environment and residential support in Delhi NCR. Admission begins with an assessment.",
+    text: "Train in a 5-acre cricket environment built for serious player development, with turf and cement practice nets, speed radar, floodlights, strength & conditioning facilities, regular practice matches and residential support.",
     videoId: "-iHp0AR06XE",
     videoTitle: "Explore our academy | Pathak100MPH",
     button: { label: "Explore admission assessments", href: "/admission/" },
+    // Hero photo (replaces the video; if this list is emptied, the video shows instead).
+    slides: [{ src: "/assets/academy-squad.webp", alt: "Ankit Pathak and coaches with Pathak100MPH academy players at the nets", width: 1920, height: 912 }],
+    trustLine: "5-acre training environment · Cricket gym · Residential support.",
   },
   facilities: {
     eyebrow: "BUILT AROUND YOUR DEVELOPMENT",

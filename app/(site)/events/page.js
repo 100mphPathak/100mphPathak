@@ -2,7 +2,6 @@ import Link from "next/link";
 import Partners from "../../components/Partners";
 import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
-import { Faq } from "../../components/Faq";
 import { Img, Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("events");
@@ -12,8 +11,8 @@ export default async function Events() {
   return (
     <main id="main" className="events-page">
       <section className="wrap page-hero">
-        <p className="eyebrow reveal"><Text v={c.hero.eyebrow} brand /></p>
-        <h1 className="reveal hero-title">{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></h1>
+        <h1 className="eyebrow reveal"><Text v={c.hero.eyebrow} brand /></h1>
+        <h2 className="reveal hero-title">{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></h2>
         <p className="lede reveal">
           <Text v={c.hero.text} brand />
         </p>
@@ -38,8 +37,8 @@ export default async function Events() {
           ))}
         </div>
       </section>
-      <Faq v={c.faq} />
-      <Partners current />
+      {/* Q&A removed for now (client request); the questions stay saved in the content. */}
+      <Partners />
       <section className="closing wrap reveal">
         <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

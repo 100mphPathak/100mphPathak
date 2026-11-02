@@ -18,11 +18,11 @@ export default function PageHero({
     <section className="page-hero wrap mobile-video-first">
       <div className="hero-copy">
         {labelIsH1 ? <h1 className="eyebrow reveal">{eyebrow}</h1> : <p className="eyebrow reveal">{eyebrow}</p>}
-        <Title className="reveal hero-title">{title}</Title>
+        <h2 className="reveal hero-title">{title}</h2>
         {description && <p className="lede reveal">{description}</p>}
         {actions && <div className="hero-actions">{actions}</div>}
       </div>
-      {slides ? (
+      {slides?.length ? ( /* no photos saved → show the video instead of crashing */
         <HeroCarousel slides={slides} />
       ) : (
         <div className="vsl-player">
@@ -33,7 +33,7 @@ export default function PageHero({
         </div>
       )}
       {trust && <div className="service-trust">{trust}</div>}
-      {caption && <div className="hero-caption">{caption}</div>}
+      {caption && <p className="site-tagline">{caption}</p>}
     </section>
   );
 }

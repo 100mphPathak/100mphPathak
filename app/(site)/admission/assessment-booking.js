@@ -7,7 +7,7 @@ export default function AssessmentBooking({ v }) {
         <div className="section-head reveal">
           <div>
             <p className="eyebrow">{v.eyebrow}</p>
-            <h2><Text v={v.heading} /></h2>
+            <h2><Text highlight="Your Assessment." v={v.heading} /></h2>
           </div>
         </div>
         <p>{v.text}</p>

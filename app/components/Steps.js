@@ -2,13 +2,13 @@ import { Text } from "./Text";
 
 // Numbered process steps as cards: { eyebrow, heading, text?, items: [{ title, text }] }.
 // variant adds a look, e.g. "journey" (outlined number + arrows between cards).
-export default function Steps({ v, id, variant }) {
+export default function Steps({ v, id, variant, highlight }) {
   return (
     <section className={`wrap approach-timeline ${variant ?? ""}`.trim()} id={id}>
       <div className="section-head reveal">
         <div>
           <p className="eyebrow">{v.eyebrow}</p>
-          <h2><Text v={v.heading} /></h2>
+          <h2><Text highlight={highlight} v={v.heading} /></h2>
         </div>
         {"text" in v && <p>{v.text}</p>}
       </div>

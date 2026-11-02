@@ -1,10 +1,10 @@
 import PageHero from "../../components/PageHero";
+import { Insights, SiteFaq } from "../../components/SiteSections";
 import Link from "next/link";
 import { Fragment } from "react";
 import Partners from "../../components/Partners";
 import "../../home.css";
 import { getContent, pageMetadata } from "../../lib/content";
-import { FaqList } from "../../components/Faq";
 import Steps from "../../components/Steps";
 import { Img, Text } from "../../components/Text";
 
@@ -18,6 +18,8 @@ export default async function OnlineTraining() {
     <main id="main" className="training-page">
       <PageHero
         eyebrow={<> {c.hero.eyebrow} </>}
+        labelIsH1
+        trust={c.hero.trustLine}
         title={<>{" "}{c.hero.heading}<br /><span>{c.hero.headingAccent}</span>{" "}</>}
         videoTitle={c.hero.videoTitle}
         videoId={c.hero.videoId}
@@ -71,7 +73,7 @@ export default async function OnlineTraining() {
           <div>
             <p className="eyebrow">{c.plans.eyebrow}</p>
             <h2>
-              <Text v={c.plans.heading} />
+              <Text highlight="Three ways to begin." v={c.plans.heading} />
             </h2>
           </div>
         </div>
@@ -105,7 +107,8 @@ export default async function OnlineTraining() {
       <section className="wrap v3-section reveal">
         <p className="eyebrow">{c.benefits.eyebrow}</p>
         <h2>
-          <Text v={c.benefits.heading} />
+          {/* Second line highlighted, e.g. "Know what to train. / Know how to train." */}
+          <Text highlight={c.benefits.heading.split("\n").at(-1)} v={c.benefits.heading} />
         </h2>
         <div className="v3-benefits">
           {c.benefits.items.map((item, i) => (
@@ -118,9 +121,6 @@ export default async function OnlineTraining() {
           ))}
         </div>
         <div className="sample-panel">
-          <span className="pill">
-            {c.benefits.sampleLabel}
-          </span>
           <div className="sample-flow">
             {c.benefits.sampleFlow.map((step, i) => (
               <Fragment key={i}>
@@ -129,14 +129,12 @@ export default async function OnlineTraining() {
               </Fragment>
             ))}
           </div>
-          <p>
-            {c.benefits.sampleText}
-          </p>
         </div>
       </section>
-      <Steps variant="journey" v={c.steps} />
-      <FaqList v={c.faq} />
-      <Partners current />
+      <Steps highlight="Online Training Works" variant="journey" v={c.steps} />
+      <Partners />
+      <Insights />
+      <SiteFaq items={c.faq.items} />
       <section className="closing wrap reveal">
         <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

@@ -7,7 +7,9 @@ const SHADES = Object.values(COLORS);
 
 // A published blog post as a card (blog list and home page). Same look as the original cards,
 // with the cover photo in the coloured box; posts without a cover get a coloured box with the category.
-export default function PostCard({ post, index = 0, reveal = true }) {
+// headingLevel: "h2" on the blog page (each post is a main item there), "h3" inside other sections.
+export default function PostCard({ post, index = 0, reveal = true, headingLevel = "h3" }) {
+  const Heading = headingLevel;
   return (
     <Link className={`blog-card${reveal ? " reveal" : ""}`} href={`/blogs/${post.slug}/`}>
       <div className={`blog-art ${post.cover_image?.src ? "has-cover" : SHADES[index % SHADES.length]}`}>
@@ -19,7 +21,7 @@ export default function PostCard({ post, index = 0, reveal = true }) {
         <b>↗</b>
       </div>
       <p className="tiny">{post.category} · {postDate(post.published_at)}</p>
-      <h3>{post.title}</h3>
+      <Heading>{post.title}</Heading>
       {post.excerpt && <p>{post.excerpt}</p>}
     </Link>
   );
