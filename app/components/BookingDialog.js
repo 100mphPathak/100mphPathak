@@ -7,7 +7,7 @@ export default function BookingDialog({ v }) {
       <h2 id="booking-title">{v.heading}</h2>
       <p>{v.text}</p>
       <p className="form-notice">{v.notice}</p>
-      <a className="button" href={v.button.href}>{v.button.label}{" "}<span>↗</span></a>
+      <a className="button" href={v.button.href}>{v.button.label}{" "}<span>↗︎</span></a>
     </dialog>
   );
 }

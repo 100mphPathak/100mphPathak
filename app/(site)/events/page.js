@@ -46,7 +46,7 @@ export default async function Events() {
         <h2><Text v={c.closing.heading} /></h2>
         <p><Text v={c.closing.text} brand /></p>
         <div className="actions">
-          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗</span></Link>
+          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗︎</span></Link>
         </div>
       </section>
     </main>

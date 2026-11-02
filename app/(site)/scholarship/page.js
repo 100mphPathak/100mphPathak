@@ -24,7 +24,7 @@ export default async function Scholarship() {
           videoId={c.hero.videoId}
           actions={
             <a className="button" href={c.hero.button.href}>
-              {c.hero.button.label}{" "}<span aria-hidden="true">↗</span>
+              {c.hero.button.label}{" "}<span aria-hidden="true">↗︎</span>
             </a>
           }
           trust={c.hero.trustLine}
@@ -66,7 +66,7 @@ export default async function Scholarship() {
           <h2><Text v={c.closing.heading} /></h2>
           <p>{c.closing.text}</p>
           <div className="actions">
-            <button className="button" data-book={c.bookingDialog.heading}>{c.closing.button}{" "}<span>↗</span>
+            <button className="button" data-book={c.bookingDialog.heading}>{c.closing.button}{" "}<span>↗︎</span>
             </button>
           </div>
         </section>

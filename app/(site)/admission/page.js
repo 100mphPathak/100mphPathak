@@ -22,7 +22,7 @@ export default async function AssessmentTrial() {
         description={<Text v={c.hero.text} brand />}
         videoTitle={c.hero.videoTitle}
         videoId={c.hero.videoId}
-        actions={<a className="button" href={c.hero.button.href} rel="noopener" target="_blank">{c.hero.button.label}{" ↗"}</a>}
+        actions={<a className="button" href={c.hero.button.href} rel="noopener" target="_blank">{c.hero.button.label}{" ↗︎"}</a>}
         trust={c.hero.trustLine}
       />
       <AssessmentBooking v={c.booking} />
@@ -39,7 +39,7 @@ export default async function AssessmentTrial() {
         <h2><Text v={c.closing.heading} /></h2>
         <p>{c.closing.text}</p>
         <div className="actions">
-          <a className="button" href={c.closing.button.href} rel="noopener" target="_blank">{c.closing.button.label}{" ↗"}</a>
+          <a className="button" href={c.closing.button.href} rel="noopener" target="_blank">{c.closing.button.label}{" ↗︎"}</a>
         </div>
       </section>
     </main>

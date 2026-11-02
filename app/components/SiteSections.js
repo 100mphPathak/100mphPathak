@@ -26,7 +26,7 @@ export async function Insights() {
           <a className="blog-card reveal" href={post.href} key={i}>
             <div className={`blog-art ${COLORS[post.color]}`}>
               <span><Text v={post.art} /></span>
-              <b>↗</b>
+              <b>↗︎</b>
             </div>
             <p className="tiny">{post.category}</p>
             <h3><Text brand v={post.title} /></h3>
@@ -34,7 +34,7 @@ export async function Insights() {
           </a>
         ))}
       </div>
-      <a className="text-link centered glass-link" href={insights.button.href}>{insights.button.label}<span aria-hidden="true">↗</span></a>
+      <a className="text-link centered glass-link" href={insights.button.href}>{insights.button.label}<span aria-hidden="true">↗︎</span></a>
     </section>
   );
 }

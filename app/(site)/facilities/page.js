@@ -27,7 +27,7 @@ export default async function Facilities() {
               {" "}
               <Link className="button" href={c.hero.button.href}>
                 {c.hero.button.label}
-                <span aria-hidden="true">{"↗"}</span>
+                <span aria-hidden="true">{"↗︎"}</span>
               </Link>{" "}
             </>
           }
@@ -106,7 +106,7 @@ export default async function Facilities() {
           <div className="actions">
             <button className="text-link" data-enquire="">
               {c.closing.button}
-              <span aria-hidden="true">{"↗"}</span>
+              <span aria-hidden="true">{"↗︎"}</span>
             </button>
           </div>
         </section>

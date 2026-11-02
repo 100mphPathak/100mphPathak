@@ -21,7 +21,7 @@ export default async function Footer() {
           </div>
           <Link className="footer-phone" href={f.phone.href}>
             {f.phoneLead}{" "}
-            <span>{f.phone.label}{" ↗"}</span>
+            <span>{f.phone.label}{" ↗︎"}</span>
           </Link>
         </div>
         <div className="footer-directory">
@@ -47,7 +47,7 @@ export default async function Footer() {
               rel="noopener"
               target="_blank"
             >
-              {f.whatsapp.label}{" ↗"}
+              {f.whatsapp.label}{" ↗︎"}
             </Link>
           </div>
         </div>

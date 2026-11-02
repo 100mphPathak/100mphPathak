@@ -130,7 +130,7 @@ export default function Editor(props) {
           <p className="small muted" style={{ margin: 0 }}><Link href="/admin/pages">Pages</Link> /</p>
           <h1>{title}</h1>
         </div>
-        {route && <a className="btn secondary" href={route} rel="noopener" target="_blank">View live page ↗</a>}
+        {route && <a className="btn secondary" href={route} rel="noopener" target="_blank">View live page ↗︎</a>}
       </div>
 
       <div className="editor">
@@ -173,10 +173,10 @@ export default function Editor(props) {
                 target="_blank"
                 title={dirty ? "Save your changes first" : "Opens the draft in a new tab"}
               >
-                Preview draft ↗
+                Preview draft ↗︎
               </a>
             ) : (
-              <a className="btn secondary" href={dirty ? undefined : "/admin/preview/global"} rel="noopener" target="_blank">Preview on home page ↗</a>
+              <a className="btn secondary" href={dirty ? undefined : "/admin/preview/global"} rel="noopener" target="_blank">Preview on home page ↗︎</a>
             )}
             {permissions.publish && (
               <button className="btn" disabled={pending || dirty || !hasUnpublished} onClick={doPublish} type="button">Publish</button>

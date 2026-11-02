@@ -18,7 +18,7 @@ export default async function PanelLayout({ children }) {
           {can(user.role, "global.edit") && <NavLink href="/admin/pages/global">Site-wide settings</NavLink>}
           {can(user.role, "users.manage") && <NavLink href="/admin/users">Users</NavLink>}
           {can(user.role, "audit.view") && <NavLink href="/admin/audit">Activity log</NavLink>}
-          <a href="/" target="_blank" rel="noopener">View website ↗</a>
+          <a href="/" target="_blank" rel="noopener">View website ↗︎</a>
         </nav>
         <div className="a-user">
           <div>{user.name || user.email}</div>

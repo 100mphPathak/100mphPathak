@@ -20,7 +20,7 @@ export default async function CallbackPrompt() {
         <strong>{prompt.heading}</strong>
         <button className="text-link" data-enquire="">
           {prompt.button}{" "}
-          <span>{"↗"}</span>
+          <span>{"↗︎"}</span>
         </button>
       </aside>
     </>

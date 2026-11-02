@@ -42,7 +42,7 @@ export default async function Home() {
           <p className="eyebrow">{c.coach.eyebrow}</p>
           <h2><Text v={c.coach.heading} brand highlight="Ankit Pathak" /></h2>
           <p>{c.coach.text}</p>
-          <a className="text-link home-capsule" href={c.coach.button.href}>{c.coach.button.label}<span aria-hidden="true">↗</span></a>
+          <a className="text-link home-capsule" href={c.coach.button.href}>{c.coach.button.label}<span aria-hidden="true">↗︎</span></a>
         </div>
       </section>
       <section className="wrap pathways" id="pathways">
@@ -74,7 +74,7 @@ export default async function Home() {
         <h2><Text v={c.closing.heading} brand /></h2>
         <p>{c.closing.text}</p>
         <div className="actions">
-          <button className="button secondary" data-enquire="">{c.closing.button}<span aria-hidden="true">↗</span></button>
+          <button className="button secondary" data-enquire="">{c.closing.button}<span aria-hidden="true">↗︎</span></button>
         </div>
       </section>
     </main>

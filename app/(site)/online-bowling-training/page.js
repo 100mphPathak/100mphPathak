@@ -26,7 +26,7 @@ export default async function OnlineTraining() {
         description={<>{" "}{c.hero.text}{" "}</>}
         actions={
           <a className="button" href={c.hero.button.href}>
-            {c.hero.button.label}{" "}<span aria-hidden="true">↗</span>
+            {c.hero.button.label}{" "}<span aria-hidden="true">↗︎</span>
           </a>
         }
       />
@@ -49,7 +49,7 @@ export default async function OnlineTraining() {
                   src={`https://www.instagram.com/reel/${video.videoId}/embed/`}
                   title={video.title}
                 />
-                <a className="video-fallback" href={`https://www.instagram.com/reel/${video.videoId}/`} rel="noopener noreferrer" target="_blank">Watch on Instagram ↗</a>
+                <a className="video-fallback" href={`https://www.instagram.com/reel/${video.videoId}/`} rel="noopener noreferrer" target="_blank">Watch on Instagram ↗︎</a>
               </article>
             ) : (
               <article className="native-reel video-story" key={i}>
@@ -61,7 +61,7 @@ export default async function OnlineTraining() {
                   src={`https://www.youtube-nocookie.com/embed/${video.videoId}?rel=0`}
                   title={video.title}
                 />
-                <a className="video-fallback" href={`https://www.youtube.com/shorts/${video.videoId}`} rel="noopener noreferrer" target="_blank">Watch on YouTube ↗</a>
+                <a className="video-fallback" href={`https://www.youtube.com/shorts/${video.videoId}`} rel="noopener noreferrer" target="_blank">Watch on YouTube ↗︎</a>
               </article>
             ),
           )}
@@ -97,7 +97,7 @@ export default async function OnlineTraining() {
                 target="_blank"
               >
                 {plan.button.label}{" "}
-                <span>{"↗"}</span>
+                <span>{"↗︎"}</span>
               </Link>
               <small>{plan.note}</small>
             </article>
@@ -146,7 +146,7 @@ export default async function OnlineTraining() {
         <div className="actions">
           <a className="button" href={c.closing.button.href}>
             {c.closing.button.label}
-            <span aria-hidden="true">{"↗"}</span>
+            <span aria-hidden="true">{"↗︎"}</span>
           </a>
         </div>
       </section>

@@ -175,7 +175,7 @@ export default function PostEditor({ post, categories, canPublish }) {
           target="_blank"
           title={dirty ? "Save your changes first" : "Opens the saved draft in a new tab"}
         >
-          Preview ↗
+          Preview ↗︎
         </a>
         <Link className="btn secondary" href={`/admin/posts/${post.id}/revisions`}>Version history</Link>
         {canPublish ? (

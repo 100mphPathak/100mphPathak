@@ -18,7 +18,7 @@ export default function PostCard({ post, index = 0, reveal = true, headingLevel 
         ) : (
           <span>{post.category}</span>
         )}
-        <b>↗</b>
+        <b>↗︎</b>
       </div>
       <p className="tiny">{post.category} · {postDate(post.published_at)}</p>
       <Heading>{post.title}</Heading>

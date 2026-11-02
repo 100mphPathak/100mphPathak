@@ -45,7 +45,10 @@ export default async function Partners({ data }) {
             {card.text && <p className="ps-text"><Text brand v={card.text} /></p>}
             <a aria-label={card.linkDescription} className="ps-action" href={card.href} rel="noopener noreferrer" target="_blank">
               <span>{card.label}</span>
-              <b aria-hidden="true">↗</b>
+              <b aria-hidden="true">
+                {/* A drawn arrow: the ↗︎ character shows as a blue emoji square on iPhones */}
+                <svg fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="18"><path d="M7 17 17 7M8 7h9v9" /></svg>
+              </b>
             </a>
           </article>
         ))}

@@ -14,7 +14,7 @@ export default async function Navbar() {
         <Link href={announcement.link.href}>
           <span>{announcement.lead}</span>
           {" "}{announcement.link.label}{"  "}
-          <b aria-hidden="true">{"↗"}</b>
+          <b aria-hidden="true">{"↗︎"}</b>
         </Link>
       </aside>
       <header className="header">
@@ -30,7 +30,7 @@ export default async function Navbar() {
           <div className="nav-actions">
             <button className="nav-enquire" data-enquire="">
               {header.callbackButton}
-              <span aria-hidden="true">{"↗"}</span>
+              <span aria-hidden="true">{"↗︎"}</span>
             </button>
             <button
               aria-expanded="false"
@@ -47,7 +47,7 @@ export default async function Navbar() {
         {menu.links.map((item, i) => (
           <Link href={item.href} key={i}>
             {item.label}
-            <span>{"↗"}</span>
+            <span>{"↗︎"}</span>
           </Link>
         ))}
         <div className="menu-support">
@@ -56,9 +56,9 @@ export default async function Navbar() {
           <p>{menu.text}</p>
           <div className="menu-contact">
             <Link href={menu.whatsapp.href} rel="noopener noreferrer" target="_blank">
-              {menu.whatsapp.label}{" ↗"}
+              {menu.whatsapp.label}{" ↗︎"}
             </Link>
-            <Link href={menu.call.href}>{menu.call.label}{" ↗"}</Link>
+            <Link href={menu.call.href}>{menu.call.label}{" ↗︎"}</Link>
           </div>
           <small><Text v={menu.signature} brand /></small>
         </div>

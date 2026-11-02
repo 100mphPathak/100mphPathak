@@ -18,7 +18,7 @@ export default function VideoRail({ v }) {
           <article className="native-reel video-story" key={i}>
             <iframe allow={ALLOW} allowFullScreen loading="lazy" referrerPolicy="strict-origin-when-cross-origin" src={`https://www.youtube-nocookie.com/embed/${short.videoId}?rel=0`} title={short.title}>
             </iframe>
-            <a className="video-fallback" href={`https://www.youtube.com/shorts/${short.videoId}`} rel="noopener noreferrer" target="_blank">Watch on YouTube ↗</a>
+            <a className="video-fallback" href={`https://www.youtube.com/shorts/${short.videoId}`} rel="noopener noreferrer" target="_blank">Watch on YouTube ↗︎</a>
           </article>
         ))}
       </div>

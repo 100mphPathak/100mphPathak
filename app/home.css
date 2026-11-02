@@ -380,8 +380,8 @@ body .partners .partner-feature .partner-visit span[aria-hidden]{font-size:20px;
 }
 /* Scholarship: stats centred in their boxes. Scholarship + Admission: the tagline under the hero larger and bold */
 .scholarship-page .scholarship-standard .facts > div{text-align:center;padding-left:0;padding-right:0}
-body :is(.scholarship-page, .assessment-page, .facilities-page, .coach-page, .training-page) .page-hero > .service-trust{font-size:16px;font-weight:700;color:#273a52}
-@media(max-width:760px){body :is(.scholarship-page, .assessment-page, .facilities-page, .coach-page, .training-page) .page-hero > .service-trust{font-size:14px}}
+body :is(.scholarship-page, .assessment-page, .facilities-page, .coach-page, .training-page) .page-hero > .service-trust,body .home-page .page-hero > .site-tagline{font-size:16px;font-weight:700;color:#273a52}
+@media(max-width:760px){body :is(.scholarship-page, .assessment-page, .facilities-page, .coach-page, .training-page) .page-hero > .service-trust,body .home-page .page-hero > .site-tagline{font-size:14px}}
 /* Home coach section (computers): 380px photo, description on ~3 lines, text centred beside it */
 @media(min-width:1001px){
   .home-page .coach-feature{grid-template-columns:1fr 1.05fr;align-items:center}
@@ -390,3 +390,5 @@ body :is(.scholarship-page, .assessment-page, .facilities-page, .coach-page, .tr
   .home-page .coach-feature .coach-copy{align-self:center}
   .home-page .coach-feature .coach-copy p:not(.eyebrow){max-width:none}
 }
+/* Home hero line on phones: bold like Admission, but kept on one line (client request) */
+@media(max-width:760px){body .home-page .page-hero > .site-tagline{font-size:clamp(10px,3.25vw,14px);white-space:nowrap}}

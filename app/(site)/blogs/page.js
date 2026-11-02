@@ -26,7 +26,7 @@ export default async function Blogs() {
           {live.length > 0 && live.map((post, i) => <PostCard headingLevel="h2" index={i} key={post.id} post={post} reveal={i < 4} />)}
           {live.length === 0 && c.posts.map((post, i) => (
             <a className={i < 4 ? "blog-card reveal" : "blog-card"} href={post.href} key={i}>
-              <div className={`blog-art ${COLORS[post.color]}`}><span><Text v={post.art} /></span><b>↗</b></div>
+              <div className={`blog-art ${COLORS[post.color]}`}><span><Text v={post.art} /></span><b>↗︎</b></div>
               <p className="tiny">{post.category}</p>
               <h2><Text v={post.title} brand /></h2>
               <p><Text v={post.text} brand /></p>
@@ -42,7 +42,7 @@ export default async function Blogs() {
         <h2><Text v={c.closing.heading} /></h2>
         <p>{c.closing.text}</p>
         <div className="actions">
-          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗</span></Link>
+          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗︎</span></Link>
         </div>
       </section>
     </main>

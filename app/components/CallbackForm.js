@@ -90,7 +90,7 @@ export default async function CallbackForm() {
           </p>
           <button className="button" type="submit">
             {form.submit}{" "}
-            <span>{"↗"}</span>
+            <span>{"↗︎"}</span>
           </button>
           <p className="form-result" role="status"></p>
           <input name="country_name" type="hidden" defaultValue="India" />

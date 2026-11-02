@@ -23,7 +23,7 @@ export default async function WhatsAppButton() {
           <span>{wa.label}</span>
         </span>
         <span aria-hidden="true" className="wa-arrow">
-          {"↗"}
+          {"↗︎"}
         </span>
       </Link>
     </>

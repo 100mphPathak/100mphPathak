@@ -17,7 +17,7 @@ export default function AssessmentBooking({ v }) {
         <div className="price">{v.price}</div>
         <p>{v.priceNote}</p>
         <hr/>
-        <a className="button" href={v.button.href} rel="noopener" target="_blank">{v.button.label}{" ↗"}</a>
+        <a className="button" href={v.button.href} rel="noopener" target="_blank">{v.button.label}{" ↗︎"}</a>
         <p className="card-after">{v.cardText}</p>
       </aside>
     </section>

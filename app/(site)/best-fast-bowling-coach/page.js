@@ -33,7 +33,7 @@ export default async function AnkitPathak() {
         trust={c.hero.trustLine}
         actions={
           <Link className="button" href={c.hero.button.href}>
-            {c.hero.button.label}{" "}<span aria-hidden="true">↗</span>
+            {c.hero.button.label}{" "}<span aria-hidden="true">↗︎</span>
           </Link>
         }
       />
@@ -75,7 +75,7 @@ export default async function AnkitPathak() {
         <h2><Text v={c.closing.heading} /></h2>
         <p>{c.closing.text}</p>
         <div className="actions">
-          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗</span>
+          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗︎</span>
           </Link>
         </div>
       </section>

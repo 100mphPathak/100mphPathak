@@ -6780,7 +6780,8 @@ body .coach-feature.coach-academy > .coach-copy p:not(.eyebrow) {
   color: #11151c; font-weight: 700; font-size: 17px; text-decoration: none; text-align: left;
   transition: box-shadow 0.2s, border-color 0.2s;
 }
-.partners-showcase .ps-card .ps-text + .ps-action, .partners-showcase .ps-card h3 + .ps-action { margin-top: 24px; }
+/* Buttons sit at the bottom of every card (margin-top:auto above), so they line up across cards */
+.partners-showcase .ps-card .ps-text { margin-bottom: 24px; }
 .partners-showcase .ps-action b {
   flex: none; display: grid; place-items: center; width: 46px; height: 46px; margin-left: auto;
   position: relative; border-radius: 50%; background: #18233a; color: #fff; font-weight: 400; font-size: 18px;
@@ -6804,7 +6805,7 @@ body .coach-feature.coach-academy > .coach-copy p:not(.eyebrow) {
   .partners-showcase .ps-role { margin-top: 16px; font-size: 10px; }
   .partners-showcase .ps-card h3 { margin-top: 8px; font-size: 22px; }
   .partners-showcase .ps-text { margin-top: 8px; font-size: 14px; line-height: 1.5; }
-  .partners-showcase .ps-card .ps-text + .ps-action, .partners-showcase .ps-card h3 + .ps-action { margin-top: 16px; }
+  .partners-showcase .ps-card .ps-text { margin-bottom: 16px; }
   .partners-showcase .ps-action { padding: 7px 7px 7px 14px; border-radius: 14px; font-size: 13px; gap: 18px; }
   .partners-showcase .ps-action b { width: 36px; height: 36px; font-size: 15px; }
   .partners-showcase .ps-action b::before { left: -10px; }
@@ -6854,3 +6855,14 @@ main .blog-card h2 {
   #plans .section-head h2 .brand-name, .v3-section > h2 .brand-name { margin-left: 0.25em; }
   #plans .section-head h2, .v3-section > h2 { max-width: none; }
 }
+/* Phones/tablets: the hero's supporting line (home "A stronger game…") goes last, below the hero, like the Admission line */
+@media (max-width: 999px) {
+  .mobile-video-first > .site-tagline { order: 7; }
+}
+/* Phones: a single blog card fills the row (centred) instead of sitting left in the swipe rail */
+@media (max-width: 760px) {
+  .insights .blog-grid:has(> :only-child) { grid-auto-columns: 100%; }
+}
+/* iPhones draw some symbols (like ↗) as colour emoji. The code marks each ↗ with U+FE0E ("show as text");
+   this asks browsers that support it to do the same for any symbol. */
+body { font-variant-emoji: text; }
