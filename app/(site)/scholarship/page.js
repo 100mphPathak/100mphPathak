@@ -56,9 +56,9 @@ export default async function Scholarship() {
             </article>
           ))}
         </section>
+        <SiteFaq items={c.faq.items} />
         <Partners />
         <Insights />
-        <SiteFaq items={c.faq.items} />
         <section className="closing wrap reveal" id="scholarship-booking">
           <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
             <Img v={header.logo} />

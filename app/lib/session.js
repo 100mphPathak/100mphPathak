@@ -25,6 +25,7 @@ export async function requirePage(action = "page.view") {
   return user;
 }
 
+
 // For server actions: never trust the UI, check again here.
 export async function authorize(action) {
   const user = await currentUser();

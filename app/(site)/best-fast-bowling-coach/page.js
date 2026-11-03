@@ -65,9 +65,9 @@ export default async function AnkitPathak() {
       </section>
       <Steps highlight="Coaching Approach" v={c.approach} />
       <PlayerResults />
+      <SiteFaq items={c.faq.items} />
       <HomePartners />
       <Insights />
-      <SiteFaq items={c.faq.items} />
       <section className="closing wrap reveal">
         <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

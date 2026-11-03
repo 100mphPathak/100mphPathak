@@ -29,9 +29,9 @@ export default async function AssessmentTrial() {
       <Steps highlight="Online Assessment Works" v={c.steps} />
       {c.videos.show && <VideoRail v={c.videos} />}
       <PlayerResults />
+      <SiteFaq items={c.faq.items} />
       <HomePartners />
       <Insights />
-      <SiteFaq items={c.faq.items} />
       <section className="closing wrap reveal">
         <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

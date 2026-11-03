@@ -28,8 +28,7 @@ async function loadDraft(slug) {
   return rows[0] ?? null;
 }
 
-// Published content (or the draft, inside a preview), always complete thanks to defaults.
-// If the database is unreachable the site keeps serving its built-in content.
+  
 export const getPage = cache(async (slug) => {
   const page = PAGES[slug];
   const preview = (await draftMode()).isEnabled;
