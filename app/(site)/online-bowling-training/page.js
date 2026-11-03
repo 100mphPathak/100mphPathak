@@ -76,6 +76,7 @@ export default async function OnlineTraining() {
               <Text highlight="Three ways to begin." v={c.plans.heading} />
             </h2>
           </div>
+          <p>{c.plans.text}</p>
         </div>
         <div className="plans">
           {c.plans.items.map((plan, i) => (
@@ -107,9 +108,9 @@ export default async function OnlineTraining() {
       <section className="wrap v3-section reveal">
         <p className="eyebrow">{c.benefits.eyebrow}</p>
         <h2>
-          {/* Second line highlighted, e.g. "Know what to train. / Know how to train." */}
-          <Text highlight={c.benefits.heading.split("\n").at(-1)} v={c.benefits.heading} />
+          <Text highlight="Know how to train" v={c.benefits.heading} />
         </h2>
+        <p className="v3-benefits-intro">{c.benefits.text}</p>
         <div className="v3-benefits">
           {c.benefits.items.map((item, i) => (
             <article key={i}>
@@ -131,10 +132,10 @@ export default async function OnlineTraining() {
           </div>
         </div>
       </section>
-      <Steps highlight="Online Training Works" variant="journey" v={c.steps} />
+      <Steps highlight="Online Training Works" v={c.steps} />
+      <SiteFaq items={c.faq.items} />
       <Partners />
       <Insights />
-      <SiteFaq items={c.faq.items} />
       <section className="closing wrap reveal">
         <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

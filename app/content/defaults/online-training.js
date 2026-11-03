@@ -41,6 +41,7 @@ export default {
   plans: {
     eyebrow: "CHOOSE YOUR COMMITMENT",
     heading: "One coaching approach.\nThree ways to begin.",
+    text: "Choose your training duration. Get the same personalized coaching support in every plan.",
     items: [
       plan("STARTER", "1 month", "₹3,999", "A focused start.", "https://pages.razorpay.com/ot-1m", false, ""),
       plan("ELITE", "6 months", "₹9,999", "Time to build consistency.", "https://pages.razorpay.com/ot-6m", true, "MOST ENROLLED"),
@@ -50,6 +51,7 @@ export default {
   benefits: {
     eyebrow: "WHAT YOUR PLAN GIVES YOU",
     heading: "Know what to train.\nKnow how to train.",
+    text: "Personalised drills and clear guidance to help you train with confidence.",
     items: [
       { heading: "Your daily work", text: "Personalised bowling drills and strength & conditioning plans delivered through WhatsApp." },
       { heading: "Your weekly review", text: "Submit bowling footage for technical analysis and feedback on your next areas of focus." },

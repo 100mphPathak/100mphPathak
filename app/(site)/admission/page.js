@@ -26,7 +26,7 @@ export default async function AssessmentTrial() {
         trust={c.hero.trustLine}
       />
       <AssessmentBooking v={c.booking} />
-      <Steps highlight="Online Assessment Works" variant="journey" v={c.steps} />
+      <Steps highlight="Online Assessment Works" v={c.steps} />
       {c.videos.show && <VideoRail v={c.videos} />}
       <PlayerResults />
       <HomePartners />

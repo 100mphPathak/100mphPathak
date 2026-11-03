@@ -297,38 +297,21 @@ body .partners .partner-feature .partner-visit span[aria-hidden]{font-size:20px;
 @media(max-width:760px){.coach-academy .coach-facts{gap:8px;margin-top:20px}.coach-academy .coach-facts div{padding:12px 8px;text-align:center;align-items:center}.coach-academy .coach-facts strong{font-size:18px}.coach-academy .coach-facts span{font-size:11px}}
 /* Coach page approach: three cards (numbered badge + title, then text), same finish as the path cards. */
 .approach-timeline .section-head{margin-bottom:36px}
-.approach-timeline .timeline{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+/* One row of cards (3 visible on desktop); more than 3 scroll sideways. The padding keeps the shadows from being cut off. */
+.approach-timeline .timeline{list-style:none;margin:-12px -12px -40px;padding:12px 12px 40px;display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 64px)/3);gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 12px}
+.approach-timeline .timeline li{scroll-snap-align:start}
 .approach-timeline .timeline li{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:16px;padding:28px 26px 30px;border:1px solid #d8e1ec;border-radius:24px;background:linear-gradient(160deg,#fff 0%,#eef3f9 45%,#d6e2ec 100%);box-shadow:0 24px 48px -18px rgba(23,44,71,.32),0 6px 16px -6px rgba(23,44,71,.14),inset 0 1px 0 #fff;transition:transform .25s ease,box-shadow .25s ease}
 .approach-timeline .timeline li:hover{transform:translateY(-4px);box-shadow:0 30px 56px -18px rgba(23,44,71,.4),0 8px 18px -6px rgba(23,44,71,.16),inset 0 1px 0 #fff}
 .approach-timeline .timeline-dot{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#15263e,#4d7189);color:#fff;font-family:var(--font-manrope),Arial,sans-serif;font-size:16px;font-weight:700;box-shadow:0 10px 20px -8px rgba(23,44,71,.6)}
 .approach-timeline .timeline h3{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.03em;color:#18202e}
 .approach-timeline .timeline p{grid-column:1/-1;margin:20px 0 0;padding-top:18px;border-top:1px solid #d3dde8;font-size:15px;line-height:1.7;color:#536176}
-@media(max-width:1000px){.approach-timeline .timeline{grid-template-columns:1fr;gap:14px}}
+@media(max-width:1000px){.approach-timeline .timeline{grid-auto-columns:min(80%,320px);gap:14px}}
 @media(max-width:760px){
 .approach-timeline .section-head{margin-bottom:22px}
 .approach-timeline .timeline li{padding:20px 20px 22px;border-radius:20px}
 .approach-timeline .timeline-dot{width:42px;height:42px;font-size:14px;border-radius:12px}
 .approach-timeline .timeline h3{font-size:22px}
 .approach-timeline .timeline p{margin-top:14px;padding-top:14px;font-size:14px}
-}
-/* Admission "How the Online Assessment Works": light gradient journey cards joined by arrows. */
-.approach-timeline.journey .timeline{gap:44px}
-.approach-timeline.journey .timeline li{position:relative;overflow:visible;display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:34px 28px 32px;border:1px solid #d8e1ec;border-radius:26px;background:radial-gradient(120% 90% at 100% 0%,rgba(100,137,160,.18),transparent 60%),linear-gradient(160deg,#fff 0%,#eef3f9 50%,#d9e4ee 100%);box-shadow:0 24px 48px -18px rgba(23,44,71,.3),0 6px 16px -6px rgba(23,44,71,.12),inset 0 1px 0 #fff}
-.approach-timeline.journey .timeline li::before{content:attr(data-step);position:absolute;top:16px;right:22px;font-family:var(--font-manrope),Arial,sans-serif;font-size:76px;font-weight:800;line-height:1;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px rgba(82,103,131,.3)}
-.approach-timeline.journey .timeline-dot{display:none}
-.approach-timeline.journey .timeline h3{margin:44px 0 12px;font-size:25px;color:#18202e}
-.approach-timeline.journey .timeline p{margin:0;padding:0;border:0;font-size:15px;line-height:1.7;color:#536176}
-.approach-timeline.journey .timeline li:not(:last-child)::after{content:"→";position:absolute;z-index:2;top:50%;right:-38px;transform:translateY(-50%);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#15263e,#4d7189);box-shadow:0 8px 18px -8px rgba(21,38,62,.6);color:#fff;font-size:16px}
-.approach-timeline.journey .timeline li:hover{transform:translateY(-4px)}
-@media(max-width:1000px){
-.approach-timeline.journey .timeline{gap:40px}
-.approach-timeline.journey .timeline li:not(:last-child)::after{content:"↓";top:auto;right:auto;left:50%;bottom:-36px;transform:translateX(-50%)}
-}
-@media(max-width:760px){
-.approach-timeline.journey .timeline li{padding:24px 22px 24px;border-radius:22px}
-.approach-timeline.journey .timeline li::before{font-size:60px;top:12px;right:18px}
-.approach-timeline.journey .timeline h3{margin-top:34px;font-size:22px}
-.approach-timeline.journey .timeline p{font-size:14px}
 }
 .booking-card .card-after{margin:18px 0 0}
 
@@ -392,3 +375,12 @@ body :is(.scholarship-page, .assessment-page, .facilities-page, .coach-page, .tr
 }
 /* Home hero line on phones: bold like Admission, but kept on one line (client request) */
 @media(max-width:760px){body .home-page .page-hero > .site-tagline{font-size:clamp(10px,3.25vw,14px);white-space:nowrap}}
+/* Admission: smaller "Book online assessment" buttons (hero, booking card, closing); the card button fits its text */
+body .assessment-page .button{min-height:38px;padding:8px 18px!important;font-size:13px!important}
+.assessment-page .booking-card .button{width:auto;margin-top:4px}
+@media(max-width:1000px){body .assessment-page .button{min-height:36px;padding:8px 16px!important;font-size:12px!important}}
+/* Online Training "Know what to train": description under the heading, same size and gap as the other section descriptions */
+.v3-section .v3-benefits-intro{font-size:var(--fs-intro)!important;margin:14px auto 30px}
+/* Sideways card rows (partners, steps): no visible scrollbar, like the player results rail */
+.partners-showcase .ps-grid,.approach-timeline .timeline{scrollbar-width:none}
+.partners-showcase .ps-grid::-webkit-scrollbar,.approach-timeline .timeline::-webkit-scrollbar{display:none}

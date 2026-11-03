@@ -6780,7 +6780,9 @@ main :is(.button, .home-capsule, .glass-link, .text-link) { font-size: var(--fs-
 .partners-showcase .ps-head { text-align: center; margin-bottom: 40px; }
 .partners-showcase .ps-head .eyebrow { margin-bottom: 14px; }
 .partners-showcase .ps-head > p:last-child { margin-top: 12px; color: #526783; font-size: 16px; }
-.partners-showcase .ps-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.partners-showcase .ps-grid { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 44px) / 3); gap: 22px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; }
+/* Desktop: three cards visible, more scroll sideways; the padding keeps the card shadows from being cut off */
+@media (min-width: 901px) { .partners-showcase .ps-grid { margin: -12px; padding: 12px 12px 24px; scroll-padding: 0 12px; } .partners-showcase .ps-card { scroll-snap-align: start; } }
 .partners-showcase .ps-card {
   display: flex; flex-direction: column; align-items: center; text-align: center;
   padding: 14px 14px 16px; background: #fff; border: 1px solid #edf0f5; border-radius: 24px;

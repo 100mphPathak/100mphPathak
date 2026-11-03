@@ -51,6 +51,7 @@ export default async function Home() {
             <p className="eyebrow">{c.pathways.eyebrow}</p>
             <h2><Text v={c.pathways.heading} highlight="Training Programs" /></h2>
           </div>
+          <p>{c.pathways.text}</p>
         </div>
         <div className="equal-paths three-paths">
           {c.pathways.cards.map((card, i) => (
@@ -64,9 +65,9 @@ export default async function Home() {
         </div>
       </section>
       <PlayerResults />
+      <SiteFaq />
       <HomePartners />
       <Insights />
-      <SiteFaq />
       <section className="closing wrap reveal">
         <a aria-label="Pathak100MPH home" className="closing-logo" href="/">
           <Img v={header.logo} />

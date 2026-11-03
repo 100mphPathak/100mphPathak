@@ -39,6 +39,7 @@ export default {
   pathways: {
     eyebrow: "FIND YOUR PATH",
     heading: "Choose Your Path at Pathak100MPH",
+    text: "Choose academy training, online fast bowling coaching, or a performance-based scholarship program.",
     cards: [
       { eyebrow: "01 / ACADEMY ADMISSION", heading: "Academy Admission", text: "Start with an online assessment for academy admission.", button: link("Book an assessment", "https://pages.razorpay.com/pathak100mph-assessment") },
       { eyebrow: "02 / TRAIN FROM ANYWHERE", heading: "Online Bowling Training", text: "Train where you live. Get a personal plan and regular feedback from our coaches.", button: link("Explore online training", "/online-bowling-training/") },

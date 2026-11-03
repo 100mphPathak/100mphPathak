@@ -33,7 +33,7 @@ export default async function Scholarship() {
           <div className="section-head reveal">
             <div>
               <p className="eyebrow">{c.standard.eyebrow}</p>
-              <h2><Text v={c.standard.heading} /></h2>
+              <h2><Text highlight="One opportunity" v={c.standard.heading} /></h2>
             </div>
             <p>{c.standard.text}</p>
           </div>
@@ -46,7 +46,7 @@ export default async function Scholarship() {
             ))}
           </div>
         </section>
-        <Steps variant="journey" v={c.steps} />
+        <Steps highlight="opportunity next" v={c.steps} />
         <section className="wrap two-notes">
           {c.notes.map((note, i) => (
             <article className="note reveal" key={i}>
