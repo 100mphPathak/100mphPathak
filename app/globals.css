@@ -6761,7 +6761,7 @@ body .coach-feature.coach-academy > .coach-copy p:not(.eyebrow) {
   }
 }
 main .hero-title { font-size: var(--fs-hero) !important; }
-main h2:not(.hero-title):not(.post-body h2):not(dialog h2):not(.blog-card h2):not(.closing h2) { font-size: var(--fs-h2) !important; }
+main h2:not(.hero-title):not(.post-body h2):not(dialog h2):not(.blog-card h2):not(.article-card h2):not(.hub-feature h2):not(.closing h2) { font-size: var(--fs-h2) !important; }
 main .closing h2 { font-size: var(--fs-cta) !important; }
 main .page-hero .lede { font-size: var(--fs-lede) !important; }
 main .section-head > p:not(.eyebrow), main .partners-showcase .ps-head > p:last-child { font-size: var(--fs-intro) !important; }
@@ -6836,20 +6836,20 @@ main :is(.button, .home-capsule, .glass-link, .text-link) { font-size: var(--fs-
 
 /* Centred section headers on every page (client request): the small label, the heading and the intro line.
    Not changed: the hero, the sections with a photo beside the text, and Admission "Your Videos" (beside its price card). */
-main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book):has(> h2),
-main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) :is(.section-head, div:has(> h2)) {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book, .hub-hero, .hub-feature, .hub-coach, .hub-cta, .post, .post-related):has(> h2),
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book, .hub-hero, .hub-feature, .hub-coach, .hub-cta, .post, .post-related) :is(.section-head, div:has(> h2)) {
   text-align: center;
 }
-main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .section-head {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book, .hub-hero, .hub-feature, .hub-coach, .hub-cta, .post, .post-related) .section-head {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) :is(.section-head, div:has(> h2)) > :is(p, h2) {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book, .hub-hero, .hub-feature, .hub-coach, .hub-cta, .post, .post-related) :is(.section-head, div:has(> h2)) > :is(p, h2) {
   margin-left: auto;
   margin-right: auto;
 }
-main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .section-head > p:not(.eyebrow) {
+main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book, .hub-hero, .hub-feature, .hub-coach, .hub-cta, .post, .post-related) .section-head > p:not(.eyebrow) {
   max-width: 640px;
   margin-top: 14px;
 }
@@ -6858,7 +6858,7 @@ main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .sec
 #plans .section-head h2 { margin-left: auto; margin-right: auto; }
 /* Computers: section descriptions use the full width, so a normal sentence fits on one line */
 @media (min-width: 1001px) {
-  main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book) .section-head > p:not(.eyebrow) { max-width: none; }
+  main#main > :not(.page-hero, .coach-feature, .coach-meet, .assessment-book, .hub-hero, .hub-feature, .hub-coach, .hub-cta, .post, .post-related) .section-head > p:not(.eyebrow) { max-width: none; }
 }
 /* Blog page: post titles are h2 (SEO) but look exactly like the card titles elsewhere (h3) */
 main .blog-card h2 {
@@ -6886,3 +6886,63 @@ main .blog-card h2 {
 /* iPhones draw some symbols (like ↗) as colour emoji. The code marks each ↗ with U+FE0E ("show as text");
    this asks browsers that support it to do the same for any symbol. */
 body { font-variant-emoji: text; }
+
+/* ---------- Site footer: full screen width, rounded top; the content lines up with the page (.wrap) ---------- */
+body footer.site-footer {
+  margin-top: 56px; padding: 0; overflow: hidden; border: 0; border-top: 1px solid #d8e1ec; border-radius: 32px 32px 0 0;
+  background: radial-gradient(60% 120% at 100% 0%, rgba(100,137,160,.16), transparent 60%), linear-gradient(160deg, #fff 0%, #eef3f9 50%, #dde7f0 100%);
+  box-shadow: 0 -18px 40px -24px rgba(23,44,71,.25), inset 0 1px 0 #fff;
+}
+body footer.site-footer .sf-top { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 28px; padding: 40px 0 28px; }
+body footer.site-footer .sf-logo { padding-right: 28px; border-right: 1px solid #cbd6e3; }
+body footer.site-footer .sf-logo img { display: block; width: 190px; height: auto; filter: brightness(0); /* logo.webp is white */ }
+body footer.site-footer .sf-tagline { margin: 0; font-size: 30px; line-height: 1.12; letter-spacing: -0.045em; color: #536176; }
+body footer.site-footer .sf-tagline strong { font-weight: 700; color: #18202e; }
+body footer.site-footer .sf-actions { display: flex; flex-direction: column; gap: 12px; min-width: 230px; }
+body footer.site-footer .sf-actions .button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+body footer.site-footer .sf-actions svg { width: 17px; height: 17px; flex: none; }
+body footer.site-footer .sf-explore { margin: 0; padding-top: 24px; border-top: 1px solid #cbd6e3; }
+body footer.site-footer .sf-links { display: grid; grid-template-rows: repeat(2, auto); grid-auto-flow: column; grid-auto-columns: 1fr; gap: 14px 24px; padding: 18px 0 36px; }
+body footer.site-footer .sf-group, body footer.site-footer .sf-more { display: contents; }
+body footer.site-footer .sf-group > .eyebrow { display: none; }
+body footer.site-footer .sf-links a { width: fit-content; font-size: 15px; color: #24384e; text-decoration: none; transition: color .2s; }
+body footer.site-footer .sf-links a:hover { color: #4d7189; }
+body footer.site-footer .sf-links .sf-directions { text-decoration: none; font-weight: inherit; }
+body footer.site-footer .sf-legal { background: linear-gradient(135deg, #15263e, #2c4560); color: #dfe7f0; font-size: 13px; }
+body footer.site-footer .sf-legal > .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding-top: 18px; padding-bottom: 18px; }
+body footer.site-footer .sf-legal nav { display: flex; gap: 28px; flex-wrap: wrap; }
+body footer.site-footer .sf-legal a { color: #fff; text-decoration: none; }
+body footer.site-footer .sf-legal a:hover { text-decoration: underline; }
+
+/* Tablets: buttons move under the tagline */
+@media (max-width: 1000px) {
+  body footer.site-footer .sf-top { grid-template-columns: auto 1fr; padding: 32px 0 24px; }
+  body footer.site-footer .sf-actions { grid-column: 1 / -1; flex-direction: row; min-width: 0; }
+}
+
+/* Phones: logo over the tagline, two buttons side by side, "Academy" and "Training" as two columns */
+@media (max-width: 760px) {
+  body footer.site-footer { margin-top: 36px; border-radius: 24px 24px 0 0; }
+  body footer.site-footer .sf-top { grid-template-columns: 1fr; gap: 14px; padding: 28px 0 20px; }
+  body footer.site-footer .sf-logo { padding: 0; border: 0; }
+  body footer.site-footer .sf-logo img { width: 130px; }
+  body footer.site-footer .sf-tagline { font-size: 25px; }
+  body footer.site-footer .sf-actions { gap: 10px; }
+  body footer.site-footer .sf-actions .button { flex: 1; padding-left: 10px !important; padding-right: 10px !important; }
+  body footer.site-footer .sf-explore { display: none; }
+  body footer.site-footer .sf-links { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-flow: row; gap: 0; padding: 18px 0 8px; border-top: 1px solid #cbd6e3; }
+  body footer.site-footer .sf-group { display: flex; flex-direction: column; gap: 10px; padding: 0 0 18px 16px; }
+  body footer.site-footer .sf-group:first-child { padding-left: 0; padding-right: 12px; border-right: 1px solid #cbd6e3; }
+  body footer.site-footer .sf-group > .eyebrow { display: block; margin: 0 0 4px; }
+  body footer.site-footer .sf-more { display: grid; grid-column: 1 / -1; grid-template-columns: 1fr 1fr; border-top: 1px solid #cbd6e3; }
+  body footer.site-footer .sf-more a { padding: 14px 0; }
+  body footer.site-footer .sf-more a:nth-child(even) { padding-left: 16px; border-left: 1px solid #cbd6e3; }
+  body footer.site-footer .sf-links a { font-size: 14px; }
+  body footer.site-footer .sf-legal { font-size: 12px; }
+  body footer.site-footer .sf-legal > .wrap { flex-direction: column-reverse; text-align: center; padding-top: 16px; padding-bottom: 16px; }
+  body footer.site-footer .sf-legal nav { justify-content: center; gap: 8px 18px; }
+}
+
+/* Floating WhatsApp button: a little higher, so it sits above the footer's dark legal bar */
+body .whatsapp-float { bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+@media (max-width: 760px) { body .whatsapp-float { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); } }

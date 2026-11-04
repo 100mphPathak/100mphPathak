@@ -1,15 +1,95 @@
 /* Blog article page (/blogs/[slug]/) */
-.post { max-width: 760px; padding: 64px 0 80px; }
-.post-head { text-align: center; margin-bottom: 36px; }
-.post-head .eyebrow a { color: inherit; }
-.post-title { font-size: clamp(34px, 5vw, 56px); }
-.post-lede { margin: 20px auto 0; max-width: 620px; font-size: 18px; line-height: 1.6; color: #526783; }
-.post-meta { margin-top: 18px; font-size: 14px; color: var(--muted); }
-.post-cover { width: 100%; height: auto; border-radius: 16px; margin-bottom: 40px; }
-.post-body { font-size: 18px; line-height: 1.75; color: #2a2f36; }
+.post {
+  max-width: 1056px;
+  padding: 34px 0 88px;
+}
+.post-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 36px;
+  color: #738196;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.post-breadcrumb a { color: #53647b; }
+.post-breadcrumb a:hover { color: var(--blue); }
+.post-breadcrumb [aria-current="page"] {
+  overflow: hidden;
+  color: #53647b;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.post-head { margin-bottom: 32px; }
+.post-head .eyebrow {
+  margin-bottom: 16px;
+  color: #536782;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.post-title {
+  max-width: 100%;
+  font-size: clamp(38px, 5vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -.055em;
+}
+.post-lede {
+  margin-top: 22px;
+  max-width: 760px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #56657a;
+}
+.post-byline {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 25px;
+  color: #6a788b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.post-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.post-author, .post-meta { display: grid; gap: 1px; }
+.post-author { min-width: 135px; }
+.post-author > span {
+  color: #7b8797;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.post-author strong { color: #26354a; font-size: 12px; }
+.post-author small { color: #738196; font-size: 10px; }
+.post-meta {
+  min-height: 30px;
+  padding-left: 17px;
+  border-left: 1px solid #d6dfe9;
+}
+.post-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin-bottom: 48px;
+}
+.post-body {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #2a2f36;
+  font-size: 18px;
+  line-height: 1.75;
+}
 .post-body > * + * { margin-top: 1.1em; }
-.post-body h2 { font-size: clamp(26px, 3vw, 34px); margin-top: 1.8em; }
-.post-body h3 { font-size: 22px; margin-top: 1.5em; }
+.post-body h2 { margin-top: 1.8em; font-size: clamp(26px, 3vw, 34px); }
+.post-body h3 { margin-top: 1.5em; font-size: 22px; }
 .post-body a:not(.button) { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
 .post-body ul, .post-body ol { padding-left: 1.4em; }
 .post-body ul { list-style: disc; }
@@ -20,13 +100,153 @@
 .post-body img { max-width: 100%; height: auto; border-radius: 12px; }
 .post-body .post-video { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; }
 .post-body .post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.post-body table { width: 100%; border-collapse: collapse; font-size: 16px; display: block; overflow-x: auto; } /* scrolls sideways on phones */
+.post-body table { width: 100%; border-collapse: collapse; font-size: 16px; display: block; overflow-x: auto; }
 .post-body tbody { display: table; width: 100%; }
 .post-body th, .post-body td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
 .post-body th { background: var(--soft); font-weight: 700; }
 .post-body .article-cta { text-align: center; margin: 2em 0; }
-.post-back { margin-top: 56px; text-align: center; }
+.post-faqs {
+  display: grid;
+  grid-template-columns: minmax(220px, .82fr) minmax(0, 1.18fr);
+  gap: 56px;
+  align-items: start;
+  max-width: 920px;
+  margin: 72px auto;
+  padding: 38px 0;
+  border-top: 1px solid #d9e1eb;
+  border-bottom: 1px solid #d9e1eb;
+  scroll-margin-top: 120px;
+}
+.post-faq-heading .eyebrow {
+  margin-bottom: 14px;
+  color: #536782;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.post-faq-heading h2 {
+  max-width: 340px;
+  font-size: clamp(30px, 3vw, 40px);
+  line-height: 1.08;
+}
+.post-faq-list details { border-bottom: 1px solid #d9e1eb; }
+.post-faq-list details:first-child { border-top: 1px solid #d9e1eb; }
+.post-faq-list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+  list-style: none;
+  cursor: pointer;
+}
+.post-faq-list summary::-webkit-details-marker { display: none; }
+.post-faq-list summary h3 {
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.4;
+  letter-spacing: -.025em;
+  font-weight: 650;
+}
+.post-faq-list summary > span {
+  flex: 0 0 28px;
+  color: #536782;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  transition: transform .2s ease;
+}
+.post-faq-list details[open] summary > span { transform: rotate(45deg); }
+.post-faq-answer { padding: 0 40px 20px 0; }
+.post-faq-answer .post-body { max-width: none; font-size: 15px; line-height: 1.7; }
+.post-faq-answer .post-body > * + * { margin-top: .65em; }
+.post-back { max-width: 760px; margin: 56px auto 0; }
 @media (max-width: 760px) {
-  .post { padding-top: 40px; }
+  .post { padding: 24px 0 64px; }
+  .post-breadcrumb { gap: 8px; margin-bottom: 28px; font-size: 12px; }
+  .post-head { margin-bottom: 25px; }
+  .post-title { font-size: clamp(34px, 8vw, 44px); }
+  .post-lede { margin-top: 15px; font-size: 16px; }
+  .post-byline { gap: 10px; margin-top: 20px; }
+  .post-author { min-width: 0; }
+  .post-meta { padding-left: 11px; }
+  .post-cover { border-radius: 14px; margin-bottom: 34px; }
   .post-body { font-size: 17px; }
+  .post-faqs { grid-template-columns: 1fr; gap: 18px; margin: 52px auto; padding: 30px 0; }
+  .post-faq-heading h2 { max-width: none; font-size: 32px; }
+  .post-faq-list summary { padding: 17px 0; }
+}
+
+/* ---------- Article layout: "In this guide" on the left (sticky), the article on the right ---------- */
+.article-page .post { max-width: none; }
+.article-page .post-head, .article-page .post-breadcrumb { max-width: 1000px; margin-left: auto; margin-right: auto; }
+/* Cover: 760px max, left edge in line with the title (the header is 1000px wide and centred) */
+.article-page .post-cover { max-width: 760px; margin: 0 0 48px max(0px, calc(50% - 500px)); }
+.post-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 64px; max-width: 1000px; margin: 0 auto; padding-top: 40px; border-top: 1px solid #d8e1ec; }
+.post-layout.no-toc { grid-template-columns: minmax(0, 1fr); }
+.post-toc { position: sticky; top: 120px; align-self: start; }
+.post-toc .eyebrow { margin: 0 0 14px; font-size: 11px; letter-spacing: .14em; color: #536782; }
+.article-page .post-toc nav { display: flex; flex-direction: column; gap: 0; border-left: 1px solid #d8e1ec; }
+.article-page .post-toc a { padding: 7px 0 7px 18px; margin-left: -1px; border-left: 2px solid transparent; font-size: 13px; line-height: 1.45; color: #536176; text-decoration: none; transition: color .2s, border-color .2s; }
+.article-page .post-toc a:hover { color: #18202e; border-left-color: #4d7189; }
+/* The section being read (set by toc-spy.js) */
+.article-page .post-toc a[aria-current="true"] { color: #18202e; border-left-color: #18202e; }
+.post-main { min-width: 0; }
+.post-main .post-body { max-width: none; margin: 0; }
+.post-main .post-body h2 { scroll-margin-top: 110px; }
+.post-main .post-faqs { grid-template-columns: 1fr; scroll-margin-top: 110px; }
+.post-toc-mobile { display: none; }
+
+/* Author box under the article */
+.post-author-note { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 22px; margin-top: 48px; padding-top: 32px; border-top: 1px solid #d8e1ec; text-align: left; }
+.post-author-photo { width: 96px; height: 96px; object-fit: cover; object-position: center 15%; border-radius: 18px; }
+.post-author-note h2 { margin: 0; font-size: 24px !important; letter-spacing: -0.03em; }
+.post-author-note p { margin: 4px 0 12px; font-size: 14px; line-height: 1.7; color: #536176; }
+.post-author-note .post-author-role { margin: 4px 0 10px; font-size: 13px; color: #6f8397; }
+.post-dates { margin: 24px 0 0; font-size: 12px; color: #6f8397; }
+
+/* Related reading: a simple list of 3 other articles */
+.post-related { padding-top: 10px; padding-bottom: 50px; text-align: left; }
+.post-related-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+.post-related-head h2 { margin: 8px 0 0; }
+.post-related-list article { padding: 22px 0; border-bottom: 1px solid #d8e1ec; }
+.post-related-list article:first-child { border-top: 1px solid #d8e1ec; }
+.post-related-list h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.02em; }
+.post-related-list h3 a { color: #18202e; text-decoration: none; }
+.post-related-list h3 a span { display: inline-block; margin-left: 6px; transition: transform .2s; }
+.post-related-list h3 a:hover span { transform: translateX(4px); }
+.post-related-list p { margin: 0; font-size: 14px; line-height: 1.7; color: #536176; }
+
+/* Reading progress: grows with the page scroll (browsers without scroll timelines just don't show it) */
+.reading-progress { position: fixed; top: 0; left: 0; z-index: 60; width: 100%; height: 3px; background: linear-gradient(90deg, #15263e, #4d7189); transform-origin: 0 50%; transform: scaleX(0); }
+@supports (animation-timeline: scroll()) {
+  .reading-progress { animation: reading-progress linear both; animation-timeline: scroll(root); }
+}
+@keyframes reading-progress { to { transform: scaleX(1); } }
+
+/* Tablets and phones: the list becomes a fold-out box above the article */
+@media (max-width: 1000px) {
+  .post-layout { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 28px; }
+  .post-toc { display: none; }
+  .post-toc-mobile { display: block; margin-bottom: 28px; border: 1px solid #d8e1ec; border-radius: 16px; background: #fff; }
+  .post-toc-mobile summary { padding: 14px 18px; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #24384e; cursor: pointer; }
+  .article-page .post-toc-mobile nav { display: flex; flex-direction: column; gap: 0; padding: 0 18px 12px; }
+  .article-page .post-toc-mobile a { padding: 8px 0; border-top: 1px solid #eef3f9; font-size: 14px; color: #536176; text-decoration: none; }
+}
+@media (max-width: 760px) {
+  .post-author-note { grid-template-columns: 64px minmax(0, 1fr); gap: 16px; }
+  .post-author-photo { width: 64px; height: 64px; border-radius: 14px; }
+  .post-related-head { flex-direction: column; align-items: flex-start; }
+  .post-related-list h3 { font-size: 19px; }
+}
+/* Desktop: the "In this guide" column starts at the navbar's left edge. The article area spans the page,
+   and the layout copies the navbar's inner width (header: 1320px max with 22px padding; 1120px and below: full width - 32px, 20px padding). */
+@media (min-width: 1001px) {
+  .article-page .post { width: auto; }
+  .article-page .post-layout { width: min(1276px, calc(100% - 92px)); max-width: none; margin-left: auto; margin-right: auto; }
+}
+@media (min-width: 1001px) and (max-width: 1120px) {
+  .article-page .post-layout { width: calc(100% - 72px); }
 }

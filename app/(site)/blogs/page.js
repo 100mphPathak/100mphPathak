@@ -1,50 +1,63 @@
 import Link from "next/link";
 import Partners from "../../components/Partners";
 import "../../home.css";
+import "./blogs.css";
 import { getContent, pageMetadata } from "../../lib/content";
-import { COLORS } from "../../content/shape";
 import { Img, Text } from "../../components/Text";
-import PostCard from "../../components/PostCard";
-import { publishedPosts } from "../../lib/posts";
+import { publishedPosts, readMinutes } from "../../lib/posts";
+import Library from "./library";
 
 export const generateMetadata = () => pageMetadata("blogs");
 
 export default async function Blogs() {
-  const [c, { header }, live] = await Promise.all([getContent("blogs"), getContent("global"), publishedPosts()]);
+  const [c, live] = await Promise.all([getContent("blogs"), publishedPosts()]);
+  // Only what the cards need goes to the browser (not the article bodies).
+  const posts = live.map(({ id, slug, title, excerpt, category, cover_image, body }) => ({ id, slug, title, excerpt, category, cover_image, minutes: readMinutes(body) }));
+  const [featured] = posts;
+
   return (
-    <main id="main">
-      <section className="wrap page-hero">
-        <p className="eyebrow reveal">{c.hero.eyebrow}</p>
-        <h1 className="reveal hero-title">{c.hero.heading}<br /><span>{c.hero.headingAccent}</span></h1>
-        <p className="lede reveal">
-          {c.hero.text}
-        </p>
+    <main className="insights-page" id="main">
+      <section className="wrap hub-hero">
+        <div>
+          <p className="eyebrow">{c.intro.eyebrow}</p>
+          <h1>{c.intro.heading}<br /><span>{c.intro.headingAccent}</span></h1>
+        </div>
+        <p>{c.intro.text}</p>
       </section>
-      <section className="wrap blog-list">
-        <div className="blog-grid">
-          {/* Posts written in the CMS. Until the first one is published, the original cards stay. */}
-          {live.length > 0 && live.map((post, i) => <PostCard headingLevel="h2" index={i} key={post.id} post={post} reveal={i < 4} />)}
-          {live.length === 0 && c.posts.map((post, i) => (
-            <a className={i < 4 ? "blog-card reveal" : "blog-card"} href={post.href} key={i}>
-              <div className={`blog-art ${COLORS[post.color]}`}><span><Text v={post.art} /></span><b>↗︎</b></div>
-              <p className="tiny">{post.category}</p>
-              <h2><Text v={post.title} brand /></h2>
-              <p><Text v={post.text} brand /></p>
-            </a>
-          ))}
+
+      {featured && (
+        <section className="wrap hub-feature">
+          <Link aria-label={featured.title} className="hub-feature-image" href={`/blogs/${featured.slug}/`}>
+            {featured.cover_image?.src ? (
+              <Img priority sizes="(max-width: 760px) 92vw, 600px" v={{ ...featured.cover_image, alt: featured.cover_image.alt || "" }} />
+            ) : (
+              <span>{featured.category}</span>
+            )}
+          </Link>
+          <div>
+            <p className="eyebrow">{c.featured.eyebrow}</p>
+            <h2>{featured.title}</h2>
+            {featured.excerpt && <p>{featured.excerpt}</p>}
+            <Link className="button" href={`/blogs/${featured.slug}/`}>{c.featured.button}<span aria-hidden="true">↗︎</span></Link>
+          </div>
+        </section>
+      )}
+
+      <Library labels={c.library} posts={posts} />
+
+      <section className="wrap hub-coach">
+        <Img loading="lazy" sizes="(max-width: 760px) 92vw, 560px" v={c.coach.photo} />
+        <div>
+          <p className="eyebrow">{c.coach.eyebrow}</p>
+          <h2><Text highlight="Ankit Pathak" v={c.coach.heading} /></h2>
+          <p>{c.coach.text}</p>
+          <Link className="text-link" href={c.coach.link.href}>{c.coach.link.label}<span aria-hidden="true">↗︎</span></Link>
         </div>
       </section>
-      <Partners current />
-      <section className="closing wrap reveal">
-        <Link aria-label="Pathak100MPH home" className="closing-logo" href="/">
-          <Img v={header.logo} />
-        </Link>
-        <h2><Text v={c.closing.heading} /></h2>
-        <p>{c.closing.text}</p>
-        <div className="actions">
-          <Link className="button" href={c.closing.button.href}>{c.closing.button.label}<span aria-hidden="true">↗︎</span></Link>
-        </div>
-      </section>
+
+     <Partners/>
+     
+
     </main>
   );
 }

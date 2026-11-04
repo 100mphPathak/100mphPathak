@@ -78,34 +78,38 @@ export default {
   },
   footer: {
     logo,
-    kicker: "DELHI NCR · EST. 2021",
     tagline: "Built for the",
     taglineBold: "serious cricketer.",
-    phoneLead: "Let’s talk cricket",
-    phone: link("+91 88823 90596", "tel:+918882390596"),
-    academyHeading: "THE ACADEMY",
-    academyLinks: [
-      link("Ankit Pathak", "/best-fast-bowling-coach/"),
-      link("Facilities & hostel", "/facilities/"),
-      link("Upcoming events", "/events/"),
-      link("Coaching insights", "/blogs/"),
-    ],
-    trainingHeading: "YOUR GAME. YOUR WAY.",
-    trainingLinks: [
-      link("Admission", "/admission/"),
-      link("Online training", "/online-bowling-training/"),
-      link("Scholarship", "/scholarship/"),
-    ],
-    locationHeading: "COME FIND YOUR PACE",
-    address: "Near Chhapraula Police Chowki,\nKRBL Rice Mill, Bisnauli,\nUttar Pradesh 203207",
-    whatsapp: link("Connect on WhatsApp", "https://wa.me/918882390596"),
+    buttons: {
+      call: link("Call Now", "tel:+918882390596"),
+      whatsapp: link("WhatsApp Now", "https://wa.me/918882390596"),
+    },
+    exploreHeading: "EXPLORE PATHAK100MPH",
+    academy: {
+      heading: "ACADEMY",
+      links: [
+        link("Ankit Pathak", "/best-fast-bowling-coach/"),
+        link("Our Facilities", "/facilities/"),
+        link("Upcoming Events", "/events/"),
+      ],
+    },
+    training: {
+      heading: "TRAINING",
+      links: [
+        link("Academy Admission", "/admission/"),
+        link("Online Training", "/online-bowling-training/"),
+        link("Scholarship", "/scholarship/"),
+      ],
+    },
+    // Shown after the two groups (on phones: in a row of their own), then "Get Directions".
+    more: [link("Insights", "/blogs/")],
+    directions: link("Get Directions", "https://www.google.com/maps/search/?api=1&query=Chhapraula+Police+Chowki+KRBL+Rice+Mill+Bisnauli+Uttar+Pradesh+203207"),
     copyright: "© 2026 Ankit Pathak and Sons",
     legalLinks: [
       link("Terms & Conditions", "https://sam.harsh-4844.chatgpt.site/terms/"),
       link("Return Policy", "https://sam.harsh-4844.chatgpt.site/return-policy/"),
       link("Privacy Policy", "https://sam.harsh-4844.chatgpt.site/privacy/"),
     ],
-    motto: "PACE. PURPOSE. PATHAK.",
   },
   playerResults: {
     eyebrow: "THE WORK SHOWS",

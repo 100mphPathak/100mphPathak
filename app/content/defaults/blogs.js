@@ -2,12 +2,16 @@ const base = "https://sam.harsh-4844.chatgpt.site/blogs/";
 const post = (slug, color, art, category, title, text) => ({ href: `${base}${slug}/`, color, art, category, title, text });
 
 export default {
-  hero: {
-    eyebrow: "FAST BOWLING COACHING TIPS",
-    heading: "Understand the work.",
-    headingAccent: "Improve your practice.",
-    text: "Fast bowling coaching tips and practical guides on pace, technique, training and preparation. Explore a topic, then find the right personal support for your game.",
+  // Top of the page: eyebrow, two-line heading, text on the right.
+  intro: {
+    eyebrow: "FAST BOWLING INSIGHTS",
+    heading: "Fast bowling.",
+    headingAccent: "Clearer answers.",
+    text: "Practical guides to your action, your training and your next step. From the basics to the details that deserve a closer look.",
   },
+  // The newest post is shown large under the heading.
+  featured: { eyebrow: "START WITH A CLEAR TASK", button: "Read the article" },
+  library: { allLabel: "All guides", searchPlaceholder: "What are you working on?", empty: "No articles match your search yet." },
   // The first three posts also appear on the home page.
   posts: [
     post("how-to-increase-arm-speed-in-fast-bowling", "blue", "FAST.\nFASTER.", "PACE & PERFORMANCE", "How to Increase Arm Speed in Fast Bowling", "Understand arm speed as part of your complete bowling action. Use video, a clear coaching cue and repeatable practice to guide your next step."),
@@ -19,9 +23,25 @@ export default {
     post("fast-bowling-drills-ankit-pathak", "sand", "YOUR\nGAME.", "COACHING INSIGHTS", "Fast Bowling Drills: Practise with a Clear Purpose", "Explore practical ways to organise run-up, accuracy and video-feedback drills. Choose a clear goal and connect practice to your normal bowling."),
     post("injury-prevention-tips-for-fast-bowlers", "sand", "YOUR\nGAME.", "COACHING INSIGHTS", "Fast Bowling Workload and Recovery: What to Discuss", "Keep coaches informed about your complete cricket workload, recovery and changes in how you feel. A practical guide to better training communication."),
   ],
-  closing: {
-    heading: "Put understanding\ninto practice.",
-    text: "Bring personal guidance into your training.",
-    button: { label: "Explore online training", href: "/online-bowling-training/" },
+  // On every article: the author line under the title and the author box at the end.
+  author: {
+    photo: { src: "/assets/portrait.webp", alt: "Ankit Pathak", width: 952, height: 1023 },
+    role: "Fast Bowling Coach",
+    bio: "Founder and Head Coach at Pathak100MPH, with 13+ years of coaching experience.",
+    link: { label: "About Ankit Pathak", href: "/best-fast-bowling-coach/" },
+  },
+  related: { eyebrow: "KEEP LEARNING", heading: "Related reading", link: { label: "All insights", href: "/blogs/" } },
+  coach: {
+    photo: { src: "/assets/portrait.webp", alt: "Coach Ankit Pathak", width: 952, height: 1023 },
+    eyebrow: "THE PERSON BEHIND THE APPROACH",
+    heading: "Meet Coach Ankit Pathak.",
+    text: "Founder and Head Coach at Pathak100MPH, with 13+ years of coaching experience. For academy admission, the Online Assessment brings your footage and goals into a one-to-one conversation.",
+    link: { label: "Understand the assessment", href: "/admission/" },
+  },
+  cta: {
+    heading: "Find the right next step for your game.",
+    text: "Explore Online Fast Bowling Training, or learn how the Online Assessment works before academy admission.",
+    button: { label: "Explore training options", href: "/online-bowling-training/" },
+    link: { label: "Understand academy admission", href: "/blogs/admission-fees-process-2026/" },
   },
 };

@@ -45,7 +45,7 @@ export const getPost = cache(async (slug) => {
 // Published posts, newest first, for the blog list, the home page and the sitemap.
 export const listPublishedPosts = unstable_cache(
   async (limit = 100) => sql`
-    select p.id::text, p.slug, p.published_at, p.updated_at, r.title, r.excerpt, r.author, r.cover_image, r.seo, c.name as category
+    select p.id::text, p.slug, p.published_at, p.updated_at, r.title, r.excerpt, r.author, r.cover_image, r.seo, r.body, c.name as category
     from posts p
     join post_revisions r on r.id = p.published_revision_id
     join categories c on c.id = r.category_id
@@ -69,3 +69,8 @@ export async function publishedPosts(limit) {
 // "31 October 2026", in India's time zone.
 export const postDate = (date) =>
   new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" }).format(new Date(date));
+
+// "7 min read": words in the article (editor JSON) at about 200 words a minute.
+const countWords = (node) =>
+  (typeof node?.text === "string" ? node.text.split(/\s+/).filter(Boolean).length : 0) + (node?.content ?? []).reduce((n, child) => n + countWords(child), 0);
+export const readMinutes = (body) => Math.max(1, Math.round(countWords(body) / 200));

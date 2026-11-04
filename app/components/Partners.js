@@ -1,9 +1,6 @@
 import { getContent } from "../lib/content";
 import { Img, Text } from "./Text";
 
-// "Partners of Pathak100MPH": three equal cards (logo, role, name, description, action bar).
-// The academy sponsor (STAG Global) is the first card; the partner cards follow.
-// Content: Site-wide settings → Partners. The same section is shown on every page that has partners.
 export default async function Partners({ data }) {
   const p = data ?? (await getContent("global")).partners;
   const cards = [

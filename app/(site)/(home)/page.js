@@ -8,8 +8,7 @@ import { Img, Text } from "../../components/Text";
 
 export const generateMetadata = () => pageMetadata("home");
 
-// Markup mirrors the reference homepage (sam.harsh-4844.chatgpt.site, v17).
-// The results arrows are wired up in SiteInteractions.js.
+
 export default async function Home() {
   const [c, { header }] = await Promise.all([getContent("home"), getContent("global")]);
   return (
