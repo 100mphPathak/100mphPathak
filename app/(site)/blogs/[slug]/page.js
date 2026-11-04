@@ -10,6 +10,12 @@ import { getPost, postDate, publishedPosts, readMinutes } from "../../../lib/pos
 import { SITE_URL, seo } from "../../../seo";
 import TocSpy from "./toc-spy";
 
+// Lists the published posts so their pages are built ahead and cached (without this, every visit renders
+// the page again). Posts published later are built on their first visit, then cached; publishing refreshes them.
+export async function generateStaticParams() {
+  return (await publishedPosts()).map((post) => ({ slug: post.slug }));
+}
+
 // Search title/description/image from the SEO panel; empty fields fall back to the post's own.
 export async function generateMetadata({ params }) {
   const { slug } = await params;

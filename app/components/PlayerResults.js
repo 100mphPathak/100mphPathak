@@ -19,7 +19,7 @@ export default async function PlayerResults() {
           <article className="player" key={i}>
             <div className="player-image">
               {/* Eager: lazy images inside a sideways scroller load late on phones and show blank while swiping. */}
-              <Img v={player.photo} loading="eager" sizes="(max-width: 760px) 290px, 25vw" />
+              <Img v={player.photo} sizes="(max-width: 760px) 290px, 25vw" />
             </div>
             <span className="tiny"><Text v={player.tag} brand /></span>
             <h3>{player.name}</h3>

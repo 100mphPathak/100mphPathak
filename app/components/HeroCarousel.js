@@ -10,7 +10,8 @@ const DELAY = 5000;
 // arrows and dots.
 export default function HeroCarousel({ slides, label = "Academy photos" }) {
   const track = useRef(null);
-  const [index, setIndex] = useState(0);
+  // The visible slide, read by autoplay. A ref, not state: scrolling then doesn't re-render the carousel.
+  const index = useRef(0);
   const [paused, setPaused] = useState(false);
   const count = slides.length;
 
@@ -23,7 +24,7 @@ export default function HeroCarousel({ slides, label = "Academy photos" }) {
 
   useEffect(() => {
     const el = track.current;
-    const onScroll = () => setIndex(Math.round(el.scrollLeft / el.clientWidth));
+    const onScroll = () => (index.current = Math.round(el.scrollLeft / el.clientWidth));
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
@@ -31,10 +32,10 @@ export default function HeroCarousel({ slides, label = "Academy photos" }) {
   useEffect(() => {
     if (count < 2 || paused || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = setInterval(() => {
-      if (!document.hidden) go(index + 1);
+      if (!document.hidden) go(index.current + 1);
     }, DELAY);
     return () => clearInterval(timer);
-  }, [index, paused, count]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [paused, count]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const first = slides[0];
   return (
@@ -55,7 +56,7 @@ export default function HeroCarousel({ slides, label = "Academy photos" }) {
               <Image
                 alt={slide.alt}
                 height={slide.height}
-                loading={i === 0 ? undefined : "eager"}
+                // Only the first slide loads up front; the others load lazily so they don't slow the first one down.
                 preload={i === 0}
                 sizes="(max-width: 999px) 100vw, 1000px"
                 src={slide.src}
