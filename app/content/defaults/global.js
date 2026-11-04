@@ -82,7 +82,6 @@ export default {
     taglineBold: "serious cricketer.",
     buttons: {
       call: link("Call Now", "tel:+918882390596"),
-      whatsapp: link("WhatsApp Now", "https://wa.me/918882390596"),
     },
     exploreHeading: "EXPLORE PATHAK100MPH",
     academy: {

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import "../../../home.css";
 import "../../../post.css";
+import "../blogs.css";
+import ArticleCard from "../../../components/ArticleCard";
 import ArticleBody, { articleToc } from "../../../components/ArticleBody";
 import Partners from "../../../components/Partners";
 import { Img } from "../../../components/Text";
@@ -124,13 +126,8 @@ export default async function BlogPost({ params }) {
             </div>
             <Link className="text-link" href={related.link.href}>{related.link.label}<span aria-hidden="true">↗︎</span></Link>
           </div>
-          <div className="post-related-list">
-            {others.map((other) => (
-              <article key={other.id}>
-                <h3><Link href={`/blogs/${other.slug}/`}>{other.title} <span aria-hidden="true">→</span></Link></h3>
-                {other.excerpt && <p>{other.excerpt}</p>}
-              </article>
-            ))}
+          <div className="library-grid">
+            {others.map((other) => <ArticleCard heading="h3" key={other.id} post={{ ...other, minutes: readMinutes(other.body) }} />)}
           </div>
         </section>
       )}
