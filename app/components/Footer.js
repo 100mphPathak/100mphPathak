@@ -41,6 +41,7 @@ export default async function Footer() {
             <a className="sf-directions" href={f.directions.href} rel="noopener noreferrer" target="_blank">
               {f.directions.label} <span aria-hidden="true">{"↗︎"}</span>
             </a>
+            {f.emails.map((item, i) => <a href={item.href} key={i}>{item.label}</a>)}
           </div>
         </nav>
       </div>

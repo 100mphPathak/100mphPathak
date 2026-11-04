@@ -103,6 +103,7 @@ export default {
     // Shown after the two groups (on phones: in a row of their own), then "Get Directions".
     more: [link("Insights", "/blogs/")],
     directions: link("Get Directions", "https://www.google.com/maps/search/?api=1&query=Chhapraula+Police+Chowki+KRBL+Rice+Mill+Bisnauli+Uttar+Pradesh+203207"),
+    emails: [link("Career", "mailto:manager@pathak100mph.com"), link("Collaboration", "mailto:collaborations@pathak100mph.com")],
     copyright: "© 2026 Ankit Pathak and Sons",
     legalLinks: [
       link("Terms & Conditions", "https://sam.harsh-4844.chatgpt.site/terms/"),
