@@ -6946,3 +6946,7 @@ body footer.site-footer .sf-legal a:hover { text-decoration: underline; }
 /* Floating WhatsApp button: a little higher, so it sits above the footer's dark legal bar */
 body .whatsapp-float { bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
 @media (max-width: 760px) { body .whatsapp-float { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); } }
+
+/* Facilities gallery: every photo is 4:5 portrait on every screen, so a 1080 × 1350 image fits with no cropping */
+body .gallery button, body .gallery button:first-child { height: auto; }
+body .gallery img { display: block; height: auto; aspect-ratio: 4 / 5; }
