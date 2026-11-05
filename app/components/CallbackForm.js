@@ -86,7 +86,7 @@ export default async function CallbackForm() {
             </select>
           </label>
           <p className="form-notice">
-            {form.notice}
+            <Text v={form.notice} />
           </p>
           <button className="button" type="submit">
             {form.submit}{" "}
@@ -96,6 +96,8 @@ export default async function CallbackForm() {
           <input name="country_name" type="hidden" defaultValue="India" />
           <input name="dial_code" type="hidden" defaultValue="+91" />
           <input name="phone_international" type="hidden" defaultValue="" />
+          {/* Spam trap: hidden from people, bots fill it in and their lead is dropped. */}
+          <input aria-hidden="true" autoComplete="off" name="website" style={{ position: "absolute", left: "-9999px" }} tabIndex={-1} />
         </form>
       </dialog>
     </>

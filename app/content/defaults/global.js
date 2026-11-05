@@ -63,7 +63,7 @@ export default {
       "Action Analysis",
       "Scholarship",
     ],
-    notice: "Design preview: this form demonstrates the enquiry experience. Details are not sent or stored.",
+    notice: "We only use your details to contact you about training. See our [Privacy Policy](/privacy/).",
     submit: "Request a call back",
   },
   whatsappButton: {

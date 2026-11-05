@@ -245,19 +245,33 @@ export default function SiteInteractions() {
     listen(leadPhone, "input", () => updateLeadPhone());
     listen(leadPhone, "blur", () => updateLeadPhone(true));
     listen(leadForm, "reset", () => queueMicrotask(() => updateLeadPhone()));
-    listen(leadForm, "submit", (e) => {
+    // Sends the lead to /api/lead (which passes it on to TeleCRM).
+    listen(leadForm, "submit", async (e) => {
       e.preventDefault();
       const valid = updateLeadPhone(true);
       if (!valid || !leadForm.reportValidity()) {
         leadPhone.reportValidity();
         return;
       }
-      $(".form-result").textContent =
-        "Preview complete. Country: " +
-        $('[name="country_name"]', leadForm).value +
-        ". Phone: " +
-        $('[name="phone_international"]', leadForm).value +
-        ". No details have been sent.";
+      const result = $(".form-result"),
+        submit = $('[type="submit"]', leadForm);
+      if (submit.disabled) return;
+      submit.disabled = true;
+      result.textContent = "Sending…";
+      try {
+        const res = await fetch("/api/lead/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...Object.fromEntries(new FormData(leadForm)), page: location.pathname }),
+        });
+        if (!res.ok) throw new Error(res.status);
+        leadForm.reset();
+        result.textContent = "Thank you! Our team will call you soon.";
+      } catch {
+        result.textContent = "Sorry, that didn't go through. Please call us on +91 8882390596.";
+      } finally {
+        submit.disabled = false;
+      }
     });
     updateLeadPhone();
 
