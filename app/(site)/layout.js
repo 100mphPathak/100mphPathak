@@ -28,6 +28,15 @@ export default async function SiteLayout({ children }) {
       {/* Only the callback form uses this; SiteInteractions reads it via window.libphonenumber?. */}
       <Script src="/assets/libphonenumber-max.js" strategy="lazyOnload" />
       <SiteInteractions />
+      {/* Google Analytics (G-FZ4SNB8W58). Public pages only; admin previews aren't counted. */}
+      {!preview && (
+        <>
+          <Script src="https://www.googletagmanager.com/gtag/js?id=G-FZ4SNB8W58" strategy="afterInteractive" />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {"window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FZ4SNB8W58');"}
+          </Script>
+        </>
+      )}
     </>
   );
 }
