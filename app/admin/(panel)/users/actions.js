@@ -39,7 +39,7 @@ export async function createUser(_prev, form) {
   const role = String(form.get("role") ?? "");
   const keep = { name, email, role }; // refill the form (never the password) if something is wrong
   if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { ...keep, error: "Enter a name and a valid email." };
-  if (password.length < 8) return { ...keep, error: "The password must be at least 8 characters." };
+  if (password.length < 10) return { ...keep, error: "The password must be at least 10 characters." };
   if (!(role in ROLES)) return { ...keep, error: "Choose an access level." };
   const admin = authAdmin();
   if (!admin) return { ...keep, error: NO_KEY };

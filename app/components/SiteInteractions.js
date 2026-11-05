@@ -264,6 +264,10 @@ export default function SiteInteractions() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...Object.fromEntries(new FormData(leadForm)), page: location.pathname }),
         });
+        if (res.status === 429) {
+          result.textContent = "You've sent this a few times already. Our team will call you, or call us on +91 8882390596.";
+          return;
+        }
         if (!res.ok) throw new Error(res.status);
         leadForm.reset();
         result.textContent = "Thank you! Our team will call you soon.";

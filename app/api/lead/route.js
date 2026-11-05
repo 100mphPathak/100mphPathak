@@ -1,10 +1,23 @@
 
 const text = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
+// 5 form sends per IP per 10 minutes.
+// ponytail: kept in this server's memory (fine on Hostinger's single Node process); resets on restart and isn't shared between Vercel instances.
+const hits = new Map();
+function limited(ip) {
+  const now = Date.now(), recent = (hits.get(ip) ?? []).filter((t) => now - t < 10 * 60_000);
+  if (hits.size > 5000) hits.clear(); // never let the map grow without bound
+  hits.set(ip, [...recent, now]);
+  return recent.length >= 5;
+}
+
 export async function POST(request) {
  
   const origin = request.headers.get("origin");
   if (origin && new URL(origin).host !== request.headers.get("host")) return Response.json({ error: "Not allowed" }, { status: 403 });
+
+  const ip = (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
+  if (limited(ip)) return Response.json({ error: "Too many requests" }, { status: 429 });
 
   let body;
   try {

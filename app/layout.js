@@ -1,5 +1,5 @@
 import { DM_Sans, Manrope } from "next/font/google";
-import "./globals.css";
+// globals.css (the public site styles) is imported by app/(site)/layout.js and app/not-found.js, not here, so it never leaks into /admin.
 import { SITE_URL } from "./seo";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });

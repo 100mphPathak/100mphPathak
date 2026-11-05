@@ -32,6 +32,7 @@ export default {
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" }, // no clickjacking: other sites can't show us in a frame
           { key: "Content-Security-Policy", value: "frame-ancestors 'self'" }, // same rule, modern form
+          { key: "Strict-Transport-Security", value: "max-age=31536000" }, // browsers always use HTTPS for this site
           { key: "X-Content-Type-Options", value: "nosniff" }, // files are only treated as what they say they are
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" }, // other sites see our domain, not full addresses
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },

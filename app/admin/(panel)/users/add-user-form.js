@@ -15,15 +15,15 @@ export default function AddUserForm() {
       <h2>Add an admin</h2>
       <label className="field">
         <span>Name</span>
-        <input autoComplete="off" defaultValue={state.name} maxLength={80} name="name" required />
+        <input autoComplete="off" defaultValue={state.name} maxLength={80} name="name" required type="text" />
       </label>
       <label className="field">
         <span>Email</span>
         <input autoComplete="off" defaultValue={state.email} name="email" required type="email" />
       </label>
       <label className="field">
-        <span>Password (at least 8 characters)</span>
-        <input autoComplete="new-password" minLength={8} name="password" required type="password" />
+        <span>Password (at least 10 characters)</span>
+        <input autoComplete="new-password" minLength={10} name="password" required type="password" />
       </label>
       <label className="field">
         <span>Access</span>

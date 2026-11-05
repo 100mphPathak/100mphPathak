@@ -6,6 +6,8 @@ import { cookies } from "next/headers";
 export async function supabase() {
   const store = await cookies();
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+    // Login cookies: page scripts can't read them (XSS can't steal the session), HTTPS-only on the live site.
+    cookieOptions: { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" },
     cookies: {
       getAll: () => store.getAll(),
       // Pages can't set cookies (only actions and routes can); the proxy refreshes them instead.

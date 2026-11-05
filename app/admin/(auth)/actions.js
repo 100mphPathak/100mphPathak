@@ -2,7 +2,7 @@
 
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
-import { audit } from "../../lib/session";
+import { audit, clientIp, tooMany } from "../../lib/session";
 import { SITE_URL } from "../../seo";
 import { supabase } from "../../lib/auth";
 
@@ -12,9 +12,14 @@ export async function signIn(_prev, formData) {
   const email = text(formData, "email").toLowerCase();
   const password = String(formData.get("password") ?? "");
   if (!email || !password) return { error: "Enter your email and password.", email };
+  // Password guessing: 5 wrong tries per email or 20 per IP in 15 minutes, then wait.
+  const ip = await clientIp();
+  if (await tooMany("auth.sign_in_failed", email, ip, { perEmail: 5, perIp: 20, minutes: 15 })) {
+    return { error: "Too many wrong attempts. Wait 15 minutes, or use “Forgot your password?”.", email };
+  }
   const { data, error } = await (await supabase()).auth.signInWithPassword({ email, password });
   if (error) {
-    await audit(null, "auth.sign_in_failed", "user", email);
+    await audit(null, "auth.sign_in_failed", "user", email, { ip });
     return { error: "Email or password is incorrect.", email };
   }
   await audit({ id: data.user.id, email }, "auth.sign_in", "user", data.user.id);
@@ -24,6 +29,12 @@ export async function signIn(_prev, formData) {
 export async function requestReset(_prev, formData) {
   const email = text(formData, "email").toLowerCase();
   if (!email) return { error: "Enter your email." };
+  // Stops reset-email floods: 3 per email or 10 per IP an hour.
+  const ip = await clientIp();
+  if (await tooMany("auth.reset_requested", email, ip, { perEmail: 3, perIp: 10, minutes: 60 })) {
+    return { error: "Too many reset requests. Check your inbox (and spam), or try again in an hour." };
+  }
+  await audit(null, "auth.reset_requested", "user", email, { ip });
   // Never build this from the Host header: a forged host would send the reset link elsewhere.
   const origin = process.env.ADMIN_ORIGIN ?? SITE_URL;
   const { error } = await (await supabase()).auth.resetPasswordForEmail(email, { redirectTo: `${origin}/api/auth/callback/?next=/admin/reset-password/` });

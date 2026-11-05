@@ -6,6 +6,8 @@ const PUBLIC_ADMIN = ["/admin/sign-in", "/admin/forgot-password", "/admin/reset-
 export default async function proxy(request) {
   let response = NextResponse.next({ request });
   const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+    // Login cookies: page scripts can't read them (XSS can't steal the session), HTTPS-only on the live site.
+    cookieOptions: { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" },
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: (list) => {

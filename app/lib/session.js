@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { sql } from "./db";
 import { can } from "./permissions";
@@ -38,4 +39,21 @@ export async function audit(user, action, resourceType, resourceId, details = {}
   await sql`
     insert into audit_log (actor_id, actor_email, action, resource_type, resource_id, details)
     values (${user?.id ?? null}, ${user?.email ?? null}, ${action}, ${resourceType}, ${resourceId}, ${details})`;
+}
+
+// Visitor's IP as seen by the host's proxy (Hostinger / Vercel put it first in x-forwarded-for).
+export async function clientIp() {
+  const h = await headers();
+  return (h.get("x-forwarded-for") ?? "").split(",")[0].trim() || h.get("x-real-ip") || "unknown";
+}
+
+// Rate limit from the activity log: true when `action` was logged more than `perEmail` times for this email,
+// or `perIp` times from this IP, in the last `minutes`. Stored in the database, so it survives restarts and works on every server.
+export async function tooMany(action, email, ip, { perEmail, perIp, minutes }) {
+  const [row] = await sql`
+    select count(*) filter (where resource_id = ${email})::int as by_email,
+           count(*) filter (where details->>'ip' = ${ip})::int as by_ip
+    from audit_log
+    where action = ${action} and at > now() - make_interval(mins => ${minutes})`;
+  return row.by_email >= perEmail || row.by_ip >= perIp;
 }
