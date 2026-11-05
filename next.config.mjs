@@ -15,6 +15,8 @@ export default {
   // Old addresses keep working (and pass their search ranking) after the client's URL changes.
   async redirects() {
     return [
+      // pathak100mph.com → www.pathak100mph.com (one address for visitors and Google).
+      { source: "/:path(.*)", has: [{ type: "host", value: "pathak100mph.com" }], destination: "https://www.pathak100mph.com/:path", permanent: true },
       { source: "/ankit-pathak/", destination: "/best-fast-bowling-coach/", permanent: true },
       { source: "/assessment-trial/", destination: "/admission/", permanent: true },
       { source: "/online-training/", destination: "/online-bowling-training/", permanent: true },
