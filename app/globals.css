@@ -5254,6 +5254,10 @@ footer {
 #enquiry {
   max-height: 90dvh;
   overflow-y: auto;
+  scrollbar-width: none; /* still scrolls with wheel, touch and keyboard; the bar just isn't drawn */
+}
+#enquiry::-webkit-scrollbar {
+  display: none;
 }
 @media (max-width: 1100px) and (min-width: 761px) {
   .reel-rail {

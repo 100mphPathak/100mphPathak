@@ -271,6 +271,12 @@ export default function SiteInteractions() {
         if (!res.ok) throw new Error(res.status);
         leadForm.reset();
         result.textContent = "Thank you! Our team will call you soon.";
+        result.scrollIntoView({ block: "nearest", behavior: reduced ? "instant" : "smooth" });
+        // Show the thank-you for a moment, then close the form (unless the visitor already closed it).
+        setTimeout(() => {
+          const dialog = $("#enquiry");
+          if (dialog.open) closeModal(dialog);
+        }, 2500);
       } catch {
         result.textContent = "Sorry, that didn't go through. Please call us on +91 8882390596.";
       } finally {
