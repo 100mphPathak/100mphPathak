@@ -13,6 +13,7 @@ export async function POST(request) {
   revalidateTag("sitemap", { expire: 0 });
   revalidateTag("posts", { expire: 0 }); // blog posts (POSTS_TAG in lib/posts.js)
   revalidatePath("/", "layout");
+  revalidatePath("/sitemap.xml"); // built separately from the pages, so it needs its own refresh
   return Response.json({ ok: true, cleared: Object.keys(PAGES).length });
 
 }
