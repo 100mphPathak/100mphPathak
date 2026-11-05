@@ -2,6 +2,8 @@ import { sql } from "../../../lib/db";
 import { ROLES } from "../../../lib/permissions";
 import { requirePage } from "../../../lib/session";
 import { when } from "../format";
+import AddUserForm from "./add-user-form";
+import DeleteUser from "./delete-user";
 import RoleSelect from "./role-select";
 
 export const metadata = { title: "Users" };
@@ -18,9 +20,9 @@ export default async function Users() {
       <div className="a-top"><h1>Users</h1></div>
       <div className="a-card small">
         <p>
-          Public sign-up is closed. To add someone: in Supabase, open <strong>Authentication → Users → Add user → Create new user</strong>{" "}
-          (tick “Auto Confirm User”), then they set their own password with “Forgot your password?” on the sign-in page.
-          They appear in this list right away, and can’t see or change anything until you give them a role.
+          Public sign-up is closed. Add an admin with the form below and share the password with them privately (in person or by phone,
+          not in a group chat). They can change it later with “Forgot your password?” on the sign-in page.
+          “No access” locks someone out but keeps their login; “Delete” removes the login for good.
         </p>
         <ul>
           <li><strong>{ROLES.editor}</strong>: edit and save drafts, upload images, preview.</li>
@@ -28,9 +30,10 @@ export default async function Users() {
           <li><strong>{ROLES.super_admin}</strong>: everything, plus site-wide settings, hiding pages from Google, users and the activity log.</li>
         </ul>
       </div>
+      <AddUserForm />
       <div className="a-table-wrap">
         <table className="a-table">
-          <thead><tr><th>Name</th><th>Email</th><th>Signed up</th><th>Access</th></tr></thead>
+          <thead><tr><th>Name</th><th>Email</th><th>Signed up</th><th>Access</th><th><span className="sr-only">Delete</span></th></tr></thead>
           <tbody>
             {users.map((u) => (
               <tr key={u.id}>
@@ -38,6 +41,7 @@ export default async function Users() {
                 <td>{u.email}</td>
                 <td className="small">{when(u.created_at)}</td>
                 <td>{u.id === me.id ? <span className="small">{ROLES[u.role]} (you)</span> : <RoleSelect role={u.role ?? ""} userId={u.id} />}</td>
+                <td>{u.id !== me.id && <DeleteUser email={u.email} userId={u.id} />}</td>
               </tr>
             ))}
           </tbody>
