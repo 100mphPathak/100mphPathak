@@ -17,6 +17,8 @@ export default {
     return [
       // pathak100mph.com → www.pathak100mph.com (one address for visitors and Google).
       { source: "/:path(.*)", has: [{ type: "host", value: "pathak100mph.com" }], destination: "https://www.pathak100mph.com/:path", permanent: true },
+      // Password-reset emails sometimes land on the home page (Supabase falls back to its Site URL): hand the code to the reset flow.
+      { source: "/", has: [{ type: "query", key: "code", value: "(?<code>[A-Za-z0-9-]{8,100})" }], destination: "/api/auth/callback/?code=:code&next=/admin/reset-password/", permanent: false },
       { source: "/ankit-pathak/", destination: "/best-fast-bowling-coach/", permanent: true },
       { source: "/assessment-trial/", destination: "/admission/", permanent: true },
       { source: "/online-training/", destination: "/online-bowling-training/", permanent: true },
