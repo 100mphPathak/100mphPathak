@@ -7,6 +7,9 @@ import assessmentTrial from "./assessment-trial.js";
 import facilities from "./facilities.js";
 import onlineTraining from "./online-training.js";
 import scholarship from "./scholarship.js";
+import terms from "./terms.js";
+import returnPolicy from "./return-policy.js";
+import privacy from "./privacy.js";
 
 // Per-page SEO fields. Empty values fall back to the global defaults (see lib/content.js).
 const seo = (title, description) => ({
@@ -79,5 +82,26 @@ export const PAGES = {
     route: "/facilities/",
     content: facilities,
     seo: seo("Cricket Academy with Hostel in Delhi NCR | Pathak100MPH", "Explore Pathak100MPH’s 5-acre cricket training environment, gym, facilities and residential support in Delhi NCR."),
+  },
+  terms: {
+    slug: "terms",
+    title: "Terms & Conditions",
+    route: "/terms/",
+    content: terms,
+    seo: seo("Terms & Conditions | Pathak100MPH", "Terms for Pathak100MPH online assessments, academy admission, online fast bowling training, scholarships, fees and payments."),
+  },
+  "return-policy": {
+    slug: "return-policy",
+    title: "Return & Refund Policy",
+    route: "/return-policy/",
+    content: returnPolicy,
+    seo: seo("Return & Refund Policy | Pathak100MPH", "Refund, rescheduling and payment support terms for Pathak100MPH assessments, online training, scholarships and academy fees."),
+  },
+  privacy: {
+    slug: "privacy",
+    title: "Privacy Policy",
+    route: "/privacy/",
+    content: privacy,
+    seo: seo("Privacy Policy | Pathak100MPH", "How Pathak100MPH collects, uses, shares and protects information from players and parents when they book, enrol or contact us."),
   },
 };

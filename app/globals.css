@@ -6949,3 +6949,8 @@ body .whatsapp-float { bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
 /* Facilities gallery: every photo is 4:5 portrait on every screen, so a 1080 × 1350 image fits with no cropping */
 body .gallery button, body .gallery button:first-child { height: auto; }
 body .gallery img { display: block; height: auto; aspect-ratio: 4 / 5; }
+
+/* Call-back pop-up ×: a 36px circle with the × centred (beats the general button padding / 44px height rules). */
+body .callback-prompt button.prompt-close {
+  width: 36px; height: 36px; min-height: 36px; padding: 0; display: grid; place-items: center; line-height: 1; font-size: 22px;
+}

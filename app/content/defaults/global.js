@@ -106,9 +106,9 @@ export default {
     emails: [link("Career", "mailto:manager@pathak100mph.com"), link("Collaboration", "mailto:collaborations@pathak100mph.com")],
     copyright: "© 2026 Ankit Pathak and Sons",
     legalLinks: [
-      link("Terms & Conditions", "https://sam.harsh-4844.chatgpt.site/terms/"),
-      link("Return Policy", "https://sam.harsh-4844.chatgpt.site/return-policy/"),
-      link("Privacy Policy", "https://sam.harsh-4844.chatgpt.site/privacy/"),
+      link("Terms & Conditions", "/terms/"),
+      link("Return Policy", "/return-policy/"),
+      link("Privacy Policy", "/privacy/"),
     ],
   },
   playerResults: {

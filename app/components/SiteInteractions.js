@@ -98,14 +98,11 @@ export default function SiteInteractions() {
           !$("dialog[open]") &&
           $(".mobile-menu").hidden
         ) {
-          const prompt = $(".callback-prompt");
-          if (prompt) prompt.hidden = false;
-          try {
-            sessionStorage.setItem("pathak-enquiry-seen", "1");
-          } catch {}
+          // Opens the full "Request a call back" form once per visit (enquiry() marks it seen).
+          enquiry();
           clearInterval(autoTimer);
         }
-      }, 30000);
+      }, 5000);
     }
     const menu = $(".mobile-menu"),
       menuBtn = $(".menu-button");
