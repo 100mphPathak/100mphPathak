@@ -79,7 +79,7 @@ export const PAGES = {
   facilities: {
     slug: "facilities",
     title: "Facilities",
-    route: "/facilities/",
+    route: "/our-facilities/",
     content: facilities,
     seo: seo("Cricket Academy with Hostel in Delhi NCR | Pathak100MPH", "Explore Pathak100MPH’s 5-acre cricket training environment, gym, facilities and residential support in Delhi NCR."),
   },

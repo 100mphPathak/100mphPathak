@@ -20,7 +20,7 @@ export default {
       link("Admission", "/admission/"),
       link("Online Training", "/online-bowling-training/"),
       link("Scholarship", "/scholarship/"),
-      link("Facilities", "/facilities/"),
+      link("Facilities", "/our-facilities/"),
       link("Events", "/events/"),
       link("Insights", "/blogs/"),
     ],
@@ -31,7 +31,7 @@ export default {
       link("Admission", "/admission/"),
       link("Online Training", "/online-bowling-training/"),
       link("Scholarship", "/scholarship/"),
-      link("Facilities", "/facilities/"),
+      link("Facilities", "/our-facilities/"),
       link("Upcoming Events", "/events/"),
       link("Insights", "/blogs/"),
     ],
@@ -88,7 +88,7 @@ export default {
       heading: "ACADEMY",
       links: [
         link("Ankit Pathak", "/best-fast-bowling-coach/"),
-        link("Our Facilities", "/facilities/"),
+        link("Our Facilities", "/our-facilities/"),
         link("Upcoming Events", "/events/"),
       ],
     },
@@ -104,6 +104,8 @@ export default {
     more: [link("Insights", "/blogs/")],
     directions: link("Get Directions", "https://www.google.com/maps/search/?api=1&query=Chhapraula+Police+Chowki+KRBL+Rice+Mill+Bisnauli+Uttar+Pradesh+203207"),
     emails: [link("Career", "mailto:manager@pathak100mph.com"), link("Collaboration", "mailto:collaborations@pathak100mph.com")],
+    // Shown after Career and Collaboration; open in a new tab.
+    socials: [link("Instagram", "https://www.instagram.com/pathak100mph"), link("YouTube", "https://www.youtube.com/@Pathak100mph")],
     copyright: "© 2026 Ankit Pathak and Sons",
     legalLinks: [
       link("Terms & Conditions", "/terms/"),

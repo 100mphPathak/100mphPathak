@@ -5,6 +5,7 @@ import { HomePartners } from "../../components/Partners";
 import { Insights, SiteFaq } from "../../components/SiteSections";
 import { getContent, pageMetadata } from "../../lib/content";
 import { Img, Text } from "../../components/Text";
+import Link from "next/link";
 
 export const generateMetadata = () => pageMetadata("home");
 
@@ -58,7 +59,7 @@ export default async function Home() {
               <span className="eyebrow">{card.eyebrow}</span>
               <h3><Text v={card.heading} brand /></h3>
               <p>{card.text}</p>
-              <a className="home-capsule product-capsule" href={card.button.href}>{card.button.label}</a>
+              <Link className="home-capsule product-capsule" href={card.button.href}>{card.button.label}</Link>
             </article>
           ))}
         </div>

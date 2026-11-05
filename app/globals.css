@@ -6924,7 +6924,11 @@ body footer.site-footer .sf-legal a:hover { text-decoration: underline; }
 /* Phones: logo over the tagline, two buttons side by side, "Academy" and "Training" as two columns */
 @media (max-width: 760px) {
   body footer.site-footer { margin-top: 36px; border-radius: 24px 24px 0 0; }
-  body footer.site-footer .sf-top { grid-template-columns: 1fr; gap: 14px; padding: 28px 0 20px; }
+  /* Logo left, Call button right, tagline underneath */
+  body footer.site-footer .sf-top { grid-template-columns: 1fr auto; grid-template-areas: "logo call" "tagline tagline"; gap: 14px; padding: 28px 0 20px; }
+  body footer.site-footer .sf-logo { grid-area: logo; }
+  body footer.site-footer .sf-tagline { grid-area: tagline; }
+  body footer.site-footer .sf-actions { grid-area: call; }
   body footer.site-footer .sf-logo { padding: 0; border: 0; }
   body footer.site-footer .sf-logo img { width: 130px; }
   body footer.site-footer .sf-tagline { font-size: 25px; }
@@ -6934,7 +6938,8 @@ body footer.site-footer .sf-legal a:hover { text-decoration: underline; }
   body footer.site-footer .sf-group:first-child { padding-left: 0; padding-right: 12px; border-right: 1px solid #cbd6e3; }
   body footer.site-footer .sf-group > .eyebrow { display: block; margin: 0 0 4px; }
   body footer.site-footer .sf-more { display: grid; grid-column: 1 / -1; grid-template-columns: 1fr 1fr; border-top: 1px solid #cbd6e3; }
-  body footer.site-footer .sf-more a { padding: 14px 0; }
+  body footer.site-footer .sf-more { padding: 13px 0 10px; }
+  body footer.site-footer .sf-more a { padding: 5px 0; } /* rows spaced like the Academy/Training lists */
   body footer.site-footer .sf-more a:nth-child(even) { padding-left: 16px; border-left: 1px solid #cbd6e3; }
   body footer.site-footer .sf-links a { font-size: 14px; }
   body footer.site-footer .sf-legal { font-size: 12px; }

@@ -42,6 +42,7 @@ export default async function Footer() {
               {f.directions.label} <span aria-hidden="true">{"↗︎"}</span>
             </a>
             {f.emails.map((item, i) => <a href={item.href} key={i}>{item.label}</a>)}
+            {f.socials.map((item, i) => <a href={item.href} key={i} rel="noopener noreferrer" target="_blank">{item.label}</a>)}
           </div>
         </nav>
       </div>
