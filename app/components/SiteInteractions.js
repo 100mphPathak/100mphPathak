@@ -233,7 +233,7 @@ export default function SiteInteractions() {
       } else {
         $("#phone-preview").textContent = raw
           ? "Check the number and selected country."
-          : "Country code: " + dial;
+          : ""; // the +91 box already shows the code
         if (showError && raw)
           leadPhone.setCustomValidity(
             "Enter a valid phone number for the selected country.",

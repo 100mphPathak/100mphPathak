@@ -6963,3 +6963,28 @@ body .gallery img { display: block; height: auto; aspect-ratio: 4 / 5; }
 body .callback-prompt button.prompt-close {
   width: 36px; height: 36px; min-height: 36px; padding: 0; display: grid; place-items: center; line-height: 1; font-size: 22px;
 }
+
+/* Call-back form, compact: everything up to the submit button fits on a laptop screen without scrolling. */
+body #enquiry { padding: 28px 30px 24px; max-width: 560px; }
+body #enquiry .modal-top .modal-title { font-size: 30px; }
+body #enquiry .modal-top > p { margin-top: 8px; }
+body #enquiry form { margin-top: 16px; }
+body #enquiry label { margin-bottom: 12px; }
+body #enquiry input, body #enquiry select { padding-top: 10px; padding-bottom: 10px; margin-top: 5px; }
+body #enquiry .phone-input-wrap { margin-top: 5px; }
+body #enquiry .phone-input-wrap input { margin-top: 0; }
+body #enquiry #phone-prefix { padding-top: 10px; padding-bottom: 10px; min-width: 52px; }
+body #enquiry .enquiry-pair { display: grid; gap: 12px; }
+body #enquiry .enquiry-pair.name-age { grid-template-columns: 1fr 96px; }
+body #enquiry .enquiry-pair.country-phone { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+/* The help line stays for screen readers (aria-describedby); the +91 box and error message say the same on screen. */
+body #enquiry #phone-help { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+body #enquiry #phone-preview { margin-top: 4px; }
+body #enquiry #phone-preview:empty { display: none; }
+body #enquiry .form-notice { margin: 4px 0 12px; }
+@media (max-width: 760px) {
+  body #enquiry { padding: 24px 20px 20px; }
+  body #enquiry .modal-top .modal-title { font-size: 26px; }
+  body #enquiry .enquiry-pair.name-age { grid-template-columns: 1fr 80px; }
+  body #enquiry .enquiry-pair.country-phone { grid-template-columns: 1fr; gap: 0; }
+}

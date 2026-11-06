@@ -19,17 +19,18 @@ export default async function CallbackForm() {
           <p>{form.text}</p>
         </div>
         <form id="enquiry-form">
-          <label>
-            {form.nameLabel}
-            <input
-              autoComplete="name"
-              maxLength="80"
-              name="name"
-              placeholder={form.namePlaceholder}
-              required
-            />
-          </label>
-          <div className="form-row">
+          {/* Name and age share a row, country and phone share a row: the whole form fits without scrolling. */}
+          <div className="form-row enquiry-pair name-age">
+            <label>
+              {form.nameLabel}
+              <input
+                autoComplete="name"
+                maxLength="80"
+                name="name"
+                placeholder={form.namePlaceholder}
+                required
+              />
+            </label>
             <label>
               {form.ageLabel}
               <input
@@ -42,40 +43,42 @@ export default async function CallbackForm() {
               />
             </label>
           </div>
-          <label>
-            {form.countryLabel}
-            <select
-              autoComplete="country"
-              id="lead-country"
-              name="country"
-              required
-              defaultValue="IN"
-            >
-              <CountryOptions />
-            </select>
-          </label>
-          <label>
-            {form.phoneLabel}
-            <div className="phone-input-wrap">
-              <span aria-hidden="true" id="phone-prefix">
-                {"+91"}
-              </span>
-              <input
-                aria-describedby="phone-help phone-preview"
-                autoComplete="tel-national"
-                inputMode="tel"
-                maxLength="25"
-                name="phone"
-                placeholder={form.phonePlaceholder}
+          <div className="form-row enquiry-pair country-phone">
+            <label>
+              {form.countryLabel}
+              <select
+                autoComplete="country"
+                id="lead-country"
+                name="country"
                 required
-                type="tel"
-              />
-            </div>
-            <small id="phone-help">
-              {form.phoneHelp}
-            </small>
-            <output aria-live="polite" id="phone-preview"></output>
-          </label>
+                defaultValue="IN"
+              >
+                <CountryOptions />
+              </select>
+            </label>
+            <label>
+              {form.phoneLabel}
+              <div className="phone-input-wrap">
+                <span aria-hidden="true" id="phone-prefix">
+                  {"+91"}
+                </span>
+                <input
+                  aria-describedby="phone-help phone-preview"
+                  autoComplete="tel-national"
+                  inputMode="tel"
+                  maxLength="25"
+                  name="phone"
+                  placeholder={form.phonePlaceholder}
+                  required
+                  type="tel"
+                />
+              </div>
+              <small id="phone-help">
+                {form.phoneHelp}
+              </small>
+              <output aria-live="polite" id="phone-preview"></output>
+            </label>
+          </div>
           <label>
             {form.programLabel}
             <select name="program" required>
