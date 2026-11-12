@@ -2,7 +2,6 @@ import { getContent } from "../lib/content";
 import CountryOptions from "./CountryOptions";
 import { Text } from "./Text";
 
-// "Request a call back" pop-up form, opened by any [data-enquire] button.
 export default async function CallbackForm() {
   const { callbackForm: form } = await getContent("global");
   return (
@@ -19,7 +18,7 @@ export default async function CallbackForm() {
           <p>{form.text}</p>
         </div>
         <form id="enquiry-form">
-          {/* Name and age share a row, country and phone share a row: the whole form fits without scrolling. */}
+   
           <div className="form-row enquiry-pair name-age">
             <label>
               {form.nameLabel}
