@@ -12,20 +12,38 @@ export default {
     // Image uploads go through a server action; 4 MB file + multipart overhead (Vercel caps bodies at 4.5 MB).
     serverActions: { bodySizeLimit: "4.4mb" },
   },
-  // Old addresses keep working (and pass their search ranking) after the client's URL changes.
+  // All permanent moves are 301 and go straight to https://www… in one hop, from both pathak100mph.com and www.
+  // Specific moves come first (first match wins); the bare-domain → www rule is last.
   async redirects() {
+    const WWW = "https://www.pathak100mph.com";
+    const moved = [
+      ["/about/", "/best-fast-bowling-coach/"],
+      ["/ankit-pathak/", "/best-fast-bowling-coach/"],
+      ["/assessment-trial/", "/admission/"],
+      ["/online-training/", "/online-bowling-training/"],
+      ["/action-analysis/", "/admission/"], // page removed; assessment is the closest service
+      ["/facilities/", "/our-facilities/"],
+      ["/terms/", "/terms-conditions/"],
+      ["/privacy/", "/privacy-policy/"],
+      // Old WordPress blog addresses (posts lived at the site root).
+      ...[
+        "admission-fees-process-2026",
+        "five-useful-tips-to-enhance-bowling",
+        "injury-prevention-tips-for-fast-bowlers",
+        "best-gym-workouts-for-fast-bowlers",
+        "perfect-fast-bowling-technique",
+        "ankit-pathaks-favorite-brace-leg-drills-to-bowl-fast",
+        "arm-speed-fast-bowling-blueprint-ankit-pathak",
+        "fast-bowling-run-up-drills-ankit-pathak",
+        "fast-bowling-drills-ankit-pathak",
+      ].map((slug) => [`/${slug}/`, `/blogs/${slug}/`]),
+    ];
     return [
-      // pathak100mph.com → www.pathak100mph.com (one address for visitors and Google).
-      { source: "/:path(.*)", has: [{ type: "host", value: "pathak100mph.com" }], destination: "https://www.pathak100mph.com/:path", permanent: true },
       // Password-reset emails sometimes land on the home page (Supabase falls back to its Site URL): hand the code to the reset flow.
       { source: "/", has: [{ type: "query", key: "code", value: "(?<code>[A-Za-z0-9-]{8,100})" }], destination: "/api/auth/callback/?code=:code&next=/admin/reset-password/", permanent: false },
-      { source: "/ankit-pathak/", destination: "/best-fast-bowling-coach/", permanent: true },
-      { source: "/assessment-trial/", destination: "/admission/", permanent: true },
-      { source: "/online-training/", destination: "/online-bowling-training/", permanent: true },
-      { source: "/facilities/", destination: "/our-facilities/", permanent: true },
-      { source: "/terms/", destination: "/terms-conditions/", permanent: true },
-      { source: "/privacy/", destination: "/privacy-policy/", permanent: true },
-      { source: "/action-analysis/", destination: "/admission/", permanent: true }, // page removed; assessment is the closest service
+      ...moved.map(([source, to]) => ({ source, destination: WWW + to, statusCode: 301 })),
+      // pathak100mph.com/anything → https://www.pathak100mph.com/anything
+      { source: "/:path(.*)", has: [{ type: "host", value: "pathak100mph.com" }], destination: `${WWW}/:path`, statusCode: 301 },
     ];
   },
   async headers() {
