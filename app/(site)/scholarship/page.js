@@ -66,7 +66,7 @@ export default async function Scholarship() {
           <h2><Text v={c.closing.heading} /></h2>
           <p>{c.closing.text}</p>
           <div className="actions">
-          <a className="button" href="https://YOUR-PAYMENT-LINK">
+          <a className="button" href="https://pages.razorpay.com/pathak100mph-scholarship">
   {c.closing.button}{" "}<span aria-hidden="true">↗︎</span>
 </a>
           </div>
