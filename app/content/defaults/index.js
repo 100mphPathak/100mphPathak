@@ -86,7 +86,7 @@ export const PAGES = {
   terms: {
     slug: "terms",
     title: "Terms & Conditions",
-    route: "/terms/",
+    route: "/terms-conditions/",
     content: terms,
     seo: seo("Terms & Conditions | Pathak100MPH", "Terms for Pathak100MPH online assessments, academy admission, online fast bowling training, scholarships, fees and payments."),
   },
@@ -100,7 +100,7 @@ export const PAGES = {
   privacy: {
     slug: "privacy",
     title: "Privacy Policy",
-    route: "/privacy/",
+    route: "/privacy-policy/",
     content: privacy,
     seo: seo("Privacy Policy | Pathak100MPH", "How Pathak100MPH collects, uses, shares and protects information from players and parents when they book, enrol or contact us."),
   },

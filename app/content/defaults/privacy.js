@@ -1,4 +1,4 @@
-// Privacy Policy (/privacy/). Same shape as terms.js, plus sub-headings (heading + text) inside a section.
+// Privacy Policy (/privacy-policy/). Same shape as terms.js, plus sub-headings (heading + text) inside a section.
 const section = (heading, text, subsections = []) => ({ heading, text, points: [], note: "", subsections });
 const sub = (heading, text) => ({ heading, text });
 

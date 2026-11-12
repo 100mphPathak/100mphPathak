@@ -23,6 +23,8 @@ export default {
       { source: "/assessment-trial/", destination: "/admission/", permanent: true },
       { source: "/online-training/", destination: "/online-bowling-training/", permanent: true },
       { source: "/facilities/", destination: "/our-facilities/", permanent: true },
+      { source: "/terms/", destination: "/terms-conditions/", permanent: true },
+      { source: "/privacy/", destination: "/privacy-policy/", permanent: true },
       { source: "/action-analysis/", destination: "/admission/", permanent: true }, // page removed; assessment is the closest service
     ];
   },

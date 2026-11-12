@@ -63,7 +63,7 @@ export default {
       "Action Analysis",
       "Scholarship",
     ],
-    notice: "We only use your details to contact you about training. See our [Privacy Policy](/privacy/).",
+    notice: "We only use your details to contact you about training. See our [Privacy Policy](/privacy-policy/).",
     submit: "Request a call back",
   },
   whatsappButton: {
@@ -108,9 +108,9 @@ export default {
     socials: [link("Instagram", "https://www.instagram.com/pathak100mph"), link("YouTube", "https://www.youtube.com/@Pathak100mph")],
     copyright: "© 2026 Ankit Pathak and Sons",
     legalLinks: [
-      link("Terms & Conditions", "/terms/"),
+      link("Terms & Conditions", "/terms-conditions/"),
       link("Return Policy", "/return-policy/"),
-      link("Privacy Policy", "/privacy/"),
+      link("Privacy Policy", "/privacy-policy/"),
     ],
   },
   playerResults: {

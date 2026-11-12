@@ -1,4 +1,4 @@
-// Terms & Conditions (/terms/). Each section: a heading, optional text (one paragraph per line), bullet points, then an optional note after the points.
+// Terms & Conditions (/terms-conditions/). Each section: a heading, optional text (one paragraph per line), bullet points, then an optional note after the points.
 export default {
   eyebrow: "LEGAL",
   title: "Terms & Conditions",
